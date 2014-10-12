@@ -91,10 +91,12 @@
                 <label for="serviceno">办证编号：</label>
                 <input type="text" id="serviceno" name="serviceno"/>
                 <select type="text" id="year" name="year">
+                    <option value="">--年份--</option>
                     <option value="2013">2013</option>
                     <option value="2014">2014</option>
                 </select> 年
                 <select type="text" id="month" name="month">
+                    <option value="">--月份--</option>
                     <option value="1">1</option><option value="2">2</option>
                     <option value="3">3</option><option value="4">4</option>
                     <option value="5">5</option><option value="6">6</option>
