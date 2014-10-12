@@ -43,13 +43,21 @@ public class OnechildarchivesServiceImpl {
     public OnePage<Onechildarchives> selectOnePage(
             OnechildarchivesExample example, Onechildarchives oca) {
         OnechildarchivesExample.Criteria cirteria = example.createCriteria();
-        if (StringUtils.isNotEmpty(oca.getFname())) {
-            try {
+        try {
+            // 在这里添加查询条件
+            if (StringUtils.isNotEmpty(oca.getFname())) {
                 cirteria.andFnameLike("%"
                         + URLDecoder.decode(oca.getFname(), "UTF-8") + "%");
-            } catch (UnsupportedEncodingException e) {
-
             }
+            if (StringUtils.isNotEmpty(oca.getFidcardno())) {
+                cirteria.andFidcardnoEqualTo(oca.getFidcardno());
+            }
+            if (StringUtils.isNotEmpty(oca.getServiceno())) {
+                cirteria.andServicenoEqualTo(URLDecoder.decode(oca.getFname(),
+                        "UTF-8"));
+            }
+        } catch (UnsupportedEncodingException e) {
+
         }
         if (oca.getRegistrationdate() != null) {
             Calendar cal = Calendar.getInstance();
