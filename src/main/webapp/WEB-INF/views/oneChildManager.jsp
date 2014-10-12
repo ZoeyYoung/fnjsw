@@ -39,7 +39,7 @@
                 <div class="panel-body">
                   <ul class="nav nav-sidebar">
                       <li><a href="${ctx}/oneChild/new">档案录入</a></li>
-                      <li><a href="#">档案管理</a></li>
+                      <li class="active"><a href="${ctx}/oneChild/list">档案管理</a></li>
                       <li><a href="#">统计报表</a></li>
                   </ul>
                 </div>
@@ -181,7 +181,7 @@ var deleteOca = function(id) {
   });
 };
 $(document).ready(function() {
-$('#ocaListTable').omGrid({
+  $('#ocaListTable').omGrid({
     autoFit: true,
     limit: 2,
     title: "一孩档案",
@@ -189,7 +189,7 @@ $('#ocaListTable').omGrid({
     dataSource: '${ctx}/oneChild/query',
     method:'POST',
     colModel: defModel
-});
+  });
 });
 </script>
 </body>

@@ -163,4 +163,16 @@ public class OneChildController {
                         + userPageData.getPage().getCount() + "}";
         return jsonResult;
     }
+
+    @RequestMapping(value = "queryDivision", method = RequestMethod.GET)
+    @ResponseBody
+    public String queryDivision(HttpServletRequest request,
+            HttpServletResponse response) {
+        String code = request.getParameter("code");
+        if ("11".equals(code)) {
+            return "{\"divisions\": [{\"code\": \"1101\", \"name\": \"市辖区\"}]}";
+        }
+        return "";
+    }
+
 }
