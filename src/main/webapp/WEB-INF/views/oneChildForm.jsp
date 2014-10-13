@@ -84,8 +84,7 @@
           <li><a href="#tab3" role="tab" data-toggle="tab">准生证扫描</a></li>
           <li><a href="#tab4" role="tab" data-toggle="tab">备注</a></li>
         </ul>
-        <sf:form method="post" action="${ctx}/oneChild/${action}"
-          modelAttribute="oca">
+        <sf:form method="post" action="${ctx}/oneChild/${action}" modelAttribute="oca">
           <input type="hidden" id="id" name="id" value="${oca.id}" />
           <!-- Tab panes -->
           <div class="tab-content">
@@ -164,13 +163,15 @@
                     </tr>
                     <tr>
                       <td class="label"><label for="fcompanyname">工作单位名称：</label></td>
-                      <td colspan="8"><sf:input id="fcompanyname"
-                          path="fcompanyname" size="100" /></td>
+                      <td colspan="8">
+                        <sf:input id="fcompanyname" path="fcompanyname" size="100" />
+                      </td>
                     </tr>
                     <tr>
                       <td class="label"><label for="fcompanyaddr">工作单位地址：</label></td>
-                      <td colspan="8"><sf:input id="fcompanyaddr"
-                          path="fcompanyaddr" size="100" /></td>
+                      <td colspan="8">
+                        <sf:input id="fcompanyaddr" path="fcompanyaddr" size="100" />
+                      </td>
                     </tr>
                   </tbody>
                 </table>
@@ -237,13 +238,15 @@
                     </tr>
                     <tr>
                       <td class="label"><label for="mcompanyname">工作单位名称：</label></td>
-                      <td colspan="8"><sf:input id="mcompanyname"
-                          path="mcompanyname" size="100" /></td>
+                      <td colspan="8">
+                        <sf:input id="mcompanyname" path="mcompanyname" size="100" />
+                      </td>
                     </tr>
                     <tr>
                       <td class="label"><label for="mcompanyaddr">工作单位地址：</label></td>
-                      <td colspan="8"><sf:input id="mcompanyaddr"
-                          path="mcompanyaddr" size="100" /></td>
+                      <td colspan="8">
+                        <sf:input id="mcompanyaddr" path="mcompanyaddr" size="100" />
+                      </td>
                     </tr>
                   </tbody>
                 </table>
@@ -265,14 +268,12 @@
                       <td class="label"><label for="marriageno">结婚证号：</label></td>
                       <td><sf:input id="marriageno" path="marriageno" size="16" /></td>
                       <td class="label"><label for="marriagedate">结婚时间：</label></td>
-                      <td><sf:input id="marriagedate" path="marriagedate"
-                          size="16" /></td>
+                      <td><sf:input id="marriagedate" path="marriagedate" size="16" /></td>
                     </tr>
                     <tr>
                       <td class="label"><label for="haschild">生育子女状况：</label></td>
                       <td><sf:input id="haschild" path="haschild" size="16" /></td>
-                      <td class="label"><label for="isadopted">是否领养：
-                      </td>
+                      <td class="label"><label for="isadopted">是否领养：</td>
                       <td>
                         <sf:select id="isadopted" path="isadopted">
                           <sf:option value="-1" selected="">-----请选择-----</sf:option>
@@ -280,12 +281,9 @@
                           <sf:option value="2">否</sf:option>
                         </sf:select>
                       </td>
-                      <td class="label">
-                        <label for="residenceno">居住证号：</label>
-                      </td>
+                      <td class="label"><label for="residenceno">居住证号：</label></td>
                       <td>
-                        <sf:input id="residenceno" path="residenceno"
-                          size="16" />
+                        <sf:input id="residenceno" path="residenceno" size="16" />
                       </td>
                       <td class="label">
                         <label for="getresidencedate">领取居住证时间：</label>
