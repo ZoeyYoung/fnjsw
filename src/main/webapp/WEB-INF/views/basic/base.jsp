@@ -19,4 +19,11 @@
 <!-- operamasks-ui -->
 <link href="${ctx}/static/lib/operamasks-ui/themes/elegant/om-elegant.css" type="text/css" rel="stylesheet" />
 <script src="${ctx}/static/lib/operamasks-ui/operamasks-ui.min.js"></script>
+<link href="${ctx}/static/lib/metisMenu/metisMenu.min.css" type="text/css" rel="stylesheet" />
+<script src="${ctx}/static/lib/metisMenu/metisMenu.min.js"></script>
 <link href="${ctx}/static/css/main.css" type="text/css" rel="stylesheet" />
+<script>
+$(function () {
+    $('#menu').metisMenu();
+});
+</script>

@@ -25,63 +25,54 @@
 
     <div class="container-fluid">
       <div class="row">
-        <div class="col-sm-3 col-md-2 sidebar">
-          <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-            <div class="panel panel-default">
-              <div class="panel-heading">
-                <h4 class="panel-title">
-                  <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                    一孩模块
-                  </a>
-                </h4>
-              </div>
-              <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel">
-                <div class="panel-body">
-                  <ul class="nav nav-sidebar">
-                      <li><a href="${ctx}/oneChild/new">档案录入</a></li>
-                      <li class="active"><a href="${ctx}/oneChild/list">档案管理</a></li>
-                      <li><a href="#">统计报表</a></li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-            <div class="panel panel-default">
-              <div class="panel-heading">
-                <h4 class="panel-title">
-                  <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                    二孩模块
-                  </a>
-                </h4>
-              </div>
-              <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel">
-                <div class="panel-body">
-                  <ul class="nav nav-sidebar">
-                    <li><a href="#">档案录入</a></li>
-                    <li><a href="#">档案管理</a></li>
-                    <li><a href="#">统计报表</a></li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-            <div class="panel panel-default">
-              <div class="panel-heading">
-                <h4 class="panel-title">
-                  <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                    系统管理
-                  </a>
-                </h4>
-              </div>
-              <div id="collapseThree" class="panel-collapse collapse" role="tabpanel">
-                <div class="panel-body">
-                  <ul class="nav nav-sidebar">
-                    <li><a href="">用户管理</a></li>
-                    <li><a href="">区域调整</a></li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <aside class="col-sm-3 col-md-2 sidebar">
+          <nav class="sidebar-nav">
+            <ul id="menu">
+              <li class="active">
+                <a href="#">
+                  <span class="sidebar-nav-item-icon"></span>
+                  <span class="sidebar-nav-item">一孩模块</span>
+                  <span class="glyphicon arrow"></span>
+                </a>
+                <ul class="collapse in">
+                  <li>
+                    <a href="${ctx}/oneChild/new">
+                      <span class="sidebar-nav-item-icon"></span>
+                      档案录入
+                    </a>
+                  </li>
+                  <li class="active">
+                    <a href="${ctx}/oneChild/list">
+                      <span class="sidebar-nav-item-icon"></span>
+                      档案管理
+                    </a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/onokumus/metisMenu/issues">
+                      <span class="sidebar-nav-item-icon"></span>
+                      统计报表
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              <li class="">
+                <a href="#">二孩模块 <span class="glyphicon arrow"></span></a>
+                <ul class="collapse" style="height: 0px;">
+                  <li><a href="#">档案录入</a></li>
+                  <li><a href="#">档案管理</a></li>
+                  <li><a href="#">统计报表</a></li>
+                </ul>
+              </li>
+              <li class="">
+                <a href="#">系统管理 <span class="glyphicon arrow"></span></a>
+                <ul class="collapse" style="height: 0px;">
+                  <li><a href="#">用户管理</a></li>
+                  <li><a href="#">区域调整</a></li>
+                </ul>
+              </li>
+            </ul>
+          </nav>
+        </aside>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
             <form id="queryForm" class="form-inline well" modelAttribute="ocaQueryParam">
                 <label for="fname">姓名：</label>
