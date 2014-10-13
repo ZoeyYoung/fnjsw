@@ -12,7 +12,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.context.annotation.Import;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,15 +23,19 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springside.modules.mapper.JsonMapper;
 
 import fnjsw.entity.Onechildarchives;
 import fnjsw.entity.OnechildarchivesExample;
 import fnjsw.service.impl.OnechildarchivesServiceImpl;
+import fnjsw.util.AppConfig;
 import fnjsw.util.OnePage;
 import fnjsw.util.Page;
 
+@Import(AppConfig.class)
 @Controller
 @RequestMapping(value = "/oneChild/")
 public class OneChildController {
@@ -40,6 +46,9 @@ public class OneChildController {
 
     @Autowired
     private OnechildarchivesServiceImpl ocaService;
+
+    @Value("${file.upload.directory}")
+    private String fileUploadDirectory;
 
     @InitBinder
     protected void init(HttpServletRequest request,
@@ -82,9 +91,11 @@ public class OneChildController {
      * @return
      */
     @RequestMapping(value = "new", method = RequestMethod.POST)
-    public String save(@Valid Onechildarchives oca, BindingResult result,
+    public String save(@RequestParam MultipartFile[] files,
+            @Valid Onechildarchives oca, BindingResult result,
             Model model) {
         logger.debug("Result Has Errors: " + result.hasErrors());
+        logger.debug("Files Length:" + files.length);
         if (result.hasErrors()) {
             model.addAttribute("oca", oca);
             model.addAttribute("action", "new");

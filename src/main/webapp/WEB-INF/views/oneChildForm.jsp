@@ -84,7 +84,8 @@
           <li><a href="#tab3" role="tab" data-toggle="tab">准生证扫描</a></li>
           <li><a href="#tab4" role="tab" data-toggle="tab">备注</a></li>
         </ul>
-        <sf:form method="post" action="${ctx}/oneChild/${action}" modelAttribute="oca">
+        <sf:form method="post" action="${ctx}/oneChild/${action}"
+            modelAttribute="oca"  enctype="multipart/form-data">
           <input type="hidden" id="id" name="id" value="${oca.id}" />
           <!-- Tab panes -->
           <div class="tab-content">
@@ -342,8 +343,8 @@
                 </table>
               </fieldset>
             </div>
-            <div class="tab-pane" id="tab2"><br><input type="file" /><hr></div>
-            <div class="tab-pane" id="tab3"><br><input type="file" /><hr></div>
+            <div class="tab-pane" id="tab2"><br><input type="file" name="files" /><hr></div>
+            <div class="tab-pane" id="tab3"><br><input type="file" name="files" /><hr></div>
             <div class="tab-pane" id="tab4"><br><textarea id="remark" class="form-control" rows="10"></textarea><hr></div>
           </div>
           <div>
