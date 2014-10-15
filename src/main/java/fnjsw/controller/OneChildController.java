@@ -1,20 +1,22 @@
 package fnjsw.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
-import org.springframework.context.annotation.Import;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -31,11 +33,9 @@ import org.springside.modules.mapper.JsonMapper;
 import fnjsw.entity.Onechildarchives;
 import fnjsw.entity.OnechildarchivesExample;
 import fnjsw.service.impl.OnechildarchivesServiceImpl;
-import fnjsw.util.AppConfig;
 import fnjsw.util.OnePage;
 import fnjsw.util.Page;
 
-@Import(AppConfig.class)
 @Controller
 @RequestMapping(value = "/oneChild/")
 public class OneChildController {
@@ -47,8 +47,7 @@ public class OneChildController {
     @Autowired
     private OnechildarchivesServiceImpl ocaService;
 
-    @Value("${file.upload.directory}")
-    private String fileUploadDirectory;
+    private String fileUploadDirectory = "D:/uploads";
 
     @InitBinder
     protected void init(HttpServletRequest request,
@@ -95,11 +94,24 @@ public class OneChildController {
             @Valid Onechildarchives oca, BindingResult result,
             Model model) {
         logger.debug("Result Has Errors: " + result.hasErrors());
-        logger.debug("Files Length:" + files.length);
         if (result.hasErrors()) {
             model.addAttribute("oca", oca);
             model.addAttribute("action", "new");
             return "oneChildForm";
+        }
+        try {
+            String filename1 = saveMutipartFile(oca.getFname(),
+                    files[0]);
+            if (StringUtils.isNotEmpty(filename1)) {
+                oca.setFamilyplanningcertificate(filename1);
+            }
+            String filename2 = saveMutipartFile(oca.getFname(),
+                    files[1]);
+            if (StringUtils.isNotEmpty(filename2)) {
+                oca.setZhunshengzheng(filename2);
+            }
+        } catch (IllegalStateException | IOException e) {
+            e.printStackTrace();
         }
         ocaService.save(oca);
         model.addAttribute("message", "创建成功");
@@ -115,12 +127,41 @@ public class OneChildController {
     }
 
     @RequestMapping(value = "update", method = RequestMethod.POST)
-    public String update(@Valid Onechildarchives oca, BindingResult result,
+    public String update(@RequestParam MultipartFile[] files,
+            @Valid Onechildarchives oca, BindingResult result,
             Model model) {
         if (result.hasErrors()) {
             model.addAttribute("oca", oca);
             model.addAttribute("action", "new");
             return "oneChildForm";
+        }
+        Onechildarchives originOca = ocaService.getById(oca.getId());
+        try {
+            String filename1 = saveMutipartFile(oca.getFname(),
+                    files[0]);
+            if (StringUtils.isNotEmpty(filename1)) {
+                // 如果重新上传了文件，则删除旧文件
+                FileUtils.deleteQuietly(new File(fileUploadDirectory
+                        + File.separator
+                        + originOca.getFamilyplanningcertificate()));
+                oca.setFamilyplanningcertificate(filename1);
+            } else {
+                oca.setFamilyplanningcertificate(originOca
+                        .getFamilyplanningcertificate());
+            }
+            String filename2 = saveMutipartFile(oca.getFname(),
+                    files[1]);
+            if (StringUtils.isNotEmpty(filename2)) {
+                // 如果重新上传了文件，则删除旧文件
+                FileUtils.deleteQuietly(new File(fileUploadDirectory
+                        + File.separator
+                        + originOca.getZhunshengzheng()));
+                oca.setZhunshengzheng(filename2);
+            } else {
+                oca.setZhunshengzheng(originOca.getZhunshengzheng());
+            }
+        } catch (IllegalStateException | IOException e) {
+            e.printStackTrace();
         }
         // 获取需要更新的对象
         ocaService.update(oca);
@@ -128,11 +169,39 @@ public class OneChildController {
         return "redirect:/oneChild/list";
     }
 
+    private String saveMutipartFile(String name, MultipartFile mpf)
+            throws IllegalStateException, IOException {
+        if (mpf.getSize() == 0L) {
+            return "";
+        }
+        String newFilenameBase = UUID.randomUUID().toString();
+        String originalFileExtension =
+                mpf.getOriginalFilename().substring(
+                        mpf.getOriginalFilename().lastIndexOf("."));
+        String newFilename = name + newFilenameBase + originalFileExtension;
+        String storageDirectory = fileUploadDirectory;
+        File newFile = new File(storageDirectory + "/" + newFilename);
+        mpf.transferTo(newFile);
+        return newFilename;
+    }
+
     @RequestMapping(value = "delete", method = RequestMethod.POST)
     @ResponseBody
     public String delete(HttpServletRequest request,
             HttpServletResponse response) {
         int id = Integer.parseInt(request.getParameter("id"));
+        // 删除记录前先删除文件
+        Onechildarchives originOca = ocaService.getById(id);
+        if (StringUtils.isNotEmpty(originOca.getFamilyplanningcertificate())) {
+            FileUtils.deleteQuietly(new File(fileUploadDirectory
+                    + File.separator
+                    + originOca.getFamilyplanningcertificate()));
+        }
+        if (StringUtils.isNotEmpty(originOca.getZhunshengzheng())) {
+            FileUtils.deleteQuietly(new File(fileUploadDirectory
+                    + File.separator
+                    + originOca.getZhunshengzheng()));
+        }
         int result = ocaService.delete(id);
         if (result == 1) {
             return "success";

@@ -79,7 +79,8 @@
       <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
         <!-- Nav tabs -->
         <ul class="nav nav-tabs" role="tablist">
-          <li class="active"><a href="#tab1" role="tab" data-toggle="tab">妊娠</a></li>
+          <li class="active"><a href="#tab0" role="tab" data-toggle="tab">基本信息</a></li>
+          <li><a href="#tab1" role="tab" data-toggle="tab">妊娠</a></li>
           <li><a href="#tab2" role="tab" data-toggle="tab">计生证件扫描</a></li>
           <li><a href="#tab3" role="tab" data-toggle="tab">准生证扫描</a></li>
           <li><a href="#tab4" role="tab" data-toggle="tab">备注</a></li>
@@ -89,7 +90,7 @@
           <input type="hidden" id="id" name="id" value="${oca.id}" />
           <!-- Tab panes -->
           <div class="tab-content">
-            <div class="tab-pane active" id="tab1">
+            <div class="tab-pane active" id="tab0">
               <br>
               <fieldset>
                 <legend>育龄妇女基本信息(*必填)</legend>
@@ -342,15 +343,46 @@
                   </tbody>
                 </table>
               </fieldset>
+              <div>
+                <input type="submit" class="btn btn-primary" size="16" value="确　定" />
+                <input type="reset" class="btn btn-default" size="16" value="重　置" />
+              </div>
+            </div>
+            <div class="tab-pane" id="tab1"><br>
+                <table class="table table-bordered">
+                    <thead>
+                        <th>序号</th>
+                        <th>服务时间</th>
+                        <th>服务结果</th>
+                        <th>服务人</th>
+                        <th>操作</th>
+                    </thead>
+                    <tbody>
+                        <tr>
+                        <td>1</td>
+                        <td>2014-01-01</td>
+                        <td>结果</td>
+                        <td>XX人</td>
+                        <td>
+                        <button type="button" class="btn btn-info">修改</button>
+                        <button type="button" class="btn">删除</button>
+                        </td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                        <td><input type="text" id="id" /></td>
+                        <td><input type="text" id="serviceTime" /></td>
+                        <td><input type="text" id="serviceResult" /></td>
+                        <td><input type="text" id="servicePerson" /></td>
+                        <td><button type="button" class="btn btn-primary">添加</button></td>
+                        </tr>
+                    </tfoot>
+                </table>
             </div>
             <div class="tab-pane" id="tab2"><br><input type="file" name="files" /><hr></div>
             <div class="tab-pane" id="tab3"><br><input type="file" name="files" /><hr></div>
-            <div class="tab-pane" id="tab4"><br><textarea id="remark" class="form-control" rows="10"></textarea><hr></div>
-          </div>
-          <div>
-            <input type="submit" class="btn btn-primary" size="16"
-              path="submit" value="确　定"> <input type="reset"
-              class="btn btn-default" size="16" path="reset" value="重　置">
+            <div class="tab-pane" id="tab4"><br><sf:textarea id="comment" path="comment" class="form-control" rows="10"></sf:textarea><hr></div>
           </div>
         </sf:form>
       </div>

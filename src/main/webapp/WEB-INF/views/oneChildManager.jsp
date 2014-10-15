@@ -107,20 +107,24 @@
 <script type="text/javascript">
 var defModel = [
 {
+    header : '服务时间',
+    name : 'registrationdate',
+    align : 'center',
+    sort : 'serverSide',
+    options: {
+        dateFormat: "yy-mm-dd"
+    },
+    type: "omCalendar"
+},
+{
+    header : '服务结果',
+    name : 'registrationdate',
+    align : 'center',
+    sort : 'serverSide'
+},
+{
     header : '用户名',
     name : 'fname',
-    align : 'center',
-    sort : 'serverSide'
-},
-{
-    header : '身份证号',
-    name : 'fidcardno',
-    align : 'center',
-    sort : 'serverSide'
-},
-{
-    header : '办证编号',
-    name : 'serviceno',
     align : 'center',
     sort : 'serverSide'
 },
@@ -132,7 +136,7 @@ var defModel = [
     var str = '<a href="javascript:void(0)" onclick="updateOca('
         + rowData.id
         + ')">编辑</a>'
-        + '<a href="javascript:void(0)" onclick="deleteOca('
+        + ' | <a href="javascript:void(0)" onclick="deleteOca('
         + rowData.id
         + ')">删除</a>';
     return str;
