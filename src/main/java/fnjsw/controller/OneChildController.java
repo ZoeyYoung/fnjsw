@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -30,6 +31,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springside.modules.mapper.JsonMapper;
 
+import fnjsw.entity.Gestationinfo;
 import fnjsw.entity.Onechildarchives;
 import fnjsw.entity.OnechildarchivesExample;
 import fnjsw.service.impl.OnechildarchivesServiceImpl;
@@ -244,6 +246,18 @@ public class OneChildController {
         return jsonResult;
     }
 
+    @RequestMapping(value = "queryGestation")
+    @ResponseBody
+    public String getGestationInfo(int ocaId, HttpServletRequest request) {
+        List<Gestationinfo> giList = ocaService.getGestationInfo(ocaId);
+        
+        String pageDataString = mapper.toJson(giList);
+        String jsonResult =
+                "{\"rows\":" + pageDataString + ",\"total\":"
+                        + giList.size() + "}";
+        return jsonResult;
+    }
+    
     @RequestMapping(value = "queryDivision", method = RequestMethod.GET)
     @ResponseBody
     public String queryDivision(HttpServletRequest request,

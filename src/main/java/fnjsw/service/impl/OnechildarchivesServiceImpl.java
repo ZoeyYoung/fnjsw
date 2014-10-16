@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import fnjsw.component.impl.OnechildarchivesComponentImpl;
+import fnjsw.entity.Gestationinfo;
 import fnjsw.entity.Onechildarchives;
 import fnjsw.entity.OnechildarchivesExample;
 import fnjsw.util.OnePage;
@@ -82,6 +83,10 @@ public class OnechildarchivesServiceImpl {
     @Transactional
     public int delete(int id) {
         return ocaComponent.delete(id);
+    }
+    
+    public List<Gestationinfo> getGestationInfo(int ocaId){
+        return ocaComponent.getGestationInfo(ocaId);
     }
 
 }

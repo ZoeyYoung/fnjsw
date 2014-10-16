@@ -9,8 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springside.modules.mapper.JsonMapper;
 
+import fnjsw.entity.Gestationinfo;
+import fnjsw.entity.GestationinfoExample;
 import fnjsw.entity.Onechildarchives;
 import fnjsw.entity.OnechildarchivesExample;
+import fnjsw.mapper.GestationinfoMapper;
 import fnjsw.mapper.OnechildarchivesMapper;
 import fnjsw.util.OnePage;
 
@@ -25,6 +28,9 @@ public class OnechildarchivesComponentImpl {
     @Autowired
     private OnechildarchivesMapper ocaMapper;
 
+    @Autowired
+    private GestationinfoMapper giMapper;
+    
     public Onechildarchives getById(int id) {
         return ocaMapper.selectByPrimaryKey(id);
     }
@@ -77,6 +83,14 @@ public class OnechildarchivesComponentImpl {
 
     public int delete(int id) {
         return ocaMapper.deleteByPrimaryKey(id);
+    }
+
+    public List<Gestationinfo> getGestationInfo(int ocaId) {
+        GestationinfoExample example = new GestationinfoExample();
+        GestationinfoExample.Criteria criteria = example.createCriteria();
+        criteria.andOcaidEqualTo(ocaId);
+        example.setOrderByClause("ID ASC");
+        return giMapper.selectByExample(example);
     }
 
 }

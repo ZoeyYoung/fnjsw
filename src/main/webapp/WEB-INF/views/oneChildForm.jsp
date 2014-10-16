@@ -373,7 +373,7 @@
                         <tr>
                         <td><input type="text" id="id" /></td>
                         <td><input type="text" id="serviceTime" /></td>
-                        <td><input type="text" id="serviceResult" /></td>
+                        <td id="serviceResult"></td>
                         <td><input type="text" id="servicePerson" /></td>
                         <td><button type="button" class="btn btn-primary">添加</button></td>
                         </tr>
@@ -389,6 +389,7 @@
     </div>
   </div>
   </div>
+  <script src="${ctx}/static/lib/jquery/jquery.myplugin.js"></script>
   <script>
     //设定日期选择器的相关属性
     var calOpts = {
@@ -428,6 +429,68 @@
     $("#f1Pr, #f1Ci, #f1Co, #f1To, #f2Pr, #f2Ci, #f2Co, #f2To, #m1Pr, #m1Ci, #m1Co, #m1To, #m2Pr, #m2Ci, #m2Co, #m2To").on('change', function() {
         appendNextOps($(this).has(":selected").val(), $(this).attr("next"));
     });
+    var selJson = {
+   	    next: {
+   	        id: "s2",
+   	        opts: {
+   	            "未孕": {
+   	                name: "未孕"
+   	            },
+   	            "怀孕": {
+   	                name: "怀孕",
+   	                next: {
+   	                    opts:  {
+   	                        "1个月": { name: "1个月" },
+   	                        "2个月": { name: "2个月" },
+   	                        "3个月": { name: "3个月" },
+   	                        "4个月": { name: "4个月" },
+   	                        "5个月": { name: "5个月" },
+   	                        "6个月": { name: "6个月" },
+   	                        "7个月": { name: "7个月" },
+   	                        "8个月": { name: "8个月" },
+   	                        "9个月": { name: "9个月" }
+   	                    }
+   	                }
+   	            },
+   	            "生育": {
+   	                name: "生育",
+   	                next: {
+   	                    opts: {
+   	                        "男": { name: "男" },
+   	                        "女": { name: "女" },
+   	                        "双胞胎男": { name: "双胞胎男" },
+   	                        "双胞胎女": { name: "双胞胎女" },
+   	                        "龙凤胎": { name: "龙凤胎" },
+   	                        "多胞胎": { name: "多胞胎" }
+   	                    }
+   	                }
+   	            },
+   	            "孕情消失": {
+   	                name: "孕情消失",
+   	                next: {
+   	                    opts: {
+   	                        "人工引流产": { name: "人工引流产" },
+   	                        "意外": { name: "意外" },
+   	                        "非法引流产": { name: "非法引流产" }
+   	                    }
+   	                }
+   	            }
+   	        }
+   	    }
+   	};
+    $("#serviceResult").MultipleLevelSelector({
+        id: "s1",
+        splitStr: " ",
+        selJson: selJson
+    });
+     
+    function getValue() {
+        alert($("#serviceResult").MultipleLevelSelector('getValue'));
+    }
+     
+    function setValue() {
+        $("#serviceResult").MultipleLevelSelector('setValue', $("#newValue").val());
+    }
     </script>
 </body>
 </html>

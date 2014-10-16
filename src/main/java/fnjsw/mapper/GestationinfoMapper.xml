@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="fnjsw.mapper.GestationinfoMapper" >
+  <resultMap id="BaseResultMap" type="fnjsw.entity.Gestationinfo" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="ocaid" property="ocaid" jdbcType="INTEGER" />
+    <result column="serviceTime" property="servicetime" jdbcType="DATE" />
+    <result column="serviceResult" property="serviceresult" jdbcType="VARCHAR" />
+    <result column="servicePerson" property="serviceperson" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, ocaid, serviceTime, serviceResult, servicePerson
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="fnjsw.entity.GestationinfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from gestationinfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from gestationinfo
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from gestationinfo
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="fnjsw.entity.GestationinfoExample" >
+    delete from gestationinfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="fnjsw.entity.Gestationinfo" >
+    insert into gestationinfo (id, ocaid, serviceTime, 
+      serviceResult, servicePerson)
+    values (#{id,jdbcType=INTEGER}, #{ocaid,jdbcType=INTEGER}, #{servicetime,jdbcType=DATE}, 
+      #{serviceresult,jdbcType=VARCHAR}, #{serviceperson,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="fnjsw.entity.Gestationinfo" >
+    insert into gestationinfo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="ocaid != null" >
+        ocaid,
+      </if>
+      <if test="servicetime != null" >
+        serviceTime,
+      </if>
+      <if test="serviceresult != null" >
+        serviceResult,
+      </if>
+      <if test="serviceperson != null" >
+        servicePerson,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="ocaid != null" >
+        #{ocaid,jdbcType=INTEGER},
+      </if>
+      <if test="servicetime != null" >
+        #{servicetime,jdbcType=DATE},
+      </if>
+      <if test="serviceresult != null" >
+        #{serviceresult,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceperson != null" >
+        #{serviceperson,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="fnjsw.entity.GestationinfoExample" resultType="java.lang.Integer" >
+    select count(*) from gestationinfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update gestationinfo
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.ocaid != null" >
+        ocaid = #{record.ocaid,jdbcType=INTEGER},
+      </if>
+      <if test="record.servicetime != null" >
+        serviceTime = #{record.servicetime,jdbcType=DATE},
+      </if>
+      <if test="record.serviceresult != null" >
+        serviceResult = #{record.serviceresult,jdbcType=VARCHAR},
+      </if>
+      <if test="record.serviceperson != null" >
+        servicePerson = #{record.serviceperson,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update gestationinfo
+    set id = #{record.id,jdbcType=INTEGER},
+      ocaid = #{record.ocaid,jdbcType=INTEGER},
+      serviceTime = #{record.servicetime,jdbcType=DATE},
+      serviceResult = #{record.serviceresult,jdbcType=VARCHAR},
+      servicePerson = #{record.serviceperson,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="fnjsw.entity.Gestationinfo" >
+    update gestationinfo
+    <set >
+      <if test="ocaid != null" >
+        ocaid = #{ocaid,jdbcType=INTEGER},
+      </if>
+      <if test="servicetime != null" >
+        serviceTime = #{servicetime,jdbcType=DATE},
+      </if>
+      <if test="serviceresult != null" >
+        serviceResult = #{serviceresult,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceperson != null" >
+        servicePerson = #{serviceperson,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="fnjsw.entity.Gestationinfo" >
+    update gestationinfo
+    set ocaid = #{ocaid,jdbcType=INTEGER},
+      serviceTime = #{servicetime,jdbcType=DATE},
+      serviceResult = #{serviceresult,jdbcType=VARCHAR},
+      servicePerson = #{serviceperson,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
