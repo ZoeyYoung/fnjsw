@@ -70,6 +70,7 @@
     id, ocaid, serviceTime, serviceResult, servicePerson
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="fnjsw.entity.GestationinfoExample" >
+    <include refid="MySqlDialectPrefix" />
     select
     <if test="distinct" >
       distinct
@@ -82,9 +83,10 @@
     <if test="orderByClause != null" >
       order by ${orderByClause}
     </if>
+    <include refid="MySqlDialectSuffix" />
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
+    select
     <include refid="Base_Column_List" />
     from gestationinfo
     where id = #{id,jdbcType=INTEGER}
@@ -100,9 +102,9 @@
     </if>
   </delete>
   <insert id="insert" parameterType="fnjsw.entity.Gestationinfo" >
-    insert into gestationinfo (id, ocaid, serviceTime, 
+    insert into gestationinfo (id, ocaid, serviceTime,
       serviceResult, servicePerson)
-    values (#{id,jdbcType=INTEGER}, #{ocaid,jdbcType=INTEGER}, #{servicetime,jdbcType=DATE}, 
+    values (#{id,jdbcType=INTEGER}, #{ocaid,jdbcType=INTEGER}, #{servicetime,jdbcType=DATE},
       #{serviceresult,jdbcType=VARCHAR}, #{serviceperson,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="fnjsw.entity.Gestationinfo" >
@@ -208,4 +210,13 @@
       servicePerson = #{serviceperson,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <sql id="MySqlDialectPrefix" >
+    <if test="page != null" >
+    </if>
+  </sql>
+  <sql id="MySqlDialectSuffix" >
+    <if test="page != null" >
+      limit #{page.begin}, #{page.end}
+    </if>
+  </sql>
 </mapper>

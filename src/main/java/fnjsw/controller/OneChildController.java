@@ -63,7 +63,7 @@ public class OneChildController {
 
     /**
      * 获取档案列表
-     * 
+     *
      * @return
      */
     @RequestMapping(value = "list", method = RequestMethod.GET)
@@ -74,7 +74,7 @@ public class OneChildController {
 
     /**
      * 跳转到添加用户页面(get请求)
-     * 
+     *
      * @return
      */
     @RequestMapping(value = "new", method = RequestMethod.GET)
@@ -86,7 +86,7 @@ public class OneChildController {
 
     /**
      * 添加档案信息处理方法(post请求)
-     * 
+     *
      * @param oca
      * @param model
      * @return
@@ -217,8 +217,8 @@ public class OneChildController {
             HttpServletRequest request) {
         OnechildarchivesExample example = new OnechildarchivesExample();
         // 根据某个条件，当前位置、每页多少条记录
-        int limit = Integer.parseInt(request.getParameter("limit"));
         int start = Integer.parseInt(request.getParameter("start"));
+        int limit = Integer.parseInt(request.getParameter("limit"));
         Page page = new Page(start, limit);
         logger.debug(page.toString());
 
@@ -250,14 +250,14 @@ public class OneChildController {
     @ResponseBody
     public String getGestationInfo(int ocaId, HttpServletRequest request) {
         List<Gestationinfo> giList = ocaService.getGestationInfo(ocaId);
-        
+
         String pageDataString = mapper.toJson(giList);
         String jsonResult =
                 "{\"rows\":" + pageDataString + ",\"total\":"
                         + giList.size() + "}";
         return jsonResult;
     }
-    
+
     @RequestMapping(value = "queryDivision", method = RequestMethod.GET)
     @ResponseBody
     public String queryDivision(HttpServletRequest request,

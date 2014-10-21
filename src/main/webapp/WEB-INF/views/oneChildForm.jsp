@@ -7,7 +7,6 @@
 <html>
 <head>
 <%@ include file="basic/base.jsp"%>
-
 <title>一孩模块 档案录入</title>
 </head>
 <body>
@@ -26,471 +25,568 @@
     </div>
   </nav>
 
-  <div class="container-fluid">
+<div class="container-fluid">
     <div class="row">
-      <aside class="col-sm-3 col-md-2 sidebar">
-        <nav class="sidebar-nav">
-          <ul id="menu">
-            <li class="active">
-              <a href="#">
-                <span class="sidebar-nav-item-icon"></span>
-                <span class="sidebar-nav-item">一孩模块</span>
-                <span class="glyphicon arrow"></span>
-              </a>
-              <ul class="collapse in">
+        <aside class="col-sm-3 col-md-2 sidebar">
+            <nav class="sidebar-nav">
+              <ul id="menu">
                 <li class="active">
-                  <a href="${ctx}/oneChild/new">
+                  <a href="#">
                     <span class="sidebar-nav-item-icon"></span>
-                    档案录入
+                    <span class="sidebar-nav-item">一孩模块</span>
+                    <span class="glyphicon arrow"></span>
                   </a>
+                  <ul class="collapse in">
+                    <li class="active">
+                      <a href="${ctx}/oneChild/new">
+                        <span class="sidebar-nav-item-icon"></span>档案录入
+                      </a>
+                    </li>
+                    <li>
+                      <a href="${ctx}/oneChild/list">
+                        <span class="sidebar-nav-item-icon"></span>档案管理
+                      </a>
+                    </li>
+                    <li>
+                      <a href="https://github.com/onokumus/metisMenu/issues">
+                        <span class="sidebar-nav-item-icon"></span>统计报表
+                      </a>
+                    </li>
+                  </ul>
                 </li>
-                <li>
-                  <a href="${ctx}/oneChild/list">
-                    <span class="sidebar-nav-item-icon"></span>
-                    档案管理
-                  </a>
+                <li class="">
+                  <a href="#">二孩模块 <span class="glyphicon arrow"></span></a>
+                  <ul class="collapse" style="height: 0px;">
+                    <li><a href="#">档案录入</a></li>
+                    <li><a href="#">档案管理</a></li>
+                    <li><a href="#">统计报表</a></li>
+                  </ul>
                 </li>
-                <li>
-                  <a href="https://github.com/onokumus/metisMenu/issues">
-                    <span class="sidebar-nav-item-icon"></span>
-                    统计报表
-                  </a>
+                <li class="">
+                  <a href="#">系统管理 <span class="glyphicon arrow"></span></a>
+                  <ul class="collapse" style="height: 0px;">
+                    <li><a href="#">用户管理</a></li>
+                    <li><a href="#">区域调整</a></li>
+                  </ul>
                 </li>
               </ul>
-            </li>
-            <li class="">
-              <a href="#">二孩模块 <span class="glyphicon arrow"></span></a>
-              <ul class="collapse" style="height: 0px;">
-                <li><a href="#">档案录入</a></li>
-                <li><a href="#">档案管理</a></li>
-                <li><a href="#">统计报表</a></li>
-              </ul>
-            </li>
-            <li class="">
-              <a href="#">系统管理 <span class="glyphicon arrow"></span></a>
-              <ul class="collapse" style="height: 0px;">
-                <li><a href="#">用户管理</a></li>
-                <li><a href="#">区域调整</a></li>
-              </ul>
-            </li>
-          </ul>
-        </nav>
-      </aside>
-      <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-        <!-- Nav tabs -->
-        <ul class="nav nav-tabs" role="tablist">
-          <li class="active"><a href="#tab0" role="tab" data-toggle="tab">基本信息</a></li>
-          <li><a href="#tab1" role="tab" data-toggle="tab">妊娠</a></li>
-          <li><a href="#tab2" role="tab" data-toggle="tab">计生证件扫描</a></li>
-          <li><a href="#tab3" role="tab" data-toggle="tab">准生证扫描</a></li>
-          <li><a href="#tab4" role="tab" data-toggle="tab">备注</a></li>
-        </ul>
-        <sf:form method="post" action="${ctx}/oneChild/${action}"
-            modelAttribute="oca"  enctype="multipart/form-data">
-          <input type="hidden" id="id" name="id" value="${oca.id}" />
-          <!-- Tab panes -->
-          <div class="tab-content">
-            <div class="tab-pane active" id="tab0">
-              <br>
-              <fieldset>
-                <legend>育龄妇女基本信息(*必填)</legend>
-                <table class="table table-condensed">
-                  <tbody>
-                    <tr>
-                      <td class="label"><label for="fname">姓名：</label></td>
-                      <td>
-                        <sf:input id="fname" path="fname" size="16" />
-                        <span class="require">*</span>
-                      </td>
-                      <td class="label"><label for="fidcardno">身份证号：</label></td>
-                      <td>
-                        <sf:input id="fidcardno" path="fidcardno" size="16" />
-                        <span class="require">*</span>
-                      </td>
-                      <td class="label"><label for="fphone">联系电话：</label></td>
-                      <td>
-                        <sf:input id="fphone" path="fphone" size="16" />
-                        <span class="require">*</span>
-                      </td>
-                      <td class="label"><label for="marriageidno">婚育证明号码：</label>
-                      </td>
-                      <td>
-                        <sf:input id="marriageidno" path="marriageidno" size="16" />
-                        <span class="require">*</span>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="label"><label for="fpermanentaddr">户籍地址：</label></td>
-                      <td colspan="8">
-                        <select id="f1Pr" name="f1Pr" next="f1Ci">
-                        </select> 省
-                        <select id="f1Ci" name="f1Ci" next="f1Co">
-                          <option value="-1" selected="">-----请选择-----</option>
-                        </select> 市
-                        <select id="f1Co" name="f1Co" next="f1To">
-                          <option value="-1" selected="">-----请选择-----</option>
-                        </select> 县
-                        <select id="f1To" name="f1To" next="f1Vi">
-                          <option value="-1" selected="">-----请选择-----</option>
-                        </select> (镇)
-                        <select id="f1Vi" name="f1Vi">
-                          <option value="-1" selected="">-----请选择-----</option>
-                        </select> (村)
-                        <label for="fphouseno">门牌号</label>
-                        <sf:input id="fphouseno" path="fphouseno" size="8" />
-                        <span class="require">*</span>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="label"><label for="faddress">现居住地址：</label></td>
-                      <td colspan="8">
-                        <select id="f2Pr" name="f2Pr" next="f2Ci">
-                        </select> 省
-                        <select id="f2Ci" name="f2Ci" next="f2Co">
-                          <option value="-1" selected="">-----请选择-----</option>
-                        </select> 市
-                        <select id="f2Co" name="f2Co" next="f2To">
-                          <option value="-1" selected="">-----请选择-----</option>
-                        </select> 县
-                        <select id="f2To" name="f2To" next="f2Vi">
-                          <option value="-1" selected="">-----请选择-----</option>
-                        </select> (镇)
-                        <select id="f2Vi" name="f2Vi">
-                          <option value="-1" selected="">-----请选择-----</option>
-                        </select> (村)
-                        <label for="fahouseno">门牌号</label>
-                        <sf:input id="fahouseno" path="fahouseno" size="8" />
-                        <span class="require">*</span>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="label"><label for="fcompanyname">工作单位名称：</label></td>
-                      <td colspan="8">
-                        <sf:input id="fcompanyname" path="fcompanyname" size="100" />
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="label"><label for="fcompanyaddr">工作单位地址：</label></td>
-                      <td colspan="8">
-                        <sf:input id="fcompanyaddr" path="fcompanyaddr" size="100" />
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </fieldset>
-              <fieldset>
-                <legend>丈夫信息(*必填)</legend>
-                <table class="table table-condensed">
-                  <tbody>
-                    <tr>
-                      <td class="label"><label for="mname">姓名：</label></td>
-                      <td><sf:input id="mname" path="mname" size="16" /><span
-                        class="require">*</span></td>
-                      <td class="label"><label for="midcardno">身份证号：</label></td>
-                      <td><sf:input id="midcardno" path="midcardno" size="16" /><span class="require">*</span></td>
-                      <td class="label"><label for="mphone">联系电话：</label></td>
-                      <td><sf:input id="mphone" path="mphone" size="16" /> <span class="require">*</span></td>
-                      <td width="280">&nbsp;</td>
-                    </tr>
-                    <tr>
-                      <td class="label"><label for="mpermanentaddr">户籍地址：</label></td>
-                      <td colspan="8">
-                        <select id="m1Pr" name="m1Pr" next="m1Ci">
-                          <option value="-1" selected="">-----请选择-----</option>
-                        </select> 省
-                        <select id="m1Ci" name="m1Ci" next="m1Co">
-                          <option value="-1" selected="">-----请选择-----</option>
-                        </select> 市
-                        <select id="m1Co" name="m1Co" next="m1To">
-                          <option value="-1" selected="">-----请选择-----</option>
-                        </select> 县
-                        <select id="m1To" name="m1To" next="m1Vi">
-                          <option value="-1" selected="">-----请选择-----</option>
-                        </select> (镇)
-                        <select id="m1Vi" name="m1Vi">
-                          <option value="-1" selected="">-----请选择-----</option>
-                        </select> (村)
-                        <label for="mphouseno">门牌号</label>
-                        <sf:input id="mphouseno" path="mphouseno" size="8" />
-                        <span class="require">*</span>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="label"><label for="maddress">现居住地址：</label></td>
-                      <td colspan="8">
-                        <select id="m2Pr" name="m2Pr" next="m2Ci">
-                          <option value="-1" selected="">-----请选择-----</option>
-                        </select> 省
-                        <select id="m2Ci" name="m2Ci" next="m2Co">
-                          <option value="-1" selected="">-----请选择-----</option>
-                        </select> 市
-                        <select id="m2Co" name="m2Co" next="m2To">
-                          <option value="-1" selected="">-----请选择-----</option>
-                        </select> 县
-                        <select id="m2To" name="m2To" next="m2Vi">
-                          <option value="-1" selected="">-----请选择-----</option>
-                        </select> (镇)
-                        <select id="m2Vi" name="m2Vi">
-                          <option value="-1" selected="">-----请选择-----</option>
-                        </select> (村)
-                        <label for="mahouseno">门牌号</label>
-                        <sf:input id="mahouseno" path="mahouseno" size="8" />
-                        <span class="require">*</span>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="label"><label for="mcompanyname">工作单位名称：</label></td>
-                      <td colspan="8">
-                        <sf:input id="mcompanyname" path="mcompanyname" size="100" />
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="label"><label for="mcompanyaddr">工作单位地址：</label></td>
-                      <td colspan="8">
-                        <sf:input id="mcompanyaddr" path="mcompanyaddr" size="100" />
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </fieldset>
-              <fieldset>
-                <legend>婚育情况(*必填)</legend>
-                <table class="table table-condensed">
-                  <tbody>
-                    <tr>
-                      <td class="label"><label for="maritalstatus">婚姻状况：</label>
-                      </td>
-                      <td>
-                        <sf:select id="maritalstatus" path="maritalstatus">
-                          <sf:option value="-1" selected="">-----请选择-----</sf:option>
-                          <sf:option value="1">初婚</sf:option>
-                          <sf:option value="2">再婚</sf:option>
-                        </sf:select>
-                      </td>
-                      <td class="label"><label for="marriageno">结婚证号：</label></td>
-                      <td><sf:input id="marriageno" path="marriageno" size="16" /></td>
-                      <td class="label"><label for="marriagedate">结婚时间：</label></td>
-                      <td><sf:input id="marriagedate" path="marriagedate" size="16" /></td>
-                    </tr>
-                    <tr>
-                      <td class="label"><label for="haschild">生育子女状况：</label></td>
-                      <td><sf:input id="haschild" path="haschild" size="16" /></td>
-                      <td class="label"><label for="isadopted">是否领养：</td>
-                      <td>
-                        <sf:select id="isadopted" path="isadopted">
-                          <sf:option value="-1" selected="">-----请选择-----</sf:option>
-                          <sf:option value="1">是</sf:option>
-                          <sf:option value="2">否</sf:option>
-                        </sf:select>
-                      </td>
-                      <td class="label"><label for="residenceno">居住证号：</label></td>
-                      <td>
-                        <sf:input id="residenceno" path="residenceno" size="16" />
-                      </td>
-                      <td class="label">
-                        <label for="getresidencedate">领取居住证时间：</label>
-                      </td>
-                      <td>
-                        <sf:input id="getresidencedate" path="getresidencedate" size="16" />
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </fieldset>
-              <fieldset>
-                <legend>办证情况</legend>
-                <table class="table table-condensed">
-                  <tbody>
-                    <tr>
-                      <td class="label"><label for="registrationaddr">办证地点：</label></td>
-                      <td>
-                        <sf:select id="" path="">
-                          <sf:option value="-1" selected="">-----请选择-----</sf:option>
-                          <sf:option value="1">男</sf:option>
-                          <sf:option value="2">女</sf:option>
-                        </sf:select> 镇
-                        <sf:select id="" path="">
-                          <sf:option value="-1" selected="">-----请选择-----</sf:option>
-                          <sf:option value="1">男</sf:option>
-                          <sf:option value="2">女</sf:option>
-                        </sf:select> 村</td>
-                      <td class="label"><label for="serviceno">服务证号：</label></td>
-                      <td>
-                        <sf:input id="serviceno" path="serviceno" size="16" />
-                        <span class="require">*</span>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="label"><label for="registrationdate">办证时间：</label></td>
-                      <td><sf:input id="registrationdate"
-                          path="registrationdate" size="16" /></td>
-                      <td class="label"><label for="operator">经办人：</label></td>
-                      <td>
-                        <sf:input id="operator" path="operator" size="16" />
-                        <span class="require">*</span>
-                      </td>
-                      <td class="label"><label for="opphone">联系电话：</label></td>
-                      <td><sf:input id="opphone" path="opphone" size="16" /> <span class="require">*</span></td>
-                      <td class="label"><label for="status">状态：</td>
-                      <td>
-                        <sf:select id="status" path="status">
-                          <sf:option value="-1" selected="">-----请选择-----</sf:option>
-                          <sf:option value="1">正常</sf:option>
-                          <sf:option value="2">注销</sf:option>
-                        </sf:select>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </fieldset>
-              <div>
-                <input type="submit" class="btn btn-primary" size="16" value="确　定" />
-                <input type="reset" class="btn btn-default" size="16" value="重　置" />
-              </div>
+            </nav>
+        </aside>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs" role="tablist">
+              <li class="active"><a href="#tab0" role="tab" data-toggle="tab">基本信息</a></li>
+              <li><a href="#tab1" role="tab" data-toggle="tab">妊娠</a></li>
+              <li><a href="#tab2" role="tab" data-toggle="tab">计生证件扫描</a></li>
+              <li><a href="#tab3" role="tab" data-toggle="tab">准生证扫描</a></li>
+              <li><a href="#tab4" role="tab" data-toggle="tab">备注</a></li>
+            </ul>
+              <!-- Tab panes -->
+            <div class="tab-content">
+                <div class="tab-pane active" id="tab0">
+                  <br>
+                  <sf:form method="post" action="${ctx}/oneChild/${action}"
+                        modelAttribute="oca" enctype="multipart/form-data">
+                      <input type="hidden" id="id" name="id" value="${oca.id}" />
+                      <fieldset>
+                        <legend>育龄妇女基本信息(*必填)</legend>
+                        <table class="table table-condensed">
+                          <tbody>
+                            <tr>
+                              <td class="label"><label for="fname">姓名：</label></td>
+                              <td>
+                                <sf:input id="fname" path="fname" size="16" />
+                                <span class="require">*</span>
+                              </td>
+                              <td class="label"><label for="fidcardno">身份证号：</label></td>
+                              <td>
+                                <sf:input id="fidcardno" path="fidcardno" size="16" />
+                                <span class="require">*</span>
+                              </td>
+                              <td class="label"><label for="fphone">联系电话：</label></td>
+                              <td>
+                                <sf:input id="fphone" path="fphone" size="16" />
+                                <span class="require">*</span>
+                              </td>
+                              <td class="label"><label for="marriageidno">婚育证明号码：</label>
+                              </td>
+                              <td>
+                                <sf:input id="marriageidno" path="marriageidno" size="16" />
+                                <span class="require">*</span>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td class="label"><label for="fpermanentaddr">户籍地址：</label></td>
+                              <td colspan="8">
+                                <select id="f1Pr" name="f1Pr" next="f1Ci">
+                                </select> 省
+                                <select id="f1Ci" name="f1Ci" next="f1Co">
+                                  <option value="-1" selected="">-----请选择-----</option>
+                                </select> 市
+                                <select id="f1Co" name="f1Co" next="f1To">
+                                  <option value="-1" selected="">-----请选择-----</option>
+                                </select> 县
+                                <select id="f1To" name="f1To" next="f1Vi">
+                                  <option value="-1" selected="">-----请选择-----</option>
+                                </select> (镇)
+                                <select id="f1Vi" name="f1Vi">
+                                  <option value="-1" selected="">-----请选择-----</option>
+                                </select> (村)
+                                <label for="fphouseno">门牌号</label>
+                                <sf:input id="fphouseno" path="fphouseno" size="8" />
+                                <span class="require">*</span>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td class="label"><label for="faddress">现居住地址：</label></td>
+                              <td colspan="8">
+                                <select id="f2Pr" name="f2Pr" next="f2Ci">
+                                </select> 省
+                                <select id="f2Ci" name="f2Ci" next="f2Co">
+                                  <option value="-1" selected="">-----请选择-----</option>
+                                </select> 市
+                                <select id="f2Co" name="f2Co" next="f2To">
+                                  <option value="-1" selected="">-----请选择-----</option>
+                                </select> 县
+                                <select id="f2To" name="f2To" next="f2Vi">
+                                  <option value="-1" selected="">-----请选择-----</option>
+                                </select> (镇)
+                                <select id="f2Vi" name="f2Vi">
+                                  <option value="-1" selected="">-----请选择-----</option>
+                                </select> (村)
+                                <label for="fahouseno">门牌号</label>
+                                <sf:input id="fahouseno" path="fahouseno" size="8" />
+                                <span class="require">*</span>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td class="label"><label for="fcompanyname">工作单位名称：</label></td>
+                              <td colspan="8">
+                                <sf:input id="fcompanyname" path="fcompanyname" size="100" />
+                              </td>
+                            </tr>
+                            <tr>
+                              <td class="label"><label for="fcompanyaddr">工作单位地址：</label></td>
+                              <td colspan="8">
+                                <sf:input id="fcompanyaddr" path="fcompanyaddr" size="100" />
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </fieldset>
+                      <fieldset>
+                        <legend>丈夫信息(*必填)</legend>
+                        <table class="table table-condensed">
+                          <tbody>
+                            <tr>
+                              <td class="label"><label for="mname">姓名：</label></td>
+                              <td><sf:input id="mname" path="mname" size="16" /><span
+                                class="require">*</span></td>
+                              <td class="label"><label for="midcardno">身份证号：</label></td>
+                              <td><sf:input id="midcardno" path="midcardno" size="16" /><span class="require">*</span></td>
+                              <td class="label"><label for="mphone">联系电话：</label></td>
+                              <td><sf:input id="mphone" path="mphone" size="16" /> <span class="require">*</span></td>
+                              <td width="280">&nbsp;</td>
+                            </tr>
+                            <tr>
+                              <td class="label"><label for="mpermanentaddr">户籍地址：</label></td>
+                              <td colspan="8">
+                                <select id="m1Pr" name="m1Pr" next="m1Ci">
+                                  <option value="-1" selected="">-----请选择-----</option>
+                                </select> 省
+                                <select id="m1Ci" name="m1Ci" next="m1Co">
+                                  <option value="-1" selected="">-----请选择-----</option>
+                                </select> 市
+                                <select id="m1Co" name="m1Co" next="m1To">
+                                  <option value="-1" selected="">-----请选择-----</option>
+                                </select> 县
+                                <select id="m1To" name="m1To" next="m1Vi">
+                                  <option value="-1" selected="">-----请选择-----</option>
+                                </select> (镇)
+                                <select id="m1Vi" name="m1Vi">
+                                  <option value="-1" selected="">-----请选择-----</option>
+                                </select> (村)
+                                <label for="mphouseno">门牌号</label>
+                                <sf:input id="mphouseno" path="mphouseno" size="8" />
+                                <span class="require">*</span>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td class="label"><label for="maddress">现居住地址：</label></td>
+                              <td colspan="8">
+                                <select id="m2Pr" name="m2Pr" next="m2Ci">
+                                  <option value="-1" selected="">-----请选择-----</option>
+                                </select> 省
+                                <select id="m2Ci" name="m2Ci" next="m2Co">
+                                  <option value="-1" selected="">-----请选择-----</option>
+                                </select> 市
+                                <select id="m2Co" name="m2Co" next="m2To">
+                                  <option value="-1" selected="">-----请选择-----</option>
+                                </select> 县
+                                <select id="m2To" name="m2To" next="m2Vi">
+                                  <option value="-1" selected="">-----请选择-----</option>
+                                </select> (镇)
+                                <select id="m2Vi" name="m2Vi">
+                                  <option value="-1" selected="">-----请选择-----</option>
+                                </select> (村)
+                                <label for="mahouseno">门牌号</label>
+                                <sf:input id="mahouseno" path="mahouseno" size="8" />
+                                <span class="require">*</span>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td class="label"><label for="mcompanyname">工作单位名称：</label></td>
+                              <td colspan="8">
+                                <sf:input id="mcompanyname" path="mcompanyname" size="100" />
+                              </td>
+                            </tr>
+                            <tr>
+                              <td class="label"><label for="mcompanyaddr">工作单位地址：</label></td>
+                              <td colspan="8">
+                                <sf:input id="mcompanyaddr" path="mcompanyaddr" size="100" />
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </fieldset>
+                      <fieldset>
+                        <legend>婚育情况(*必填)</legend>
+                        <table class="table table-condensed">
+                          <tbody>
+                            <tr>
+                              <td class="label"><label for="maritalstatus">婚姻状况：</label>
+                              </td>
+                              <td>
+                                <sf:select id="maritalstatus" path="maritalstatus">
+                                  <sf:option value="-1" selected="">-----请选择-----</sf:option>
+                                  <sf:option value="1">初婚</sf:option>
+                                  <sf:option value="2">再婚</sf:option>
+                                </sf:select>
+                              </td>
+                              <td class="label"><label for="marriageno">结婚证号：</label></td>
+                              <td><sf:input id="marriageno" path="marriageno" size="16" /></td>
+                              <td class="label"><label for="marriagedate">结婚时间：</label></td>
+                              <td><sf:input id="marriagedate" path="marriagedate" size="16" /></td>
+                            </tr>
+                            <tr>
+                              <td class="label"><label for="haschild">生育子女状况：</label></td>
+                              <td><sf:input id="haschild" path="haschild" size="16" /></td>
+                              <td class="label"><label for="isadopted">是否领养：</label></td>
+                              <td>
+                                <sf:select id="isadopted" path="isadopted">
+                                  <sf:option value="-1" selected="">-----请选择-----</sf:option>
+                                  <sf:option value="1">是</sf:option>
+                                  <sf:option value="2">否</sf:option>
+                                </sf:select>
+                              </td>
+                              <td class="label"><label for="residenceno">居住证号：</label></td>
+                              <td>
+                                <sf:input id="residenceno" path="residenceno" size="16" />
+                              </td>
+                              <td class="label">
+                                <label for="getresidencedate">领取居住证时间：</label>
+                              </td>
+                              <td>
+                                <sf:input id="getresidencedate" path="getresidencedate" size="16" />
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </fieldset>
+                      <fieldset>
+                        <legend>办证情况</legend>
+                        <table class="table table-condensed">
+                          <tbody>
+                            <tr>
+                              <td class="label"><label for="registrationaddr">办证地点：</label></td>
+                              <td>
+                                <sf:select id="" path="">
+                                  <sf:option value="-1" selected="">-----请选择-----</sf:option>
+                                  <sf:option value="1">男</sf:option>
+                                  <sf:option value="2">女</sf:option>
+                                </sf:select> 镇
+                                <sf:select id="" path="">
+                                  <sf:option value="-1" selected="">-----请选择-----</sf:option>
+                                  <sf:option value="1">男</sf:option>
+                                  <sf:option value="2">女</sf:option>
+                                </sf:select> 村</td>
+                              <td class="label"><label for="serviceno">服务证号：</label></td>
+                              <td>
+                                <sf:input id="serviceno" path="serviceno" size="16" />
+                                <span class="require">*</span>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td class="label"><label for="registrationdate">办证时间：</label></td>
+                              <td><sf:input id="registrationdate"
+                                  path="registrationdate" size="16" /></td>
+                              <td class="label"><label for="operator">经办人：</label></td>
+                              <td>
+                                <sf:input id="operator" path="operator" size="16" />
+                                <span class="require">*</span>
+                              </td>
+                              <td class="label"><label for="opphone">联系电话：</label></td>
+                              <td><sf:input id="opphone" path="opphone" size="16" /> <span class="require">*</span></td>
+                              <td class="label"><label for="status">状态：</label></td>
+                              <td>
+                                <sf:select id="status" path="status">
+                                  <sf:option value="-1" selected="">-----请选择-----</sf:option>
+                                  <sf:option value="1">正常</sf:option>
+                                  <sf:option value="2">注销</sf:option>
+                                </sf:select>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </fieldset>
+                      <div>
+                        <input type="submit" class="btn btn-primary" size="16" value="确　定" />
+                        <input type="reset" class="btn btn-default" size="16" value="重　置" />
+                      </div>
+                  </sf:form>
+                </div>
+                <div class="tab-pane" id="tab1"><br>
+                    <table class="table table-bordered">
+                        <thead>
+                            <th>序号</th>
+                            <th>服务时间</th>
+                            <th>服务结果</th>
+                            <th>服务人</th>
+                            <th>操作</th>
+                        </thead>
+                        <tbody>
+                            <tr>
+                            <td>1</td>
+                            <td>2014-01-01</td>
+                            <td>结果</td>
+                            <td>XX人</td>
+                            <td>
+                            <button type="button" class="btn btn-info">修改</button>
+                            <button type="button" class="btn">删除</button>
+                            </td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                            <td><input type="text" id="id" /></td>
+                            <td><input type="text" id="serviceTime" /></td>
+                            <td id="serviceResult"></td>
+                            <td><input type="text" id="servicePerson" /></td>
+                            <td><button type="button" class="btn btn-primary">添加</button></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <div class="tab-pane" id="tab2"><br>
+                    <form target="iframe" id="uploadForm" name="uploadForm" action="${ctx}/oneChild/uploadFPC" method="post" enctype="multipart/form-data">
+                        <div class="upload-box">
+                            <div class="upload-main">
+                                <div class="upload-choose">
+                                    <input id="fileImage" type="file" size="30" name="fileselect[]" multiple />
+                                    <span id="fileDragArea" class="upload-drag-area">或者将图片拖到此处</span>
+                                </div>
+                                <div id="preview" class="upload-preview"></div>
+                            </div>
+                            <div class="upload-submit">
+                                <button type="button" id="fileSubmit" class="upload-submit-btn">确认上传图片</button>
+                            </div>
+                            <div id="uploadInf" class="upload-inf"></div>
+                        </div>
+                    </form>
+                    <iframe name="iframe" id="iframe" style="display:none" ></iframe>
+                </div>
+                <div class="tab-pane" id="tab3"><br><input type="file" name="files" /><hr></div>
+                <div class="tab-pane" id="tab4"><br><textarea id="comment" name="comment" class="form-control" rows="10"></textarea><hr></div>
             </div>
-            <div class="tab-pane" id="tab1"><br>
-                <table class="table table-bordered">
-                    <thead>
-                        <th>序号</th>
-                        <th>服务时间</th>
-                        <th>服务结果</th>
-                        <th>服务人</th>
-                        <th>操作</th>
-                    </thead>
-                    <tbody>
-                        <tr>
-                        <td>1</td>
-                        <td>2014-01-01</td>
-                        <td>结果</td>
-                        <td>XX人</td>
-                        <td>
-                        <button type="button" class="btn btn-info">修改</button>
-                        <button type="button" class="btn">删除</button>
-                        </td>
-                        </tr>
-                    </tbody>
-                    <tfoot>
-                        <tr>
-                        <td><input type="text" id="id" /></td>
-                        <td><input type="text" id="serviceTime" /></td>
-                        <td id="serviceResult"></td>
-                        <td><input type="text" id="servicePerson" /></td>
-                        <td><button type="button" class="btn btn-primary">添加</button></td>
-                        </tr>
-                    </tfoot>
-                </table>
-            </div>
-            <div class="tab-pane" id="tab2"><br><input type="file" name="files" /><hr></div>
-            <div class="tab-pane" id="tab3"><br><input type="file" name="files" /><hr></div>
-            <div class="tab-pane" id="tab4"><br><sf:textarea id="comment" path="comment" class="form-control" rows="10"></sf:textarea><hr></div>
-          </div>
-        </sf:form>
-      </div>
+        </div>
     </div>
-  </div>
-  </div>
-  <script src="${ctx}/static/lib/jquery/jquery.myplugin.js"></script>
-  <script>
-    //设定日期选择器的相关属性
-    var calOpts = {
-        dateFormat: "yy/mm/dd"
-    };
-    $("#marriagedate").omCalendar(calOpts);
-    $("#getresidencedate").omCalendar(calOpts);
-    $("#registrationdate").omCalendar(calOpts);
+</div>
+<script src="${ctx}/static/lib/jquery/jquery.myplugin.js"></script>
+<script src="${ctx}/static/script/zxxFile.js"></script>
+<script>
+//设定日期选择器的相关属性
+var calOpts = {
+  dateFormat: "yy/mm/dd"
+};
+$("#marriagedate").omCalendar(calOpts);
+$("#getresidencedate").omCalendar(calOpts);
+$("#registrationdate").omCalendar(calOpts);
 
-    var fiPr = [{
-        code: "11",
-        name: "北京市"
-    }, {
-        code: "12",
-        name: "天津市"
-    }, {
-        code: "13",
-        name: "河北省"
-    }];
-    $("#f1Pr, #f2Pr, #m1Pr, #m2Pr").empty();
-    $("#f1Pr, #f2Pr, #m1Pr, #m2Pr").append($("<option/>").text("-----请选择-----").attr("value",""));
-    for (var i = 0, l = fiPr.length; i < l; i++) {
-        $("#f1Pr, #f2Pr, #m1Pr, #m2Pr").append($("<option/>").text(fiPr[i].name).attr("value", fiPr[i].code));
-    }
-    var appendNextOps = function(code, next) {
-        $.getJSON("${ctx}/oneChild/queryDivision", {
-            code: code
-        }).always(function(data) {
-            $("#" + next).empty();
-            $("#" + next).append($("<option/>").text("-----请选择-----").attr("value",""));
-            var nextOpts = data.divisions;
-            for (var i = 0, l = nextOpts.length; i < l; i++) {
-                $("#" + next).append($("<option/>").text(nextOpts[i].name).attr("value", nextOpts[i].code));
+var fiPr = [{
+    code: "11",
+    name: "北京市"
+}, {
+    code: "12",
+    name: "天津市"
+}, {
+    code: "13",
+    name: "河北省"
+}];
+$("#f1Pr, #f2Pr, #m1Pr, #m2Pr").empty();
+$("#f1Pr, #f2Pr, #m1Pr, #m2Pr").append($("<option/>").text("-----请选择-----").attr("value",""));
+for (var i = 0, l = fiPr.length; i < l; i++) {
+    $("#f1Pr, #f2Pr, #m1Pr, #m2Pr").append($("<option/>").text(fiPr[i].name).attr("value", fiPr[i].code));
+}
+var appendNextOps = function(code, next) {
+    $.getJSON("${ctx}/oneChild/queryDivision", {
+        code: code
+    }).always(function(data) {
+        $("#" + next).empty();
+        $("#" + next).append($("<option/>").text("-----请选择-----").attr("value",""));
+        var nextOpts = data.divisions;
+        for (var i = 0, l = nextOpts.length; i < l; i++) {
+          $("#" + next).append($("<option/>").text(nextOpts[i].name).attr("value", nextOpts[i].code));
+        }
+    });
+};
+$("#f1Pr, #f1Ci, #f1Co, #f1To, #f2Pr, #f2Ci, #f2Co, #f2To, #m1Pr, #m1Ci, #m1Co, #m1To, #m2Pr, #m2Ci, #m2Co, #m2To").on('change', function() {
+    appendNextOps($(this).has(":selected").val(), $(this).attr("next"));
+});
+var selJson = {
+    next: {
+        id: "s2",
+        opts: {
+            "未孕": {
+                name: "未孕"
+            },
+            "怀孕": {
+                name: "怀孕",
+                next: {
+                    opts:  {
+                        "1个月": { name: "1个月" },
+                        "2个月": { name: "2个月" },
+                        "3个月": { name: "3个月" },
+                        "4个月": { name: "4个月" },
+                        "5个月": { name: "5个月" },
+                        "6个月": { name: "6个月" },
+                        "7个月": { name: "7个月" },
+                        "8个月": { name: "8个月" },
+                        "9个月": { name: "9个月" }
+                    }
+                }
+            },
+            "生育": {
+                name: "生育",
+                next: {
+                    opts: {
+                        "男": { name: "男" },
+                        "女": { name: "女" },
+                        "双胞胎男": { name: "双胞胎男" },
+                        "双胞胎女": { name: "双胞胎女" },
+                        "龙凤胎": { name: "龙凤胎" },
+                        "多胞胎": { name: "多胞胎" }
+                    }
+                }
+            },
+            "孕情消失": {
+                name: "孕情消失",
+                next: {
+                    opts: {
+                        "人工引流产": { name: "人工引流产" },
+                        "意外": { name: "意外" },
+                        "非法引流产": { name: "非法引流产" }
+                    }
+                }
             }
-        });
-    };
-    $("#f1Pr, #f1Ci, #f1Co, #f1To, #f2Pr, #f2Ci, #f2Co, #f2To, #m1Pr, #m1Ci, #m1Co, #m1To, #m2Pr, #m2Ci, #m2Co, #m2To").on('change', function() {
-        appendNextOps($(this).has(":selected").val(), $(this).attr("next"));
-    });
-    var selJson = {
-   	    next: {
-   	        id: "s2",
-   	        opts: {
-   	            "未孕": {
-   	                name: "未孕"
-   	            },
-   	            "怀孕": {
-   	                name: "怀孕",
-   	                next: {
-   	                    opts:  {
-   	                        "1个月": { name: "1个月" },
-   	                        "2个月": { name: "2个月" },
-   	                        "3个月": { name: "3个月" },
-   	                        "4个月": { name: "4个月" },
-   	                        "5个月": { name: "5个月" },
-   	                        "6个月": { name: "6个月" },
-   	                        "7个月": { name: "7个月" },
-   	                        "8个月": { name: "8个月" },
-   	                        "9个月": { name: "9个月" }
-   	                    }
-   	                }
-   	            },
-   	            "生育": {
-   	                name: "生育",
-   	                next: {
-   	                    opts: {
-   	                        "男": { name: "男" },
-   	                        "女": { name: "女" },
-   	                        "双胞胎男": { name: "双胞胎男" },
-   	                        "双胞胎女": { name: "双胞胎女" },
-   	                        "龙凤胎": { name: "龙凤胎" },
-   	                        "多胞胎": { name: "多胞胎" }
-   	                    }
-   	                }
-   	            },
-   	            "孕情消失": {
-   	                name: "孕情消失",
-   	                next: {
-   	                    opts: {
-   	                        "人工引流产": { name: "人工引流产" },
-   	                        "意外": { name: "意外" },
-   	                        "非法引流产": { name: "非法引流产" }
-   	                    }
-   	                }
-   	            }
-   	        }
-   	    }
-   	};
-    $("#serviceResult").MultipleLevelSelector({
-        id: "s1",
-        splitStr: " ",
-        selJson: selJson
-    });
-     
-    function getValue() {
-        alert($("#serviceResult").MultipleLevelSelector('getValue'));
+        }
     }
-     
-    function setValue() {
-        $("#serviceResult").MultipleLevelSelector('setValue', $("#newValue").val());
+};
+$("#serviceResult").MultipleLevelSelector({
+    id: "s1",
+    splitStr: " ",
+    selJson: selJson
+});
+
+function getValue() {
+    alert($("#serviceResult").MultipleLevelSelector('getValue'));
+}
+
+function setValue() {
+    $("#serviceResult").MultipleLevelSelector('setValue', $("#newValue").val());
+}
+
+var params = {
+    fileInput: $("#fileImage").get(0),
+    dragDrop: $("#fileDragArea").get(0),
+    upButton: $("#fileSubmit").get(0),
+    url: $("#uploadForm").attr("action"),
+    filter: function(files) {
+        var arrFiles = [];
+        for (var i = 0, file; file = files[i]; i++) {
+            if (file.type.indexOf("image") == 0) {
+                arrFiles.push(file);
+            } else {
+                alert('文件"' + file.name + '"不是图片。');
+            }
+        }
+        return arrFiles;
+    },
+    onSelect: function(files) {
+        var html = '', i = 0;
+        $("#preview").html('<div class="upload-loading"></div>');
+        var funAppendImage = function() {
+            file = files[i];
+            if (file) {
+                var reader = new FileReader()
+                reader.onload = function(e) {
+                    html += '<div id="uploadList' + i
+                            + '" class="upload-append-list"><p><strong>'
+                            + file.name + '</strong>'
+                            + '<a href="javascript:" class="upload-delete" title="删除" data-index="'+ i +'">删除</a><br/>'
+                            + '<img id="uploadImage' + i + '" src="' + e.target.result + '" class="upload-image" /></p>'
+                            + '<span id="uploadProgress' + i + '" class="upload-progress"></span></div>';
+                    i++;
+                    funAppendImage();
+                }
+                reader.readAsDataURL(file);
+            } else {
+                $("#preview").html(html);
+                if (html) {
+                    // 删除方法
+                    $(".upload-delete").click(function() {
+                        ZXXFILE.funDeleteFile(files[parseInt($(this).attr("data-index"))]);
+                        return false;
+                    });
+                    // 提交按钮显示
+                    $("#fileSubmit").show();
+                } else {
+                    // 提交按钮隐藏
+                    $("#fileSubmit").hide();
+                }
+            }
+        };
+        funAppendImage();
+    },
+    onDelete: function(file) {
+        $("#uploadList" + file.index).fadeOut();
+    },
+    onDragOver: function() {
+        $(this).addClass("upload-drag-hover");
+    },
+    onDragLeave: function() {
+        $(this).removeClass("upload-drag-hover");
+    },
+    onProgress: function(file, loaded, total) {
+        var eleProgress = $("#uploadProgress" + file.index), percent = (loaded / total * 100).toFixed(2) + '%';
+        eleProgress.show().html(percent);
+    },
+    onSuccess: function(file, response) {
+        $("#uploadInf").append("<p>上传成功，图片地址是：" + response + "</p>");
+    },
+    onFailure: function(file) {
+        $("#uploadInf").append("<p>图片" + file.name + "上传失败！</p>");
+        $("#uploadImage" + file.index).css("opacity", 0.2);
+    },
+    onComplete: function() {
+        // 提交按钮隐藏
+        $("#fileSubmit").hide();
+        // file控件value置空
+        $("#fileImage").val("");
+        $("#uploadInf").append("<p>当前图片全部上传完毕，可继续添加上传。</p>");
     }
-    </script>
+};
+ZXXFILE = $.extend(ZXXFILE, params);
+ZXXFILE.init();
+</script>
 </body>
 </html>
