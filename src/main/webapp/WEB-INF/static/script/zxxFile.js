@@ -71,32 +71,42 @@ var ZXXFILE = {
         }
         for (var i = 0, file; file = this.fileFilter[i]; i++) {
             (function(file) {
-                var xhr = new XMLHttpRequest();
-                if (xhr.upload) {
-                    // 上传中
-                    xhr.upload.addEventListener("progress", function(e) {
-                        self.onProgress(file, e.loaded, e.total);
-                    }, false);
-                    // 文件上传成功或是失败
-                    xhr.onreadystatechange = function(e) {
-                        if (xhr.readyState == 4) {
-                            if (xhr.status == 200) {
-                                self.onSuccess(file, xhr.responseText);
-                                self.funDeleteFile(file);
-                                if (!self.fileFilter.length) {
-                                    //全部完毕
-                                    self.onComplete();
-                                }
-                            } else {
-                                self.onFailure(file, xhr.responseText);
-                            }
+                var formData = new FormData(); 
+                formData.append("imageFile", file);
+                // 开始上传
+                $.ajax({
+                    url: self.url,  //Server script to process data
+                    type: 'POST',
+                    xhr: function() {  // Custom XMLHttpRequest
+                        var myXhr = $.ajaxSettings.xhr();
+                        if(myXhr.upload){ // Check if upload property exists
+                            // 上传中
+                            myXhr.upload.addEventListener("progress", function(e) {
+                                self.onProgress(file, e.loaded, e.total);
+                            }, false);
                         }
-                    };
-                    // 开始上传
-                    xhr.open("POST", self.url, true);
-                    xhr.setRequestHeader("X_FILENAME", file.name);
-                    xhr.send(file);
-                }
+                        return myXhr;
+                    },
+                    //Ajax events
+                    success: function(ret) {
+                        // 文件上传成功或是失败
+                        self.onSuccess(file, ret);
+                        self.funDeleteFile(file);
+                        if (!self.fileFilter.length) {
+                            //全部完毕
+                            self.onComplete();
+                        }
+                    },
+                    error: function(ret) {
+                        self.onFailure(file, ret);
+                    },
+                    // Form data
+                    data: formData,
+                    //Options to tell jQuery not to process data or worry about content-type.
+                    cache: false,
+                    contentType: false,
+                    processData: false
+                });
             })(file);
         }
     },

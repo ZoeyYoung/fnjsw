@@ -63,7 +63,7 @@ public class OneChildController {
 
     /**
      * 获取档案列表
-     *
+     * 
      * @return
      */
     @RequestMapping(value = "list", method = RequestMethod.GET)
@@ -74,7 +74,7 @@ public class OneChildController {
 
     /**
      * 跳转到添加用户页面(get请求)
-     *
+     * 
      * @return
      */
     @RequestMapping(value = "new", method = RequestMethod.GET)
@@ -86,7 +86,7 @@ public class OneChildController {
 
     /**
      * 添加档案信息处理方法(post请求)
-     *
+     * 
      * @param oca
      * @param model
      * @return
@@ -169,6 +169,15 @@ public class OneChildController {
         ocaService.update(oca);
         model.addAttribute("message", "更新成功");
         return "redirect:/oneChild/list";
+    }
+
+    @RequestMapping(value = "uploadFPC", method = RequestMethod.POST)
+    @ResponseBody
+    public String uploadFPC(@RequestParam("imageFile") MultipartFile file,
+            Model model) {
+        System.out.println("xxx");
+        System.out.println(file.getOriginalFilename());
+        return "ok";
     }
 
     private String saveMutipartFile(String name, MultipartFile mpf)

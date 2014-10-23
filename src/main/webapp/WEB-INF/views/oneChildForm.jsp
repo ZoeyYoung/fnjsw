@@ -378,7 +378,7 @@
                     </table>
                 </div>
                 <div class="tab-pane" id="tab2"><br>
-                    <form target="iframe" id="uploadForm" name="uploadForm" action="${ctx}/oneChild/uploadFPC" method="post" enctype="multipart/form-data">
+                    <form id="uploadForm" name="uploadForm" action="${ctx}/oneChild/uploadFPC" method="post" enctype="multipart/form-data">
                         <div class="upload-box">
                             <div class="upload-main">
                                 <div class="upload-choose">
@@ -393,7 +393,6 @@
                             <div id="uploadInf" class="upload-inf"></div>
                         </div>
                     </form>
-                    <iframe name="iframe" id="iframe" style="display:none" ></iframe>
                 </div>
                 <div class="tab-pane" id="tab3"><br><input type="file" name="files" /><hr></div>
                 <div class="tab-pane" id="tab4"><br><textarea id="comment" name="comment" class="form-control" rows="10"></textarea><hr></div>
@@ -527,7 +526,7 @@ var params = {
         var funAppendImage = function() {
             file = files[i];
             if (file) {
-                var reader = new FileReader()
+                var reader = new FileReader();
                 reader.onload = function(e) {
                     html += '<div id="uploadList' + i
                             + '" class="upload-append-list"><p><strong>'
@@ -537,7 +536,7 @@ var params = {
                             + '<span id="uploadProgress' + i + '" class="upload-progress"></span></div>';
                     i++;
                     funAppendImage();
-                }
+                };
                 reader.readAsDataURL(file);
             } else {
                 $("#preview").html(html);
