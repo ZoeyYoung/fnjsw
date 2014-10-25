@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.UUID;
 
@@ -24,6 +25,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -92,8 +94,7 @@ public class OneChildController {
      * @return
      */
     @RequestMapping(value = "new", method = RequestMethod.POST)
-    public String save(@RequestParam MultipartFile[] files,
-            @Valid Onechildarchives oca, BindingResult result,
+    public String save(@Valid Onechildarchives oca, BindingResult result,
             Model model) {
         logger.debug("Result Has Errors: " + result.hasErrors());
         if (result.hasErrors()) {
@@ -101,86 +102,96 @@ public class OneChildController {
             model.addAttribute("action", "new");
             return "oneChildForm";
         }
-        try {
-            String filename1 = saveMutipartFile(oca.getFname(),
-                    files[0]);
-            if (StringUtils.isNotEmpty(filename1)) {
-                oca.setFamilyplanningcertificate(filename1);
-            }
-            String filename2 = saveMutipartFile(oca.getFname(),
-                    files[1]);
-            if (StringUtils.isNotEmpty(filename2)) {
-                oca.setZhunshengzheng(filename2);
-            }
-        } catch (IllegalStateException | IOException e) {
-            e.printStackTrace();
-        }
-        ocaService.save(oca);
+        ocaService.saveOca(oca);
         model.addAttribute("message", "创建成功");
         return "redirect:/oneChild/list";
     }
 
-    @RequestMapping(value = "update", method = RequestMethod.GET)
-    public String updateForm(int id, Model model) {
+    @RequestMapping(value = "newGi/{id}", method = RequestMethod.POST)
+    public String saveGi(@PathVariable("id") int ocaId,
+            HttpServletRequest request,
+            Model model) {
+        logger.debug("ocaId: " + ocaId);
+        Gestationinfo gi = new Gestationinfo();
+        gi.setOcaid(ocaId);
+        gi.setServicetime(new Date());
+        gi.setServiceresult(request.getParameter("serviceResult"));
+        gi.setServiceperson(request.getParameter("servicePerson"));
+        ocaService.saveGi(gi);
+        model.addAttribute("message", "创建成功");
+        return "redirect:/oneChild/update/" + ocaId;
+    }
+
+    @RequestMapping(value = "update/{id}", method = RequestMethod.GET)
+    public String updateForm(@PathVariable("id") int id, Model model) {
         // 获取需要更新的对象
-        model.addAttribute("oca", ocaService.getById(id));
+        model.addAttribute("oca", ocaService.getOcaById(id));
+        model.addAttribute("gis", ocaService.getGiByOcaId(id));
         model.addAttribute("action", "update");
         return "oneChildForm";
     }
 
-    @RequestMapping(value = "update", method = RequestMethod.POST)
-    public String update(@RequestParam MultipartFile[] files,
-            @Valid Onechildarchives oca, BindingResult result,
+    @RequestMapping(value = "updateGi/{id}", method = RequestMethod.POST)
+    @ResponseBody
+    public String updateGi(@PathVariable("id") int giId,
+            HttpServletRequest request,
             Model model) {
+        logger.debug("giId: " + giId);
+        Gestationinfo gi = ocaService.getGiById(giId);
+        gi.setServicetime(new Date());
+        gi.setServiceresult(request.getParameter("serviceResult"));
+        gi.setServiceperson(request.getParameter("servicePerson"));
+        ocaService.updateGi(gi);
+        model.addAttribute("message", "创建成功");
+        return "";
+    }
+
+    @RequestMapping(value = "update", method = RequestMethod.POST)
+    public String update(@Valid Onechildarchives oca, BindingResult result,
+            Model model) {
+        logger.debug("Result Has Errors: " + result.hasErrors());
         if (result.hasErrors()) {
             model.addAttribute("oca", oca);
-            model.addAttribute("action", "new");
+            model.addAttribute("action", "update");
             return "oneChildForm";
         }
-        Onechildarchives originOca = ocaService.getById(oca.getId());
-        try {
-            String filename1 = saveMutipartFile(oca.getFname(),
-                    files[0]);
-            if (StringUtils.isNotEmpty(filename1)) {
-                // 如果重新上传了文件，则删除旧文件
-                FileUtils.deleteQuietly(new File(fileUploadDirectory
-                        + File.separator
-                        + originOca.getFamilyplanningcertificate()));
-                oca.setFamilyplanningcertificate(filename1);
-            } else {
-                oca.setFamilyplanningcertificate(originOca
-                        .getFamilyplanningcertificate());
-            }
-            String filename2 = saveMutipartFile(oca.getFname(),
-                    files[1]);
-            if (StringUtils.isNotEmpty(filename2)) {
-                // 如果重新上传了文件，则删除旧文件
-                FileUtils.deleteQuietly(new File(fileUploadDirectory
-                        + File.separator
-                        + originOca.getZhunshengzheng()));
-                oca.setZhunshengzheng(filename2);
-            } else {
-                oca.setZhunshengzheng(originOca.getZhunshengzheng());
-            }
-        } catch (IllegalStateException | IOException e) {
-            e.printStackTrace();
-        }
-        // 获取需要更新的对象
-        ocaService.update(oca);
+        ocaService.updateOca(oca);
         model.addAttribute("message", "更新成功");
         return "redirect:/oneChild/list";
+    }
+
+    @RequestMapping(value = "updateComment", method = RequestMethod.POST)
+    public String updateComment(@Valid Onechildarchives oca,
+            BindingResult result,
+            Model model) {
+        logger.debug("Result Has Errors: " + result.hasErrors());
+        if (result.hasErrors()) {
+            model.addAttribute("oca", oca);
+            model.addAttribute("action", "update");
+            return "oneChildForm";
+        }
+        Onechildarchives originOca = ocaService.getOcaById(oca.getId());
+        originOca.setComment(oca.getComment());
+        ocaService.updateOca(originOca);
+        model.addAttribute("message", "更新成功");
+        return "redirect:/oneChild/update/" + oca.getId();
     }
 
     @RequestMapping(value = "uploadFPC", method = RequestMethod.POST)
     @ResponseBody
     public String uploadFPC(@RequestParam("imageFile") MultipartFile file,
             Model model) {
-        System.out.println("xxx");
-        System.out.println(file.getOriginalFilename());
-        return "ok";
+        try {
+            return saveMutipartFile(fileUploadDirectory,
+                    file.getOriginalFilename(), file);
+        } catch (IllegalStateException | IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return "";
     }
 
-    private String saveMutipartFile(String name, MultipartFile mpf)
+    private String saveMutipartFile(String dir, String name, MultipartFile mpf)
             throws IllegalStateException, IOException {
         if (mpf.getSize() == 0L) {
             return "";
@@ -190,8 +201,7 @@ public class OneChildController {
                 mpf.getOriginalFilename().substring(
                         mpf.getOriginalFilename().lastIndexOf("."));
         String newFilename = name + newFilenameBase + originalFileExtension;
-        String storageDirectory = fileUploadDirectory;
-        File newFile = new File(storageDirectory + "/" + newFilename);
+        File newFile = new File(dir + "/" + newFilename);
         mpf.transferTo(newFile);
         return newFilename;
     }
@@ -202,7 +212,7 @@ public class OneChildController {
             HttpServletResponse response) {
         int id = Integer.parseInt(request.getParameter("id"));
         // 删除记录前先删除文件
-        Onechildarchives originOca = ocaService.getById(id);
+        Onechildarchives originOca = ocaService.getOcaById(id);
         if (StringUtils.isNotEmpty(originOca.getFamilyplanningcertificate())) {
             FileUtils.deleteQuietly(new File(fileUploadDirectory
                     + File.separator
@@ -213,7 +223,18 @@ public class OneChildController {
                     + File.separator
                     + originOca.getZhunshengzheng()));
         }
-        int result = ocaService.delete(id);
+        int result = ocaService.deleteOca(id);
+        if (result == 1) {
+            return "success";
+        }
+        return "fail";
+    }
+
+    @RequestMapping(value = "deleteGi/{id}", method = RequestMethod.POST)
+    @ResponseBody
+    public String deleteGi(@PathVariable("id") int id) {
+        // 删除记录前先删除文件
+        int result = ocaService.deleteGi(id);
         if (result == 1) {
             return "success";
         }
@@ -255,18 +276,6 @@ public class OneChildController {
         return jsonResult;
     }
 
-    @RequestMapping(value = "queryGestation")
-    @ResponseBody
-    public String getGestationInfo(int ocaId, HttpServletRequest request) {
-        List<Gestationinfo> giList = ocaService.getGestationInfo(ocaId);
-
-        String pageDataString = mapper.toJson(giList);
-        String jsonResult =
-                "{\"rows\":" + pageDataString + ",\"total\":"
-                        + giList.size() + "}";
-        return jsonResult;
-    }
-
     @RequestMapping(value = "queryDivision", method = RequestMethod.GET)
     @ResponseBody
     public String queryDivision(HttpServletRequest request,
@@ -276,6 +285,20 @@ public class OneChildController {
             return "{\"divisions\": [{\"code\": \"1101\", \"name\": \"市辖区\"}]}";
         }
         return "";
+    }
+
+    // ////////////////////////////////////////////////////////////////////////////
+
+    @RequestMapping(value = "queryGestation")
+    @ResponseBody
+    public String getGestationInfo(int ocaId, HttpServletRequest request) {
+        List<Gestationinfo> giList = ocaService.getGiByOcaId(ocaId);
+
+        String pageDataString = mapper.toJson(giList);
+        String jsonResult =
+                "{\"rows\":" + pageDataString + ",\"total\":"
+                        + giList.size() + "}";
+        return jsonResult;
     }
 
 }
