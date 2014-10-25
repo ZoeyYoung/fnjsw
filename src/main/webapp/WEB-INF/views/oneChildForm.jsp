@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
   pageEncoding="UTF-8"%>
-<%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}"></c:set>
 <!doctype html>
 <html>
@@ -10,20 +11,21 @@
 <title>一孩模块 档案录入</title>
 </head>
 <body>
-  <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
     <div class="container-fluid">
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed"
-          data-toggle="collapse" data-target="#navbar" aria-expanded="false"
-          aria-controls="navbar">
-          <span class="sr-only">toggle navigation</span> <span
-            class="icon-bar"></span> <span class="icon-bar"></span> <span
-            class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="#">阜宁县人口计生证件管理系统</a>
-      </div>
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed"
+                data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+                aria-controls="navbar">
+                <span class="sr-only">toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">阜宁县人口计生证件管理系统</a>
+        </div>
     </div>
-  </nav>
+</nav>
 
 <div class="container-fluid">
     <div class="row">
@@ -86,7 +88,7 @@
                 <div class="tab-pane active" id="tab0">
                   <br>
                   <sf:form method="post" action="${ctx}/oneChild/${action}"
-                        modelAttribute="oca" enctype="multipart/form-data">
+                        modelAttribute="oca">
                       <input type="hidden" id="id" name="id" value="${oca.id}" />
                       <fieldset>
                         <legend>育龄妇女基本信息(*必填)</legend>
@@ -355,27 +357,45 @@
                             <th>操作</th>
                         </thead>
                         <tbody>
-                            <tr>
-                            <td>1</td>
-                            <td>2014-01-01</td>
-                            <td>结果</td>
-                            <td>XX人</td>
+                        <c:forEach items= "${gis}" var="gi" varStatus="status">
+                            <tr id="giTr${gi.id}">
+                            <td>${status.count}</td>
+                            <td><fmt:formatDate value="${gi.servicetime}" pattern="yyyy-MM-dd"/></td>
                             <td>
-                            <button type="button" class="btn btn-info">修改</button>
-                            <button type="button" class="btn">删除</button>
+                              <span id="serviceResultSpan${gi.id}">${gi.serviceresult}</span>
+                              <div id="serviceResult${gi.id}" style="display:none;"></div>
+                            </td>
+                            <td>
+                              <span id="servicePersonSpan${gi.id}">${gi.serviceperson}</span>
+                              <input type="text" id="servicePerson${gi.id}" name="updateServicePerson" style="display:none;"/>
+                            </td>
+                            <td>
+                            <div id="btnGroup1${gi.id}">
+                                <button type="button" onclick="updateGiInit(${gi.id})">修改</button>
+                                <button type="button" onclick="deleteGi(${gi.id})">删除</button>
+                            </div>
+                            <div id="btnGroup2${gi.id}" style="display:none;">
+                                <button type="button" onclick="updateGi(${gi.id})">确认</button>
+                                <button type="button" onclick="cancelGi(${gi.id})">取消</button>
+                            </div>
                             </td>
                             </tr>
+                        </c:forEach>
                         </tbody>
-                        <tfoot>
-                            <tr>
-                            <td><input type="text" id="id" /></td>
-                            <td><input type="text" id="serviceTime" /></td>
-                            <td id="serviceResult"></td>
-                            <td><input type="text" id="servicePerson" /></td>
-                            <td><button type="button" class="btn btn-primary">添加</button></td>
-                            </tr>
-                        </tfoot>
                     </table>
+                    <br>
+                    <form name="addGiForm" action="${ctx}/oneChild/newGi/${oca.id}" method="POST">
+                        <input type="hidden" id="serviceResult" name="serviceResult" />
+                        <table>
+                            <tr>
+                                <td class="label"><label for="serviceResult">服务结果：</label></td>
+                                <td id="serviceResultSel"></td>
+                                <td class="label"><label for="servicePerson">服务人：</label></td>
+                                <td><input type="text" name="servicePerson" /></td>
+                                <td><button id="addGiBtn" type="button">添加</button></td>
+                            <tr>
+                        </table>
+                    </form>
                 </div>
                 <div class="tab-pane" id="tab2"><br>
                     <form id="uploadForm" name="uploadForm" action="${ctx}/oneChild/uploadFPC" method="post" enctype="multipart/form-data">
@@ -395,7 +415,17 @@
                     </form>
                 </div>
                 <div class="tab-pane" id="tab3"><br><input type="file" name="files" /><hr></div>
-                <div class="tab-pane" id="tab4"><br><textarea id="comment" name="comment" class="form-control" rows="10"></textarea><hr></div>
+                <div class="tab-pane" id="tab4"><br>
+	                <sf:form method="post" action="${ctx}/oneChild/updateComment"
+	                        modelAttribute="oca">
+	                    <input type="hidden" id="id" name="id" value="${oca.id}" />
+	                    <sf:textarea id="comment" path="comment" class="form-control" rows="10"></sf:textarea><hr>
+	                    <div>
+                            <input type="submit" class="btn btn-primary" size="16" value="确　定" />
+                            <input type="reset" class="btn btn-default" size="16" value="重　置" />
+                        </div>
+	                </sf:form>
+                </div>
             </div>
         </div>
     </div>
@@ -490,18 +520,104 @@ var selJson = {
         }
     }
 };
-$("#serviceResult").MultipleLevelSelector({
+$("#serviceResultSel").MultipleLevelSelector({
     id: "s1",
     splitStr: " ",
     selJson: selJson
 });
-
-function getValue() {
-    alert($("#serviceResult").MultipleLevelSelector('getValue'));
-}
-
 function setValue() {
-    $("#serviceResult").MultipleLevelSelector('setValue', $("#newValue").val());
+    $("#serviceResultSel").MultipleLevelSelector('setValue', $("#newValue").val());
+}
+$("#addGiBtn").on('click', function() {
+    $("#serviceResult").val($("#serviceResultSel").MultipleLevelSelector('getValue'));
+    addGiForm.submit();
+});
+
+function updateGiInit(giId) {
+    var selJson = {
+        next: {
+            id: "giSel2" + giId,
+            opts: {
+                "未孕": {
+                    name: "未孕"
+                },
+                "怀孕": {
+                    name: "怀孕",
+                    next: {
+                        opts:  {
+                            "1个月": { name: "1个月" },
+                            "2个月": { name: "2个月" },
+                            "3个月": { name: "3个月" },
+                            "4个月": { name: "4个月" },
+                            "5个月": { name: "5个月" },
+                            "6个月": { name: "6个月" },
+                            "7个月": { name: "7个月" },
+                            "8个月": { name: "8个月" },
+                            "9个月": { name: "9个月" }
+                        }
+                    }
+                },
+                "生育": {
+                    name: "生育",
+                    next: {
+                        opts: {
+                            "男": { name: "男" },
+                            "女": { name: "女" },
+                            "双胞胎男": { name: "双胞胎男" },
+                            "双胞胎女": { name: "双胞胎女" },
+                            "龙凤胎": { name: "龙凤胎" },
+                            "多胞胎": { name: "多胞胎" }
+                        }
+                    }
+                },
+                "孕情消失": {
+                    name: "孕情消失",
+                    next: {
+                        opts: {
+                            "人工引流产": { name: "人工引流产" },
+                            "意外": { name: "意外" },
+                            "非法引流产": { name: "非法引流产" }
+                        }
+                    }
+                }
+            }
+        }
+    };
+    $("#giTr" + giId + " span").hide();
+    $("#serviceResult" + giId).MultipleLevelSelector({
+        id: "giSel1" + giId,
+        splitStr: " ",
+        selJson: selJson
+    });
+    $("#serviceResult" + giId).MultipleLevelSelector('setValue', $("#serviceResultSpan" + giId).text());
+    $("#serviceResult" + giId).show();
+    $("#servicePerson" + giId).show().val($("#servicePersonSpan" + giId).text());
+    $("#btnGroup1" + giId).hide();
+    $("#btnGroup2" + giId).show();
+}
+function updateGi(giId){
+    $.post("${ctx}/oneChild/updateGi/" + giId, {
+      "serviceResult": $("#serviceResult" + giId).MultipleLevelSelector('getValue'),
+      "servicePerson": $("#servicePerson" + giId).val()
+    }, function() {
+      $("#serviceResultSpan" + giId).text($("#serviceResult" + giId).MultipleLevelSelector('getValue'));
+      $("#servicePersonSpan" + giId).text($("#servicePerson" + giId).val());
+      $("#giTr" + giId + " span").show();
+      $("#btnGroup1" + giId).show();
+      $("#btnGroup2" + giId).hide();
+      $("#serviceResult" + giId).hide();
+      $("#servicePerson" + giId).hide();
+    });
+}
+function cancelGi(giId){
+    $.post("${ctx}/oneChild/deleteGi/" + giId, function() {
+        $("#giTr" + giId).remove();
+    });
+}
+function deleteGi(giId){
+    $.post("${ctx}/oneChild/deleteGi/" + giId, function() {
+        $("#giTr" + giId).remove();
+    });
 }
 
 var params = {

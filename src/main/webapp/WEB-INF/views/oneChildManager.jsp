@@ -148,7 +148,7 @@ var queryOca = function() {
     $('#ocaListTable').omGrid("setData", '${ctx}/oneChild/query?' + encodeURI($("#queryForm").serialize()));
 };
 var updateOca = function(id) {
-    window.location = "${ctx}/oneChild/update?id="+id;
+    window.location = "${ctx}/oneChild/update/"+id;
 };
 var deleteOca = function(id) {
   console.log(id);

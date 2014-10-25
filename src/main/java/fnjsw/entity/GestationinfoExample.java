@@ -5,7 +5,20 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import fnjsw.util.Page;
+
 public class GestationinfoExample {
+    // added by c
+    protected Page page;
+
+    public void setPage(Page page) {
+        this.page = page;
+    }
+
+    public Page getPage() {
+        return page;
+    }
+
     protected String orderByClause;
 
     protected boolean distinct;
@@ -92,30 +105,39 @@ public class GestationinfoExample {
             criteria.add(new Criterion(condition));
         }
 
-        protected void addCriterion(String condition, Object value, String property) {
+        protected void addCriterion(String condition, Object value,
+                String property) {
             if (value == null) {
-                throw new RuntimeException("Value for " + property + " cannot be null");
+                throw new RuntimeException("Value for " + property
+                        + " cannot be null");
             }
             criteria.add(new Criterion(condition, value));
         }
 
-        protected void addCriterion(String condition, Object value1, Object value2, String property) {
+        protected void addCriterion(String condition, Object value1,
+                Object value2, String property) {
             if (value1 == null || value2 == null) {
-                throw new RuntimeException("Between values for " + property + " cannot be null");
+                throw new RuntimeException("Between values for " + property
+                        + " cannot be null");
             }
             criteria.add(new Criterion(condition, value1, value2));
         }
 
-        protected void addCriterionForJDBCDate(String condition, Date value, String property) {
+        protected void addCriterionForJDBCDate(String condition, Date value,
+                String property) {
             if (value == null) {
-                throw new RuntimeException("Value for " + property + " cannot be null");
+                throw new RuntimeException("Value for " + property
+                        + " cannot be null");
             }
-            addCriterion(condition, new java.sql.Date(value.getTime()), property);
+            addCriterion(condition, new java.sql.Date(value.getTime()),
+                    property);
         }
 
-        protected void addCriterionForJDBCDate(String condition, List<Date> values, String property) {
+        protected void addCriterionForJDBCDate(String condition,
+                List<Date> values, String property) {
             if (values == null || values.size() == 0) {
-                throw new RuntimeException("Value list for " + property + " cannot be null or empty");
+                throw new RuntimeException("Value list for " + property
+                        + " cannot be null or empty");
             }
             List<java.sql.Date> dateList = new ArrayList<java.sql.Date>();
             Iterator<Date> iter = values.iterator();
@@ -125,11 +147,14 @@ public class GestationinfoExample {
             addCriterion(condition, dateList, property);
         }
 
-        protected void addCriterionForJDBCDate(String condition, Date value1, Date value2, String property) {
+        protected void addCriterionForJDBCDate(String condition, Date value1,
+                Date value2, String property) {
             if (value1 == null || value2 == null) {
-                throw new RuntimeException("Between values for " + property + " cannot be null");
+                throw new RuntimeException("Between values for " + property
+                        + " cannot be null");
             }
-            addCriterion(condition, new java.sql.Date(value1.getTime()), new java.sql.Date(value2.getTime()), property);
+            addCriterion(condition, new java.sql.Date(value1.getTime()),
+                    new java.sql.Date(value2.getTime()), property);
         }
 
         public Criteria andIdIsNull() {
@@ -303,12 +328,14 @@ public class GestationinfoExample {
         }
 
         public Criteria andServicetimeBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("serviceTime between", value1, value2, "servicetime");
+            addCriterionForJDBCDate("serviceTime between", value1, value2,
+                    "servicetime");
             return (Criteria) this;
         }
 
         public Criteria andServicetimeNotBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("serviceTime not between", value1, value2, "servicetime");
+            addCriterionForJDBCDate("serviceTime not between", value1, value2,
+                    "servicetime");
             return (Criteria) this;
         }
 
@@ -373,12 +400,14 @@ public class GestationinfoExample {
         }
 
         public Criteria andServiceresultBetween(String value1, String value2) {
-            addCriterion("serviceResult between", value1, value2, "serviceresult");
+            addCriterion("serviceResult between", value1, value2,
+                    "serviceresult");
             return (Criteria) this;
         }
 
         public Criteria andServiceresultNotBetween(String value1, String value2) {
-            addCriterion("serviceResult not between", value1, value2, "serviceresult");
+            addCriterion("serviceResult not between", value1, value2,
+                    "serviceresult");
             return (Criteria) this;
         }
 
@@ -443,12 +472,14 @@ public class GestationinfoExample {
         }
 
         public Criteria andServicepersonBetween(String value1, String value2) {
-            addCriterion("servicePerson between", value1, value2, "serviceperson");
+            addCriterion("servicePerson between", value1, value2,
+                    "serviceperson");
             return (Criteria) this;
         }
 
         public Criteria andServicepersonNotBetween(String value1, String value2) {
-            addCriterion("servicePerson not between", value1, value2, "serviceperson");
+            addCriterion("servicePerson not between", value1, value2,
+                    "serviceperson");
             return (Criteria) this;
         }
     }
@@ -532,7 +563,8 @@ public class GestationinfoExample {
             this(condition, value, null);
         }
 
-        protected Criterion(String condition, Object value, Object secondValue, String typeHandler) {
+        protected Criterion(String condition, Object value, Object secondValue,
+                String typeHandler) {
             super();
             this.condition = condition;
             this.value = value;

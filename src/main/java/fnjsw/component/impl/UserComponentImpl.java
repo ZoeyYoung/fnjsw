@@ -61,15 +61,11 @@ public class UserComponentImpl implements IUserComponent {
     @Override
     public OnePage<User> selectOnePage(UserExample example) {
         OnePage<User> onepage = new OnePage<User>();
-
         int count = userMapper.countByExample(example);
-
         List<User> userList = userMapper.selectByExample(example);
-
         example.getPage().setCount(count);
         onepage.setPage(example.getPage());
         onepage.setDataList(userList);
-
         return onepage;
     }
 

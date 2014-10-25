@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import fnjsw.component.impl.GestationinfoComponentImpl;
 import fnjsw.component.impl.OnechildarchivesComponentImpl;
 import fnjsw.entity.Gestationinfo;
 import fnjsw.entity.Onechildarchives;
@@ -23,22 +24,34 @@ public class OnechildarchivesServiceImpl {
 
     @Autowired
     private OnechildarchivesComponentImpl ocaComponent;
+    @Autowired
+    private GestationinfoComponentImpl giComponent;
 
-    public Onechildarchives getById(int id) {
+    public Onechildarchives getOcaById(int id) {
         return ocaComponent.getById(id);
     }
 
-    public List<Onechildarchives> getByFName(String fname) {
+    public List<Onechildarchives> getOcaByFName(String fname) {
         return ocaComponent.getByFName(fname);
     }
 
+    public List<Onechildarchives> getAllOca() {
+        return ocaComponent.getAll();
+    }
+
     @Transactional
-    public int save(Onechildarchives oca) {
+    public int saveOca(Onechildarchives oca) {
         return ocaComponent.save(oca);
     }
 
-    public List<Onechildarchives> getAll() {
-        return ocaComponent.getAll();
+    @Transactional
+    public int updateOca(Onechildarchives oca) {
+        return ocaComponent.update(oca);
+    }
+
+    @Transactional
+    public int deleteOca(int id) {
+        return ocaComponent.delete(id);
     }
 
     public OnePage<Onechildarchives> selectOnePage(
@@ -75,18 +88,27 @@ public class OnechildarchivesServiceImpl {
         return ocaComponent.selectOnePage(example);
     }
 
-    @Transactional
-    public int update(Onechildarchives oca) {
-        return ocaComponent.update(oca);
+    public List<Gestationinfo> getGiByOcaId(int ocaId) {
+        return giComponent.getByOcaId(ocaId);
+    }
+
+    public Gestationinfo getGiById(int id) {
+        return giComponent.getById(id);
     }
 
     @Transactional
-    public int delete(int id) {
-        return ocaComponent.delete(id);
+    public int saveGi(Gestationinfo gi) {
+        return giComponent.save(gi);
     }
-    
-    public List<Gestationinfo> getGestationInfo(int ocaId){
-        return ocaComponent.getGestationInfo(ocaId);
+
+    @Transactional
+    public int updateGi(Gestationinfo gi) {
+        return giComponent.update(gi);
+    }
+
+    @Transactional
+    public int deleteGi(int id) {
+        return giComponent.delete(id);
     }
 
 }
