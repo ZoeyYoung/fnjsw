@@ -368,7 +368,13 @@
           </form>
         </div>
         <div class="tab-pane" id="tab2"><br>
-          <form id="uploadForm" name="uploadForm" action="${ctx}/oneChild/uploadFPC" method="post" enctype="multipart/form-data">
+          <c:forEach items= "${fpcs}" var="fpc" varStatus="status">
+            <img src="D:/uploads/${oca.id}/${fpc.filename}" style="width:100px; height:100px;" />
+            ${fpc.filename}
+          </c:forEach>
+          <form id="uploadForm" name="uploadForm"
+              action="${ctx}/oneChild/uploadFPC/${oca.id}"
+              enctype="multipart/form-data" method="post">
             <div class="upload-box">
               <div class="upload-main">
                 <div class="upload-choose">
@@ -386,8 +392,8 @@
         </div>
         <div class="tab-pane" id="tab3"><br><input type="file" name="files" /><hr></div>
         <div class="tab-pane" id="tab4"><br>
-          <sf:form method="post" action="${ctx}/oneChild/updateComment"
-                  modelAttribute="oca">
+          <sf:form action="${ctx}/oneChild/updateComment"
+              modelAttribute="oca" method="post">
             <input type="hidden" id="id" name="id" value="${oca.id}" />
             <sf:textarea id="comment" path="comment" class="form-control" rows="10"></sf:textarea><hr>
             <div>
@@ -441,6 +447,9 @@ var appendNextOps = function(code, next) {
 $("#f1Pr, #f1Ci, #f1Co, #f1To, #f2Pr, #f2Ci, #f2Co, #f2To, #m1Pr, #m1Ci, #m1Co, #m1To, #m2Pr, #m2Ci, #m2Co, #m2To").on('change', function() {
     appendNextOps($(this).has(":selected").val(), $(this).attr("next"));
 });
+////////////////////////////////////////////////////////////
+// 妊娠增删改查
+////////////////////////////////////////////////////////////
 var selJson = {
     next: {
         id: "s2",
@@ -495,14 +504,10 @@ $("#serviceResultSel").MultipleLevelSelector({
     splitStr: " ",
     selJson: selJson
 });
-function setValue() {
-    $("#serviceResultSel").MultipleLevelSelector('setValue', $("#newValue").val());
-}
 $("#addGiBtn").on('click', function() {
     $("#serviceResult").val($("#serviceResultSel").MultipleLevelSelector('getValue'));
     addGiForm.submit();
 });
-
 function updateGiInit(giId) {
     var selJson = {
         next: {
@@ -589,7 +594,9 @@ function deleteGi(giId){
         $("#giTr" + giId).remove();
     });
 }
-
+////////////////////////////////////////////////////////////
+// 计生证件扫描 图片上传预览
+////////////////////////////////////////////////////////////
 var params = {
     fileInput: $("#fileImage").get(0),
     dragDrop: $("#fileDragArea").get(0),

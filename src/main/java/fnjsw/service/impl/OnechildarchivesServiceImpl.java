@@ -11,8 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import fnjsw.component.impl.FamilyplanningcertificateComponentImpl;
 import fnjsw.component.impl.GestationinfoComponentImpl;
 import fnjsw.component.impl.OnechildarchivesComponentImpl;
+import fnjsw.entity.Familyplanningcertificate;
 import fnjsw.entity.Gestationinfo;
 import fnjsw.entity.Onechildarchives;
 import fnjsw.entity.OnechildarchivesExample;
@@ -26,6 +28,8 @@ public class OnechildarchivesServiceImpl {
     private OnechildarchivesComponentImpl ocaComponent;
     @Autowired
     private GestationinfoComponentImpl giComponent;
+    @Autowired
+    private FamilyplanningcertificateComponentImpl fpcComponent;
 
     public Onechildarchives getOcaById(int id) {
         return ocaComponent.getById(id);
@@ -109,6 +113,29 @@ public class OnechildarchivesServiceImpl {
     @Transactional
     public int deleteGi(int id) {
         return giComponent.delete(id);
+    }
+
+    public List<Familyplanningcertificate> getFpcByOcaId(int ocaId) {
+        return fpcComponent.getByOcaId(ocaId);
+    }
+
+    public Familyplanningcertificate getFpcById(int id) {
+        return fpcComponent.getById(id);
+    }
+
+    @Transactional
+    public int saveFpc(Familyplanningcertificate fpc) {
+        return fpcComponent.save(fpc);
+    }
+
+    @Transactional
+    public int updateFpc(Familyplanningcertificate fpc) {
+        return fpcComponent.update(fpc);
+    }
+
+    @Transactional
+    public int deleteFpc(int fpc) {
+        return fpcComponent.delete(fpc);
     }
 
 }

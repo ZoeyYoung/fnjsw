@@ -32,6 +32,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springside.modules.mapper.JsonMapper;
 
+import fnjsw.entity.Familyplanningcertificate;
 import fnjsw.entity.Gestationinfo;
 import fnjsw.entity.Onechildarchives;
 import fnjsw.entity.OnechildarchivesExample;
@@ -50,7 +51,7 @@ public class OneChildController {
     @Autowired
     private OnechildarchivesServiceImpl ocaService;
 
-    private String fileUploadDirectory = "D:/uploads";
+    private String fileUploadDirectory = "D:/uploads/";
 
     @InitBinder
     protected void init(HttpServletRequest request,
@@ -64,7 +65,7 @@ public class OneChildController {
 
     /**
      * 获取档案列表
-     * 
+     *
      * @return
      */
     @RequestMapping(value = "list", method = RequestMethod.GET)
@@ -75,7 +76,7 @@ public class OneChildController {
 
     /**
      * 跳转到添加用户页面(get请求)
-     * 
+     *
      * @return
      */
     @RequestMapping(value = "new", method = RequestMethod.GET)
@@ -87,7 +88,7 @@ public class OneChildController {
 
     /**
      * 添加档案信息处理方法(post请求)
-     * 
+     *
      * @param oca
      * @param model
      * @return
@@ -126,6 +127,7 @@ public class OneChildController {
         // 获取需要更新的对象
         model.addAttribute("oca", ocaService.getOcaById(id));
         model.addAttribute("gis", ocaService.getGiByOcaId(id));
+        model.addAttribute("fpcs", ocaService.getFpcByOcaId(id));
         model.addAttribute("action", "update");
         return "oneChildForm";
     }
@@ -176,13 +178,20 @@ public class OneChildController {
         return "redirect:/oneChild/update/" + oca.getId();
     }
 
-    @RequestMapping(value = "uploadFPC", method = RequestMethod.POST)
+    @RequestMapping(value = "uploadFPC/{id}", method = RequestMethod.POST)
     @ResponseBody
-    public String uploadFPC(@RequestParam("imageFile") MultipartFile file,
+    public String uploadFPC(@PathVariable("id") int ocaId,
+            @RequestParam("imageFile") MultipartFile file,
             Model model) {
         try {
-            return saveMutipartFile(fileUploadDirectory,
-                    file.getOriginalFilename(), file);
+            Familyplanningcertificate fpc = new Familyplanningcertificate();
+            String filename =
+                    saveMutipartFile(new File(fileUploadDirectory + ocaId),
+                            file);
+            fpc.setOcaid(ocaId);
+            fpc.setFilename(filename);
+            fpc.setUploadtime(new Date());
+            ocaService.saveFpc(fpc);
         } catch (IllegalStateException | IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -190,17 +199,20 @@ public class OneChildController {
         return "";
     }
 
-    private String saveMutipartFile(String dir, String name, MultipartFile mpf)
+    private String saveMutipartFile(File dir, MultipartFile mpf)
             throws IllegalStateException, IOException {
         if (mpf.getSize() == 0L) {
             return "";
+        }
+        if (!dir.isDirectory()) {
+            dir.mkdirs();
         }
         String newFilenameBase = UUID.randomUUID().toString();
         String originalFileExtension =
                 mpf.getOriginalFilename().substring(
                         mpf.getOriginalFilename().lastIndexOf("."));
-        String newFilename = name + newFilenameBase + originalFileExtension;
-        File newFile = new File(dir + "/" + newFilename);
+        String newFilename = newFilenameBase + originalFileExtension;
+        File newFile = new File(dir.getAbsolutePath() + "/" + newFilename);
         mpf.transferTo(newFile);
         return newFilename;
     }
