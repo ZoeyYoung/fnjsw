@@ -1,7 +1,10 @@
 package fnjsw.controller;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -65,7 +68,7 @@ public class OneChildController {
 
     /**
      * 获取档案列表
-     *
+     * 
      * @return
      */
     @RequestMapping(value = "list", method = RequestMethod.GET)
@@ -76,7 +79,7 @@ public class OneChildController {
 
     /**
      * 跳转到添加用户页面(get请求)
-     *
+     * 
      * @return
      */
     @RequestMapping(value = "new", method = RequestMethod.GET)
@@ -88,7 +91,7 @@ public class OneChildController {
 
     /**
      * 添加档案信息处理方法(post请求)
-     *
+     * 
      * @param oca
      * @param model
      * @return
@@ -197,6 +200,28 @@ public class OneChildController {
             e.printStackTrace();
         }
         return "";
+    }
+
+    @RequestMapping("preview/{fpcId}")
+    public void previewFPC(@PathVariable("fpcId") int fpcId,
+            HttpServletRequest request,
+            HttpServletResponse response) throws IOException {
+        Familyplanningcertificate fpc = ocaService.getFpcById(fpcId);
+        File file =
+                new File(fileUploadDirectory + fpc.getOcaid() + File.separator
+                        + fpc.getFilename());
+        InputStream is = new FileInputStream(file);
+        OutputStream os = response.getOutputStream();
+        byte[] bt = new byte[1024];
+        int len = -1;
+        while ((len = is.read(bt)) != -1) {
+            os.write(bt, 0, len);
+        }
+        response.setContentType("application/bmp");
+        os.write("\r\n".getBytes());
+        os.flush();
+        os.close();
+        is.close();
     }
 
     private String saveMutipartFile(File dir, MultipartFile mpf)

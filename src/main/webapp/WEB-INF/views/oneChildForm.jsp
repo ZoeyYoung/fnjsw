@@ -368,10 +368,29 @@
           </form>
         </div>
         <div class="tab-pane" id="tab2"><br>
+          <script>
+          function newFpcImgPreview(fpcId, filename) {
+            var formImg = new Image();
+            formImg.src='${ctx}/oneChild/preview/' + fpcId;
+            formImg.width = 100;
+            formImg.height = 100;
+            formImg.onload = function(){
+              $("#fpcImg" + fpcId).append(formImg);
+            };
+          }
+          </script>
+          <div id="fpcPreviews">
           <c:forEach items= "${fpcs}" var="fpc" varStatus="status">
-            <img src="D:/uploads/${oca.id}/${fpc.filename}" style="width:100px; height:100px;" />
-            ${fpc.filename}
+            <p>
+              <strong>${fpc.filename}</strong>
+              <a href="javascript:" class="upload-delete" title="删除" data-index="'+ fpcId +'">删除</a><br/>
+              <div id="fpcImg${fpc.id}"></div>
+            </p>
+            <script>
+              newFpcImgPreview(${fpc.id});
+            </script>
           </c:forEach>
+          </div>
           <form id="uploadForm" name="uploadForm"
               action="${ctx}/oneChild/uploadFPC/${oca.id}"
               enctype="multipart/form-data" method="post">
