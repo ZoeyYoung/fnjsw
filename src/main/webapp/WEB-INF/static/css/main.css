@@ -209,9 +209,9 @@ legend {
 .upload-drag-area{display:inline-block; width:60%; padding:4em 0; margin-left:.5em; border:1px dashed #ddd; background:#fff 20px center; color:#999; text-align:center; vertical-align:middle;}
 .upload-drag-hover{border-color:#069; box-shadow:inset 2px 2px 4px rgba(0, 0, 0, .5); color:#333;}
 .upload-preview{border-top:1px solid #bbb; border-bottom:1px solid #bbb; background-color:#fff; overflow:hidden; _zoom:1;}
-.upload-append-list{height:300px; padding:0 1em; float:left; position:relative;}
+.upload-append-list{ padding:0 1em; float:left; position:relative;}
 .upload-delete{margin-left:2em;}
-.upload-image{max-height:250px; padding:5px;}
+.upload-image{max-height:150px; padding:5px;}
 .upload-submit{padding-top:1em; padding-left:1em;}
 .upload-submit-btn{display:none; height:32px; font-size:14px;}
 .upload-loading{height:250px; background:url(http://www.zhangxinxu.com/study/image/loading.gif) no-repeat center;}

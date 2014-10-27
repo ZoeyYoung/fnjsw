@@ -368,30 +368,19 @@
           </form>
         </div>
         <div class="tab-pane" id="tab2"><br>
-          <script>
-          function newFpcImgPreview(fpcId, filename) {
-            var formImg = new Image();
-            formImg.src='${ctx}/oneChild/preview/' + fpcId;
-            formImg.width = 100;
-            formImg.height = 100;
-            formImg.onload = function(){
-              $("#fpcImg" + fpcId).append(formImg);
-            };
-          }
-          </script>
-          <div id="fpcPreviews">
+          <div id="fpcPreviews row">
           <c:forEach items= "${fpcs}" var="fpc" varStatus="status">
-            <p>
-              <strong>${fpc.filename}</strong>
-              <a href="javascript:" class="upload-delete" title="删除" data-index="'+ fpcId +'">删除</a><br/>
-              <div id="fpcImg${fpc.id}"></div>
-            </p>
-            <script>
-              newFpcImgPreview(${fpc.id});
-            </script>
+            <div id="fpcImg${fpc.id}" class="col-sm-4 col-md-3">
+              <div class="thumbnail">
+                <img src="${ctx}/oneChild/preview/${fpc.id}" class="upload-image img-responsive" title="${fpc.filename}"/>
+                <div class="caption">
+                  <a href="javascript:;" class="upload-delete" title="删除" data-index="${fpc.id}" onclick="deleteFPC(${fpc.id})">删除</a>
+                </div>
+              </div>
+            </div>
           </c:forEach>
           </div>
-          <form id="uploadForm" name="uploadForm"
+          <form id="uploadForm" name="uploadForm" style="clear:both;"
               action="${ctx}/oneChild/uploadFPC/${oca.id}"
               enctype="multipart/form-data" method="post">
             <div class="upload-box">
@@ -409,7 +398,26 @@
             </div>
           </form>
         </div>
-        <div class="tab-pane" id="tab3"><br><input type="file" name="files" /><hr></div>
+        <div class="tab-pane" id="tab3"><br>
+          <c:if test="${oca.zhunshengzheng != null && oca.zhunshengzheng != ''}">
+          <div id="zszImg" class="col-sm-4 col-md-3">
+            <div class="thumbnail">
+              <img src="${ctx}/oneChild/previewZSZ/${oca.id}" class="upload-image img-responsive" title="${fpc.filename}"/>
+              <div class="caption">
+                <a href="javascript:;" class="upload-delete" title="删除" data-index="${oca.id}" onclick="deleteZSZ(${oca.id})">删除</a>
+              </div>
+            </div>
+          </div>
+          </c:if>
+          <form id="uploadZSZForm" name="uploadForm" class="form-inline" style="clear:both;"
+                action="${ctx}/oneChild/uploadZSZ/${oca.id}"
+                enctype="multipart/form-data" method="post">
+            <div class="form-group">
+              <input type="file" name="zsz" />
+            </div>
+            <button type="submit" id="zszSubmit">确认上传图片</button>
+          </form>
+        </div>
         <div class="tab-pane" id="tab4"><br>
           <sf:form action="${ctx}/oneChild/updateComment"
               modelAttribute="oca" method="post">
@@ -638,18 +646,13 @@ var params = {
         var funAppendImage = function() {
             file = files[i];
             if (file) {
-                var reader = new FileReader();
-                reader.onload = function(e) {
-                    html += '<div id="uploadList' + i
-                            + '" class="upload-append-list"><p><strong>'
-                            + file.name + '</strong>'
-                            + '<a href="javascript:" class="upload-delete" title="删除" data-index="'+ i +'">删除</a><br/>'
-                            + '<img id="uploadImage' + i + '" src="' + e.target.result + '" class="upload-image" /></p>'
-                            + '<span id="uploadProgress' + i + '" class="upload-progress"></span></div>';
-                    i++;
-                    funAppendImage();
-                };
-                reader.readAsDataURL(file);
+                var url = window.URL.createObjectURL(file);
+                html += '<div id="uploadList' + i + '" class="upload-append-list">'
+                        + '<img id="uploadImage' + i + '" src="' + url + '" class="upload-image" title="' + file.name + '"/>'
+                        + '<p><a href="javascript:" class="upload-delete" title="删除" data-index="'+ i +'">删除</a><br/>'
+                        + '</p><span id="uploadProgress' + i + '" class="upload-progress"></span></div>';
+                i++;
+                funAppendImage();
             } else {
                 $("#preview").html(html);
                 if (html) {
@@ -682,7 +685,7 @@ var params = {
         eleProgress.show().html(percent);
     },
     onSuccess: function(file, response) {
-        $("#uploadInf").append("<p>上传成功，图片地址是：" + response + "</p>");
+        $("#uploadInf").append("<p>上传成功</p>");
     },
     onFailure: function(file) {
         $("#uploadInf").append("<p>图片" + file.name + "上传失败！</p>");
@@ -698,6 +701,44 @@ var params = {
 };
 ZXXFILE = $.extend(ZXXFILE, params);
 ZXXFILE.init();
+var deleteFPC = function(id) {
+  $.ajax({
+    type: 'POST',
+    async: true,
+    cache: false,
+    url : "${ctx}/oneChild/deleteFPC/" + id,
+    success : function(data) {
+      if (data && null != data && "success" == data) {
+        $("#fpcImg" + id).remove();
+      } else {
+        alert('删除失败!');
+        return false;
+      }
+    },
+    error : function(data) {
+      alert('删除失败!');
+    }
+  });
+};
+var deleteZSZ = function(id) {
+  $.ajax({
+    type: 'POST',
+    async: true,
+    cache: false,
+    url : "${ctx}/oneChild/deleteZSZ/" + id,
+    success : function(data) {
+      if (data && null != data && "success" == data) {
+        $("#zszImg").remove();
+      } else {
+        alert('删除失败!');
+        return false;
+      }
+    },
+    error : function(data) {
+      alert('删除失败!');
+    }
+  });
+};
 </script>
 </body>
 </html>

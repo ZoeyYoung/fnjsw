@@ -202,6 +202,26 @@ public class OneChildController {
         return "";
     }
 
+    @RequestMapping(value = "uploadZSZ/{id}", method = RequestMethod.POST)
+    public String uploadZSZ(@PathVariable("id") int ocaId,
+            @RequestParam("zsz") MultipartFile[] file,
+            Model model) {
+        try {
+            Onechildarchives oca = ocaService.getOcaById(ocaId);
+            String filename =
+                    saveMutipartFile(new File(fileUploadDirectory + ocaId),
+                            file[0]);
+            if (StringUtils.isNotEmpty(filename)) {
+                oca.setZhunshengzheng(filename);
+            }
+            ocaService.updateOca(oca);
+        } catch (IllegalStateException | IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return "redirect:/oneChild/update/" + ocaId;
+    }
+
     @RequestMapping("preview/{fpcId}")
     public void previewFPC(@PathVariable("fpcId") int fpcId,
             HttpServletRequest request,
@@ -210,6 +230,28 @@ public class OneChildController {
         File file =
                 new File(fileUploadDirectory + fpc.getOcaid() + File.separator
                         + fpc.getFilename());
+        InputStream is = new FileInputStream(file);
+        OutputStream os = response.getOutputStream();
+        byte[] bt = new byte[1024];
+        int len = -1;
+        while ((len = is.read(bt)) != -1) {
+            os.write(bt, 0, len);
+        }
+        response.setContentType("application/bmp");
+        os.write("\r\n".getBytes());
+        os.flush();
+        os.close();
+        is.close();
+    }
+
+    @RequestMapping("previewZSZ/{ocaId}")
+    public void previewZSZ(@PathVariable("ocaId") int ocaId,
+            HttpServletRequest request,
+            HttpServletResponse response) throws IOException {
+        Onechildarchives oca = ocaService.getOcaById(ocaId);
+        File file =
+                new File(fileUploadDirectory + oca.getId() + File.separator
+                        + oca.getZhunshengzheng());
         InputStream is = new FileInputStream(file);
         OutputStream os = response.getOutputStream();
         byte[] bt = new byte[1024];
@@ -272,6 +314,41 @@ public class OneChildController {
         // 删除记录前先删除文件
         int result = ocaService.deleteGi(id);
         if (result == 1) {
+            return "success";
+        }
+        return "fail";
+    }
+
+    @RequestMapping("deleteFPC/{fpcId}")
+    @ResponseBody
+    public String deleteFPC(@PathVariable("fpcId") int fpcId,
+            Model model) {
+        Familyplanningcertificate fpc = ocaService.getFpcById(fpcId);
+        int result = ocaService.deleteFpc(fpcId);
+        if (result == 1) {
+            File file =
+                    new File(fileUploadDirectory + fpc.getOcaid()
+                            + File.separator
+                            + fpc.getFilename());
+            FileUtils.deleteQuietly(file);
+            return "success";
+        }
+        return "fail";
+    }
+
+    @RequestMapping("deleteZSZ/{ocaId}")
+    @ResponseBody
+    public String deleteZSZ(@PathVariable("ocaId") int ocaId,
+            Model model) {
+        Onechildarchives oca = ocaService.getOcaById(ocaId);
+        String filename = oca.getZhunshengzheng();
+        oca.setZhunshengzheng("");
+        int result = ocaService.updateOca(oca);
+        if (result == 1) {
+            File file =
+                    new File(fileUploadDirectory + ocaId + File.separator
+                            + filename);
+            FileUtils.deleteQuietly(file);
             return "success";
         }
         return "fail";

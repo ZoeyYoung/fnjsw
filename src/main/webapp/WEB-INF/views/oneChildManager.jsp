@@ -151,7 +151,6 @@ var updateOca = function(id) {
     window.location = "${ctx}/oneChild/update/"+id;
 };
 var deleteOca = function(id) {
-  console.log(id);
   $.ajax({
     type: 'POST',
     async: true,
