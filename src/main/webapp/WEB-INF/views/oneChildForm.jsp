@@ -77,14 +77,16 @@
       <!-- 一孩录入标签 -->
       <ul class="nav nav-tabs" role="tablist">
         <li class="active"><a href="#tab0" role="tab" data-toggle="tab">基本信息</a></li>
-        <li><a href="#tab1" role="tab" data-toggle="tab">妊娠</a></li>
-        <li><a href="#tab2" role="tab" data-toggle="tab">计生证件扫描</a></li>
-        <li><a href="#tab3" role="tab" data-toggle="tab">准生证扫描</a></li>
-        <li><a href="#tab4" role="tab" data-toggle="tab">备注</a></li>
+        <c:if test="${action == 'update'}">
+          <li><a href="#tab1" role="tab" data-toggle="tab">妊娠</a></li>
+          <li><a href="#tab2" role="tab" data-toggle="tab">计生证件扫描</a></li>
+          <li><a href="#tab3" role="tab" data-toggle="tab">准生证扫描</a></li>
+          <li><a href="#tab4" role="tab" data-toggle="tab">备注</a></li>
+        </c:if>
       </ul>
       <!-- Tab panes -->
       <div class="tab-content">
-        <div class="tab-pane active" id="tab0">
+        <div class="tab-pane fade in active" id="tab0">
           <br>
           <sf:form action="${ctx}/oneChild/${action}"
               modelAttribute="oca" method="post">
