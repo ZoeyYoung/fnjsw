@@ -77,6 +77,8 @@ public class Onechildarchives {
 
     private String lastserviceperson;
 
+    private String logoutreason;
+
     private String comment;
 
     public Integer getId() {
@@ -373,6 +375,14 @@ public class Onechildarchives {
 
     public void setLastserviceperson(String lastserviceperson) {
         this.lastserviceperson = lastserviceperson;
+    }
+
+    public String getLogoutreason() {
+        return logoutreason;
+    }
+
+    public void setLogoutreason(String logoutreason) {
+        this.logoutreason = logoutreason;
     }
 
     public String getComment() {

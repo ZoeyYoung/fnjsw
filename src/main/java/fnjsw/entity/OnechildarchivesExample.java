@@ -17,7 +17,6 @@ public class OnechildarchivesExample {
     public Page getPage() {
         return page;
     }
-
     protected String orderByClause;
 
     protected boolean distinct;
@@ -104,39 +103,30 @@ public class OnechildarchivesExample {
             criteria.add(new Criterion(condition));
         }
 
-        protected void addCriterion(String condition, Object value,
-                String property) {
+        protected void addCriterion(String condition, Object value, String property) {
             if (value == null) {
-                throw new RuntimeException("Value for " + property
-                        + " cannot be null");
+                throw new RuntimeException("Value for " + property + " cannot be null");
             }
             criteria.add(new Criterion(condition, value));
         }
 
-        protected void addCriterion(String condition, Object value1,
-                Object value2, String property) {
+        protected void addCriterion(String condition, Object value1, Object value2, String property) {
             if (value1 == null || value2 == null) {
-                throw new RuntimeException("Between values for " + property
-                        + " cannot be null");
+                throw new RuntimeException("Between values for " + property + " cannot be null");
             }
             criteria.add(new Criterion(condition, value1, value2));
         }
 
-        protected void addCriterionForJDBCDate(String condition, Date value,
-                String property) {
+        protected void addCriterionForJDBCDate(String condition, Date value, String property) {
             if (value == null) {
-                throw new RuntimeException("Value for " + property
-                        + " cannot be null");
+                throw new RuntimeException("Value for " + property + " cannot be null");
             }
-            addCriterion(condition, new java.sql.Date(value.getTime()),
-                    property);
+            addCriterion(condition, new java.sql.Date(value.getTime()), property);
         }
 
-        protected void addCriterionForJDBCDate(String condition,
-                List<Date> values, String property) {
+        protected void addCriterionForJDBCDate(String condition, List<Date> values, String property) {
             if (values == null || values.size() == 0) {
-                throw new RuntimeException("Value list for " + property
-                        + " cannot be null or empty");
+                throw new RuntimeException("Value list for " + property + " cannot be null or empty");
             }
             List<java.sql.Date> dateList = new ArrayList<java.sql.Date>();
             Iterator<Date> iter = values.iterator();
@@ -146,14 +136,11 @@ public class OnechildarchivesExample {
             addCriterion(condition, dateList, property);
         }
 
-        protected void addCriterionForJDBCDate(String condition, Date value1,
-                Date value2, String property) {
+        protected void addCriterionForJDBCDate(String condition, Date value1, Date value2, String property) {
             if (value1 == null || value2 == null) {
-                throw new RuntimeException("Between values for " + property
-                        + " cannot be null");
+                throw new RuntimeException("Between values for " + property + " cannot be null");
             }
-            addCriterion(condition, new java.sql.Date(value1.getTime()),
-                    new java.sql.Date(value2.getTime()), property);
+            addCriterion(condition, new java.sql.Date(value1.getTime()), new java.sql.Date(value2.getTime()), property);
         }
 
         public Criteria andIdIsNull() {
@@ -492,8 +479,7 @@ public class OnechildarchivesExample {
         }
 
         public Criteria andMarriageidnoNotBetween(String value1, String value2) {
-            addCriterion("marriageIdNo not between", value1, value2,
-                    "marriageidno");
+            addCriterion("marriageIdNo not between", value1, value2, "marriageidno");
             return (Criteria) this;
         }
 
@@ -543,8 +529,7 @@ public class OnechildarchivesExample {
         }
 
         public Criteria andFpermanentaddressNotLike(String value) {
-            addCriterion("fPermanentAddress not like", value,
-                    "fpermanentaddress");
+            addCriterion("fPermanentAddress not like", value, "fpermanentaddress");
             return (Criteria) this;
         }
 
@@ -554,21 +539,17 @@ public class OnechildarchivesExample {
         }
 
         public Criteria andFpermanentaddressNotIn(List<String> values) {
-            addCriterion("fPermanentAddress not in", values,
-                    "fpermanentaddress");
+            addCriterion("fPermanentAddress not in", values, "fpermanentaddress");
             return (Criteria) this;
         }
 
         public Criteria andFpermanentaddressBetween(String value1, String value2) {
-            addCriterion("fPermanentAddress between", value1, value2,
-                    "fpermanentaddress");
+            addCriterion("fPermanentAddress between", value1, value2, "fpermanentaddress");
             return (Criteria) this;
         }
 
-        public Criteria andFpermanentaddressNotBetween(String value1,
-                String value2) {
-            addCriterion("fPermanentAddress not between", value1, value2,
-                    "fpermanentaddress");
+        public Criteria andFpermanentaddressNotBetween(String value1, String value2) {
+            addCriterion("fPermanentAddress not between", value1, value2, "fpermanentaddress");
             return (Criteria) this;
         }
 
@@ -848,8 +829,7 @@ public class OnechildarchivesExample {
         }
 
         public Criteria andFcompanynameNotBetween(String value1, String value2) {
-            addCriterion("fCompanyName not between", value1, value2,
-                    "fcompanyname");
+            addCriterion("fCompanyName not between", value1, value2, "fcompanyname");
             return (Criteria) this;
         }
 
@@ -919,8 +899,7 @@ public class OnechildarchivesExample {
         }
 
         public Criteria andFcompanyaddrNotBetween(String value1, String value2) {
-            addCriterion("fCompanyAddr not between", value1, value2,
-                    "fcompanyaddr");
+            addCriterion("fCompanyAddr not between", value1, value2, "fcompanyaddr");
             return (Criteria) this;
         }
 
@@ -1180,8 +1159,7 @@ public class OnechildarchivesExample {
         }
 
         public Criteria andMpermanentaddressNotLike(String value) {
-            addCriterion("mPermanentAddress not like", value,
-                    "mpermanentaddress");
+            addCriterion("mPermanentAddress not like", value, "mpermanentaddress");
             return (Criteria) this;
         }
 
@@ -1191,21 +1169,17 @@ public class OnechildarchivesExample {
         }
 
         public Criteria andMpermanentaddressNotIn(List<String> values) {
-            addCriterion("mPermanentAddress not in", values,
-                    "mpermanentaddress");
+            addCriterion("mPermanentAddress not in", values, "mpermanentaddress");
             return (Criteria) this;
         }
 
         public Criteria andMpermanentaddressBetween(String value1, String value2) {
-            addCriterion("mPermanentAddress between", value1, value2,
-                    "mpermanentaddress");
+            addCriterion("mPermanentAddress between", value1, value2, "mpermanentaddress");
             return (Criteria) this;
         }
 
-        public Criteria andMpermanentaddressNotBetween(String value1,
-                String value2) {
-            addCriterion("mPermanentAddress not between", value1, value2,
-                    "mpermanentaddress");
+        public Criteria andMpermanentaddressNotBetween(String value1, String value2) {
+            addCriterion("mPermanentAddress not between", value1, value2, "mpermanentaddress");
             return (Criteria) this;
         }
 
@@ -1485,8 +1459,7 @@ public class OnechildarchivesExample {
         }
 
         public Criteria andMcompanynameNotBetween(String value1, String value2) {
-            addCriterion("mCompanyName not between", value1, value2,
-                    "mcompanyname");
+            addCriterion("mCompanyName not between", value1, value2, "mcompanyname");
             return (Criteria) this;
         }
 
@@ -1556,8 +1529,7 @@ public class OnechildarchivesExample {
         }
 
         public Criteria andMcompanyaddrNotBetween(String value1, String value2) {
-            addCriterion("mCompanyAddr not between", value1, value2,
-                    "mcompanyaddr");
+            addCriterion("mCompanyAddr not between", value1, value2, "mcompanyaddr");
             return (Criteria) this;
         }
 
@@ -1622,14 +1594,12 @@ public class OnechildarchivesExample {
         }
 
         public Criteria andMaritalstatusBetween(String value1, String value2) {
-            addCriterion("maritalStatus between", value1, value2,
-                    "maritalstatus");
+            addCriterion("maritalStatus between", value1, value2, "maritalstatus");
             return (Criteria) this;
         }
 
         public Criteria andMaritalstatusNotBetween(String value1, String value2) {
-            addCriterion("maritalStatus not between", value1, value2,
-                    "maritalstatus");
+            addCriterion("maritalStatus not between", value1, value2, "maritalstatus");
             return (Criteria) this;
         }
 
@@ -1749,20 +1719,17 @@ public class OnechildarchivesExample {
         }
 
         public Criteria andMarriagedateNotIn(List<Date> values) {
-            addCriterionForJDBCDate("marriageDate not in", values,
-                    "marriagedate");
+            addCriterionForJDBCDate("marriageDate not in", values, "marriagedate");
             return (Criteria) this;
         }
 
         public Criteria andMarriagedateBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("marriageDate between", value1, value2,
-                    "marriagedate");
+            addCriterionForJDBCDate("marriageDate between", value1, value2, "marriagedate");
             return (Criteria) this;
         }
 
         public Criteria andMarriagedateNotBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("marriageDate not between", value1, value2,
-                    "marriagedate");
+            addCriterionForJDBCDate("marriageDate not between", value1, value2, "marriagedate");
             return (Criteria) this;
         }
 
@@ -1972,8 +1939,7 @@ public class OnechildarchivesExample {
         }
 
         public Criteria andResidencenoNotBetween(String value1, String value2) {
-            addCriterion("residenceNo not between", value1, value2,
-                    "residenceno");
+            addCriterion("residenceNo not between", value1, value2, "residenceno");
             return (Criteria) this;
         }
 
@@ -1988,62 +1954,52 @@ public class OnechildarchivesExample {
         }
 
         public Criteria andGetresidencedateEqualTo(Date value) {
-            addCriterionForJDBCDate("getResidenceDate =", value,
-                    "getresidencedate");
+            addCriterionForJDBCDate("getResidenceDate =", value, "getresidencedate");
             return (Criteria) this;
         }
 
         public Criteria andGetresidencedateNotEqualTo(Date value) {
-            addCriterionForJDBCDate("getResidenceDate <>", value,
-                    "getresidencedate");
+            addCriterionForJDBCDate("getResidenceDate <>", value, "getresidencedate");
             return (Criteria) this;
         }
 
         public Criteria andGetresidencedateGreaterThan(Date value) {
-            addCriterionForJDBCDate("getResidenceDate >", value,
-                    "getresidencedate");
+            addCriterionForJDBCDate("getResidenceDate >", value, "getresidencedate");
             return (Criteria) this;
         }
 
         public Criteria andGetresidencedateGreaterThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("getResidenceDate >=", value,
-                    "getresidencedate");
+            addCriterionForJDBCDate("getResidenceDate >=", value, "getresidencedate");
             return (Criteria) this;
         }
 
         public Criteria andGetresidencedateLessThan(Date value) {
-            addCriterionForJDBCDate("getResidenceDate <", value,
-                    "getresidencedate");
+            addCriterionForJDBCDate("getResidenceDate <", value, "getresidencedate");
             return (Criteria) this;
         }
 
         public Criteria andGetresidencedateLessThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("getResidenceDate <=", value,
-                    "getresidencedate");
+            addCriterionForJDBCDate("getResidenceDate <=", value, "getresidencedate");
             return (Criteria) this;
         }
 
         public Criteria andGetresidencedateIn(List<Date> values) {
-            addCriterionForJDBCDate("getResidenceDate in", values,
-                    "getresidencedate");
+            addCriterionForJDBCDate("getResidenceDate in", values, "getresidencedate");
             return (Criteria) this;
         }
 
         public Criteria andGetresidencedateNotIn(List<Date> values) {
-            addCriterionForJDBCDate("getResidenceDate not in", values,
-                    "getresidencedate");
+            addCriterionForJDBCDate("getResidenceDate not in", values, "getresidencedate");
             return (Criteria) this;
         }
 
         public Criteria andGetresidencedateBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("getResidenceDate between", value1, value2,
-                    "getresidencedate");
+            addCriterionForJDBCDate("getResidenceDate between", value1, value2, "getresidencedate");
             return (Criteria) this;
         }
 
         public Criteria andGetresidencedateNotBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("getResidenceDate not between", value1,
-                    value2, "getresidencedate");
+            addCriterionForJDBCDate("getResidenceDate not between", value1, value2, "getresidencedate");
             return (Criteria) this;
         }
 
@@ -2108,15 +2064,12 @@ public class OnechildarchivesExample {
         }
 
         public Criteria andRegistrationaddrBetween(String value1, String value2) {
-            addCriterion("registrationAddr between", value1, value2,
-                    "registrationaddr");
+            addCriterion("registrationAddr between", value1, value2, "registrationaddr");
             return (Criteria) this;
         }
 
-        public Criteria andRegistrationaddrNotBetween(String value1,
-                String value2) {
-            addCriterion("registrationAddr not between", value1, value2,
-                    "registrationaddr");
+        public Criteria andRegistrationaddrNotBetween(String value1, String value2) {
+            addCriterion("registrationAddr not between", value1, value2, "registrationaddr");
             return (Criteria) this;
         }
 
@@ -2201,62 +2154,52 @@ public class OnechildarchivesExample {
         }
 
         public Criteria andRegistrationdateEqualTo(Date value) {
-            addCriterionForJDBCDate("registrationDate =", value,
-                    "registrationdate");
+            addCriterionForJDBCDate("registrationDate =", value, "registrationdate");
             return (Criteria) this;
         }
 
         public Criteria andRegistrationdateNotEqualTo(Date value) {
-            addCriterionForJDBCDate("registrationDate <>", value,
-                    "registrationdate");
+            addCriterionForJDBCDate("registrationDate <>", value, "registrationdate");
             return (Criteria) this;
         }
 
         public Criteria andRegistrationdateGreaterThan(Date value) {
-            addCriterionForJDBCDate("registrationDate >", value,
-                    "registrationdate");
+            addCriterionForJDBCDate("registrationDate >", value, "registrationdate");
             return (Criteria) this;
         }
 
         public Criteria andRegistrationdateGreaterThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("registrationDate >=", value,
-                    "registrationdate");
+            addCriterionForJDBCDate("registrationDate >=", value, "registrationdate");
             return (Criteria) this;
         }
 
         public Criteria andRegistrationdateLessThan(Date value) {
-            addCriterionForJDBCDate("registrationDate <", value,
-                    "registrationdate");
+            addCriterionForJDBCDate("registrationDate <", value, "registrationdate");
             return (Criteria) this;
         }
 
         public Criteria andRegistrationdateLessThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("registrationDate <=", value,
-                    "registrationdate");
+            addCriterionForJDBCDate("registrationDate <=", value, "registrationdate");
             return (Criteria) this;
         }
 
         public Criteria andRegistrationdateIn(List<Date> values) {
-            addCriterionForJDBCDate("registrationDate in", values,
-                    "registrationdate");
+            addCriterionForJDBCDate("registrationDate in", values, "registrationdate");
             return (Criteria) this;
         }
 
         public Criteria andRegistrationdateNotIn(List<Date> values) {
-            addCriterionForJDBCDate("registrationDate not in", values,
-                    "registrationdate");
+            addCriterionForJDBCDate("registrationDate not in", values, "registrationdate");
             return (Criteria) this;
         }
 
         public Criteria andRegistrationdateBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("registrationDate between", value1, value2,
-                    "registrationdate");
+            addCriterionForJDBCDate("registrationDate between", value1, value2, "registrationdate");
             return (Criteria) this;
         }
 
         public Criteria andRegistrationdateNotBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("registrationDate not between", value1,
-                    value2, "registrationdate");
+            addCriterionForJDBCDate("registrationDate not between", value1, value2, "registrationdate");
             return (Criteria) this;
         }
 
@@ -2531,14 +2474,12 @@ public class OnechildarchivesExample {
         }
 
         public Criteria andZhunshengzhengBetween(String value1, String value2) {
-            addCriterion("zhunShengZheng between", value1, value2,
-                    "zhunshengzheng");
+            addCriterion("zhunShengZheng between", value1, value2, "zhunshengzheng");
             return (Criteria) this;
         }
 
         public Criteria andZhunshengzhengNotBetween(String value1, String value2) {
-            addCriterion("zhunShengZheng not between", value1, value2,
-                    "zhunshengzheng");
+            addCriterion("zhunShengZheng not between", value1, value2, "zhunshengzheng");
             return (Criteria) this;
         }
 
@@ -2553,62 +2494,52 @@ public class OnechildarchivesExample {
         }
 
         public Criteria andLastservicetimeEqualTo(Date value) {
-            addCriterionForJDBCDate("lastServiceTime =", value,
-                    "lastservicetime");
+            addCriterionForJDBCDate("lastServiceTime =", value, "lastservicetime");
             return (Criteria) this;
         }
 
         public Criteria andLastservicetimeNotEqualTo(Date value) {
-            addCriterionForJDBCDate("lastServiceTime <>", value,
-                    "lastservicetime");
+            addCriterionForJDBCDate("lastServiceTime <>", value, "lastservicetime");
             return (Criteria) this;
         }
 
         public Criteria andLastservicetimeGreaterThan(Date value) {
-            addCriterionForJDBCDate("lastServiceTime >", value,
-                    "lastservicetime");
+            addCriterionForJDBCDate("lastServiceTime >", value, "lastservicetime");
             return (Criteria) this;
         }
 
         public Criteria andLastservicetimeGreaterThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("lastServiceTime >=", value,
-                    "lastservicetime");
+            addCriterionForJDBCDate("lastServiceTime >=", value, "lastservicetime");
             return (Criteria) this;
         }
 
         public Criteria andLastservicetimeLessThan(Date value) {
-            addCriterionForJDBCDate("lastServiceTime <", value,
-                    "lastservicetime");
+            addCriterionForJDBCDate("lastServiceTime <", value, "lastservicetime");
             return (Criteria) this;
         }
 
         public Criteria andLastservicetimeLessThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("lastServiceTime <=", value,
-                    "lastservicetime");
+            addCriterionForJDBCDate("lastServiceTime <=", value, "lastservicetime");
             return (Criteria) this;
         }
 
         public Criteria andLastservicetimeIn(List<Date> values) {
-            addCriterionForJDBCDate("lastServiceTime in", values,
-                    "lastservicetime");
+            addCriterionForJDBCDate("lastServiceTime in", values, "lastservicetime");
             return (Criteria) this;
         }
 
         public Criteria andLastservicetimeNotIn(List<Date> values) {
-            addCriterionForJDBCDate("lastServiceTime not in", values,
-                    "lastservicetime");
+            addCriterionForJDBCDate("lastServiceTime not in", values, "lastservicetime");
             return (Criteria) this;
         }
 
         public Criteria andLastservicetimeBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("lastServiceTime between", value1, value2,
-                    "lastservicetime");
+            addCriterionForJDBCDate("lastServiceTime between", value1, value2, "lastservicetime");
             return (Criteria) this;
         }
 
         public Criteria andLastservicetimeNotBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("lastServiceTime not between", value1,
-                    value2, "lastservicetime");
+            addCriterionForJDBCDate("lastServiceTime not between", value1, value2, "lastservicetime");
             return (Criteria) this;
         }
 
@@ -2658,8 +2589,7 @@ public class OnechildarchivesExample {
         }
 
         public Criteria andLastserviceresultNotLike(String value) {
-            addCriterion("lastServiceResult not like", value,
-                    "lastserviceresult");
+            addCriterion("lastServiceResult not like", value, "lastserviceresult");
             return (Criteria) this;
         }
 
@@ -2669,21 +2599,17 @@ public class OnechildarchivesExample {
         }
 
         public Criteria andLastserviceresultNotIn(List<String> values) {
-            addCriterion("lastServiceResult not in", values,
-                    "lastserviceresult");
+            addCriterion("lastServiceResult not in", values, "lastserviceresult");
             return (Criteria) this;
         }
 
         public Criteria andLastserviceresultBetween(String value1, String value2) {
-            addCriterion("lastServiceResult between", value1, value2,
-                    "lastserviceresult");
+            addCriterion("lastServiceResult between", value1, value2, "lastserviceresult");
             return (Criteria) this;
         }
 
-        public Criteria andLastserviceresultNotBetween(String value1,
-                String value2) {
-            addCriterion("lastServiceResult not between", value1, value2,
-                    "lastserviceresult");
+        public Criteria andLastserviceresultNotBetween(String value1, String value2) {
+            addCriterion("lastServiceResult not between", value1, value2, "lastserviceresult");
             return (Criteria) this;
         }
 
@@ -2733,8 +2659,7 @@ public class OnechildarchivesExample {
         }
 
         public Criteria andLastservicepersonNotLike(String value) {
-            addCriterion("lastServicePerson not like", value,
-                    "lastserviceperson");
+            addCriterion("lastServicePerson not like", value, "lastserviceperson");
             return (Criteria) this;
         }
 
@@ -2744,21 +2669,87 @@ public class OnechildarchivesExample {
         }
 
         public Criteria andLastservicepersonNotIn(List<String> values) {
-            addCriterion("lastServicePerson not in", values,
-                    "lastserviceperson");
+            addCriterion("lastServicePerson not in", values, "lastserviceperson");
             return (Criteria) this;
         }
 
         public Criteria andLastservicepersonBetween(String value1, String value2) {
-            addCriterion("lastServicePerson between", value1, value2,
-                    "lastserviceperson");
+            addCriterion("lastServicePerson between", value1, value2, "lastserviceperson");
             return (Criteria) this;
         }
 
-        public Criteria andLastservicepersonNotBetween(String value1,
-                String value2) {
-            addCriterion("lastServicePerson not between", value1, value2,
-                    "lastserviceperson");
+        public Criteria andLastservicepersonNotBetween(String value1, String value2) {
+            addCriterion("lastServicePerson not between", value1, value2, "lastserviceperson");
+            return (Criteria) this;
+        }
+
+        public Criteria andLogoutreasonIsNull() {
+            addCriterion("logoutReason is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLogoutreasonIsNotNull() {
+            addCriterion("logoutReason is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLogoutreasonEqualTo(String value) {
+            addCriterion("logoutReason =", value, "logoutreason");
+            return (Criteria) this;
+        }
+
+        public Criteria andLogoutreasonNotEqualTo(String value) {
+            addCriterion("logoutReason <>", value, "logoutreason");
+            return (Criteria) this;
+        }
+
+        public Criteria andLogoutreasonGreaterThan(String value) {
+            addCriterion("logoutReason >", value, "logoutreason");
+            return (Criteria) this;
+        }
+
+        public Criteria andLogoutreasonGreaterThanOrEqualTo(String value) {
+            addCriterion("logoutReason >=", value, "logoutreason");
+            return (Criteria) this;
+        }
+
+        public Criteria andLogoutreasonLessThan(String value) {
+            addCriterion("logoutReason <", value, "logoutreason");
+            return (Criteria) this;
+        }
+
+        public Criteria andLogoutreasonLessThanOrEqualTo(String value) {
+            addCriterion("logoutReason <=", value, "logoutreason");
+            return (Criteria) this;
+        }
+
+        public Criteria andLogoutreasonLike(String value) {
+            addCriterion("logoutReason like", value, "logoutreason");
+            return (Criteria) this;
+        }
+
+        public Criteria andLogoutreasonNotLike(String value) {
+            addCriterion("logoutReason not like", value, "logoutreason");
+            return (Criteria) this;
+        }
+
+        public Criteria andLogoutreasonIn(List<String> values) {
+            addCriterion("logoutReason in", values, "logoutreason");
+            return (Criteria) this;
+        }
+
+        public Criteria andLogoutreasonNotIn(List<String> values) {
+            addCriterion("logoutReason not in", values, "logoutreason");
+            return (Criteria) this;
+        }
+
+        public Criteria andLogoutreasonBetween(String value1, String value2) {
+            addCriterion("logoutReason between", value1, value2, "logoutreason");
+            return (Criteria) this;
+        }
+
+        public Criteria andLogoutreasonNotBetween(String value1, String value2) {
+            addCriterion("logoutReason not between", value1, value2, "logoutreason");
             return (Criteria) this;
         }
     }
@@ -2842,8 +2833,7 @@ public class OnechildarchivesExample {
             this(condition, value, null);
         }
 
-        protected Criterion(String condition, Object value, Object secondValue,
-                String typeHandler) {
+        protected Criterion(String condition, Object value, Object secondValue, String typeHandler) {
             super();
             this.condition = condition;
             this.value = value;

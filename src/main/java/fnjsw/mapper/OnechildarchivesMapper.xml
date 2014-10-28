@@ -39,6 +39,7 @@
     <result column="lastServiceTime" property="lastservicetime" jdbcType="DATE" />
     <result column="lastServiceResult" property="lastserviceresult" jdbcType="VARCHAR" />
     <result column="lastServicePerson" property="lastserviceperson" jdbcType="VARCHAR" />
+    <result column="logoutReason" property="logoutreason" jdbcType="VARCHAR" />
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="fnjsw.entity.Onechildarchives" extends="BaseResultMap" >
     <result column="comment" property="comment" jdbcType="LONGVARCHAR" />
@@ -102,12 +103,12 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, fName, fIdCardNo, fPhone, marriageIdNo, fPermanentAddress, fpHouseNo, fAddress,
-    faHouseNo, fCompanyName, fCompanyAddr, mName, mIdCardNo, mPhone, mPermanentAddress,
-    mpHouseNo, mAddress, maHouseNo, mCompanyName, mCompanyAddr, maritalStatus, marriageNo,
-    marriageDate, hasChild, isAdopted, residenceNo, getResidenceDate, registrationAddr,
-    serviceNo, registrationDate, operator, opPhone, status, zhunShengZheng, lastServiceTime,
-    lastServiceResult, lastServicePerson
+    id, fName, fIdCardNo, fPhone, marriageIdNo, fPermanentAddress, fpHouseNo, fAddress, 
+    faHouseNo, fCompanyName, fCompanyAddr, mName, mIdCardNo, mPhone, mPermanentAddress, 
+    mpHouseNo, mAddress, maHouseNo, mCompanyName, mCompanyAddr, maritalStatus, marriageNo, 
+    marriageDate, hasChild, isAdopted, residenceNo, getResidenceDate, registrationAddr, 
+    serviceNo, registrationDate, operator, opPhone, status, zhunShengZheng, lastServiceTime, 
+    lastServiceResult, lastServicePerson, logoutReason
   </sql>
   <sql id="Blob_Column_List" >
     comment
@@ -145,7 +146,7 @@
     <include refid="MySqlDialectSuffix" />
   </select>
   <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
-    select
+    select 
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
@@ -163,32 +164,34 @@
     </if>
   </delete>
   <insert id="insert" parameterType="fnjsw.entity.Onechildarchives" >
-    insert into onechildarchives (id, fName, fIdCardNo,
-      fPhone, marriageIdNo, fPermanentAddress,
-      fpHouseNo, fAddress, faHouseNo,
-      fCompanyName, fCompanyAddr, mName,
-      mIdCardNo, mPhone, mPermanentAddress,
-      mpHouseNo, mAddress, maHouseNo,
-      mCompanyName, mCompanyAddr, maritalStatus,
-      marriageNo, marriageDate, hasChild,
-      isAdopted, residenceNo, getResidenceDate,
-      registrationAddr, serviceNo, registrationDate,
-      operator, opPhone, status,
-      zhunShengZheng, lastServiceTime, lastServiceResult,
-      lastServicePerson, comment)
-    values (#{id,jdbcType=INTEGER}, #{fname,jdbcType=VARCHAR}, #{fidcardno,jdbcType=VARCHAR},
-      #{fphone,jdbcType=VARCHAR}, #{marriageidno,jdbcType=VARCHAR}, #{fpermanentaddress,jdbcType=VARCHAR},
-      #{fphouseno,jdbcType=VARCHAR}, #{faddress,jdbcType=VARCHAR}, #{fahouseno,jdbcType=VARCHAR},
-      #{fcompanyname,jdbcType=VARCHAR}, #{fcompanyaddr,jdbcType=VARCHAR}, #{mname,jdbcType=VARCHAR},
-      #{midcardno,jdbcType=VARCHAR}, #{mphone,jdbcType=VARCHAR}, #{mpermanentaddress,jdbcType=VARCHAR},
-      #{mphouseno,jdbcType=VARCHAR}, #{maddress,jdbcType=VARCHAR}, #{mahouseno,jdbcType=VARCHAR},
-      #{mcompanyname,jdbcType=VARCHAR}, #{mcompanyaddr,jdbcType=VARCHAR}, #{maritalstatus,jdbcType=VARCHAR},
-      #{marriageno,jdbcType=VARCHAR}, #{marriagedate,jdbcType=DATE}, #{haschild,jdbcType=VARCHAR},
-      #{isadopted,jdbcType=VARCHAR}, #{residenceno,jdbcType=VARCHAR}, #{getresidencedate,jdbcType=DATE},
-      #{registrationaddr,jdbcType=VARCHAR}, #{serviceno,jdbcType=VARCHAR}, #{registrationdate,jdbcType=DATE},
-      #{operator,jdbcType=VARCHAR}, #{opphone,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR},
-      #{zhunshengzheng,jdbcType=VARCHAR}, #{lastservicetime,jdbcType=DATE}, #{lastserviceresult,jdbcType=VARCHAR},
-      #{lastserviceperson,jdbcType=VARCHAR}, #{comment,jdbcType=LONGVARCHAR})
+    insert into onechildarchives (id, fName, fIdCardNo, 
+      fPhone, marriageIdNo, fPermanentAddress, 
+      fpHouseNo, fAddress, faHouseNo, 
+      fCompanyName, fCompanyAddr, mName, 
+      mIdCardNo, mPhone, mPermanentAddress, 
+      mpHouseNo, mAddress, maHouseNo, 
+      mCompanyName, mCompanyAddr, maritalStatus, 
+      marriageNo, marriageDate, hasChild, 
+      isAdopted, residenceNo, getResidenceDate, 
+      registrationAddr, serviceNo, registrationDate, 
+      operator, opPhone, status, 
+      zhunShengZheng, lastServiceTime, lastServiceResult, 
+      lastServicePerson, logoutReason, comment
+      )
+    values (#{id,jdbcType=INTEGER}, #{fname,jdbcType=VARCHAR}, #{fidcardno,jdbcType=VARCHAR}, 
+      #{fphone,jdbcType=VARCHAR}, #{marriageidno,jdbcType=VARCHAR}, #{fpermanentaddress,jdbcType=VARCHAR}, 
+      #{fphouseno,jdbcType=VARCHAR}, #{faddress,jdbcType=VARCHAR}, #{fahouseno,jdbcType=VARCHAR}, 
+      #{fcompanyname,jdbcType=VARCHAR}, #{fcompanyaddr,jdbcType=VARCHAR}, #{mname,jdbcType=VARCHAR}, 
+      #{midcardno,jdbcType=VARCHAR}, #{mphone,jdbcType=VARCHAR}, #{mpermanentaddress,jdbcType=VARCHAR}, 
+      #{mphouseno,jdbcType=VARCHAR}, #{maddress,jdbcType=VARCHAR}, #{mahouseno,jdbcType=VARCHAR}, 
+      #{mcompanyname,jdbcType=VARCHAR}, #{mcompanyaddr,jdbcType=VARCHAR}, #{maritalstatus,jdbcType=VARCHAR}, 
+      #{marriageno,jdbcType=VARCHAR}, #{marriagedate,jdbcType=DATE}, #{haschild,jdbcType=VARCHAR}, 
+      #{isadopted,jdbcType=VARCHAR}, #{residenceno,jdbcType=VARCHAR}, #{getresidencedate,jdbcType=DATE}, 
+      #{registrationaddr,jdbcType=VARCHAR}, #{serviceno,jdbcType=VARCHAR}, #{registrationdate,jdbcType=DATE}, 
+      #{operator,jdbcType=VARCHAR}, #{opphone,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, 
+      #{zhunshengzheng,jdbcType=VARCHAR}, #{lastservicetime,jdbcType=DATE}, #{lastserviceresult,jdbcType=VARCHAR}, 
+      #{lastserviceperson,jdbcType=VARCHAR}, #{logoutreason,jdbcType=VARCHAR}, #{comment,jdbcType=LONGVARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="fnjsw.entity.Onechildarchives" >
     insert into onechildarchives
@@ -303,6 +306,9 @@
       </if>
       <if test="lastserviceperson != null" >
         lastServicePerson,
+      </if>
+      <if test="logoutreason != null" >
+        logoutReason,
       </if>
       <if test="comment != null" >
         comment,
@@ -419,6 +425,9 @@
       </if>
       <if test="lastserviceperson != null" >
         #{lastserviceperson,jdbcType=VARCHAR},
+      </if>
+      <if test="logoutreason != null" >
+        #{logoutreason,jdbcType=VARCHAR},
       </if>
       <if test="comment != null" >
         #{comment,jdbcType=LONGVARCHAR},
@@ -545,6 +554,9 @@
       <if test="record.lastserviceperson != null" >
         lastServicePerson = #{record.lastserviceperson,jdbcType=VARCHAR},
       </if>
+      <if test="record.logoutreason != null" >
+        logoutReason = #{record.logoutreason,jdbcType=VARCHAR},
+      </if>
       <if test="record.comment != null" >
         comment = #{record.comment,jdbcType=LONGVARCHAR},
       </if>
@@ -592,6 +604,7 @@
       lastServiceTime = #{record.lastservicetime,jdbcType=DATE},
       lastServiceResult = #{record.lastserviceresult,jdbcType=VARCHAR},
       lastServicePerson = #{record.lastserviceperson,jdbcType=VARCHAR},
+      logoutReason = #{record.logoutreason,jdbcType=VARCHAR},
       comment = #{record.comment,jdbcType=LONGVARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -635,7 +648,8 @@
       zhunShengZheng = #{record.zhunshengzheng,jdbcType=VARCHAR},
       lastServiceTime = #{record.lastservicetime,jdbcType=DATE},
       lastServiceResult = #{record.lastserviceresult,jdbcType=VARCHAR},
-      lastServicePerson = #{record.lastserviceperson,jdbcType=VARCHAR}
+      lastServicePerson = #{record.lastserviceperson,jdbcType=VARCHAR},
+      logoutReason = #{record.logoutreason,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -751,6 +765,9 @@
       <if test="lastserviceperson != null" >
         lastServicePerson = #{lastserviceperson,jdbcType=VARCHAR},
       </if>
+      <if test="logoutreason != null" >
+        logoutReason = #{logoutreason,jdbcType=VARCHAR},
+      </if>
       <if test="comment != null" >
         comment = #{comment,jdbcType=LONGVARCHAR},
       </if>
@@ -795,6 +812,7 @@
       lastServiceTime = #{lastservicetime,jdbcType=DATE},
       lastServiceResult = #{lastserviceresult,jdbcType=VARCHAR},
       lastServicePerson = #{lastserviceperson,jdbcType=VARCHAR},
+      logoutReason = #{logoutreason,jdbcType=VARCHAR},
       comment = #{comment,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -835,7 +853,8 @@
       zhunShengZheng = #{zhunshengzheng,jdbcType=VARCHAR},
       lastServiceTime = #{lastservicetime,jdbcType=DATE},
       lastServiceResult = #{lastserviceresult,jdbcType=VARCHAR},
-      lastServicePerson = #{lastserviceperson,jdbcType=VARCHAR}
+      lastServicePerson = #{lastserviceperson,jdbcType=VARCHAR},
+      logoutReason = #{logoutreason,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <sql id="MySqlDialectPrefix" >

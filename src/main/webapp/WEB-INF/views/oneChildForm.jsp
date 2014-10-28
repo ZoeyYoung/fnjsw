@@ -290,22 +290,24 @@
                     </td>
                     <td class="label"><label for="serviceno">服务证号：</label></td>
                     <td><sf:input id="serviceno" path="serviceno" size="16" /></td>
-                  </tr>
-                  <tr>
                     <td class="label"><label for="registrationdate">办证时间：</label></td>
                     <td><sf:input id="registrationdate"
                         path="registrationdate" size="16" /></td>
+                    <td width="320">&nbsp;</td>
+                  </tr>
+                  <tr>
                     <td class="label"><label for="operator">经办人：</label></td>
                     <td><sf:input id="operator" path="operator" size="16" /></td>
                     <td class="label"><label for="opphone">联系电话：</label></td>
                     <td><sf:input id="opphone" path="opphone" size="16" /></td>
                     <td class="label"><label for="status">状态：</label></td>
-                    <td>
+                    <td width="400" colspan="2">
                       <sf:select id="status" path="status">
-                        <sf:option value="-1" selected="">-----请选择-----</sf:option>
                         <sf:option value="正常">正常</sf:option>
                         <sf:option value="注销">注销</sf:option>
                       </sf:select>
+                      <lable id="logoutreasonLabel" style="display:none;" for="logoutreason">注销原因</lable>
+                      <sf:input id="logoutreason" path="logoutreason" style="display:none;" size="16"/>
                     </td>
                   </tr>
                 </tbody>
@@ -443,7 +445,19 @@ var calOpts = {
 $("#marriagedate").omCalendar(calOpts);
 $("#getresidencedate").omCalendar(calOpts);
 $("#registrationdate").omCalendar(calOpts);
-
+$("#status").on('change', function() {
+  if ($("#status").val() === "注销") {
+    $("#logoutreason").show();
+    $("#logoutreasonLabel").show();
+  } else {
+    $("#logoutreason").hide();
+    $("#logoutreasonLabel").hide();
+  }
+});
+if ($("#status").val() === "注销") {
+  $("#logoutreason").show();
+  $("#logoutreasonLabel").show();
+}
 var fiPr = [{
     code: "11",
     name: "北京市"

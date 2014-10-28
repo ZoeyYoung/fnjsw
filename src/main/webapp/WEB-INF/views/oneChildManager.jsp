@@ -102,50 +102,42 @@ $("#enddate").omCalendar(calOpts);
 var defModel = [{
     header : '地址',
     name : 'registrationaddr',
-    align : 'center',
-    sort : 'serverSide'
+    align : 'center'
 }, {
     header : '育妇姓名',
     name : 'fname',
-    align : 'center',
-    sort : 'serverSide'
+    align : 'center'
 }, {
     header : '身份证号码',
     name : 'fidcardno',
-    align : 'center',
-    sort : 'serverSide'
+    align : 'center'
 }, {
     header : '丈夫姓名',
     name : 'mname',
-    align : 'center',
-    sort : 'serverSide'
+    align : 'center'
 }, {
     header : '身份证号码',
     name : 'midcardno',
-    align : 'center',
-    sort : 'serverSide'
+    align : 'center'
 }, {
     header : '婚姻状况',
     name : 'maritalstatus',
-    align : 'center',
-    sort : 'serverSide'
+    align : 'center'
 }, {
     header : '结婚时间',
     name : 'marriagedate',
-    align : 'center',
-    sort : 'serverSide'
+    align : 'center'
 }, {
     header : '妊娠情况',
     name : 'fname',
-    align : 'center',
-    sort : 'serverSide'
+    align : 'center'
 }, {
     header : '其它',
     name : 'fname',
-    align : 'center',
-    sort : 'serverSide'
+    align : 'center'
 }, {
     header : '操作',
+    width: 300,
     name: "",
     align : 'center',
     renderer : function(colValue, rowData, rowIndex) {
