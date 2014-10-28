@@ -5,8 +5,10 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -291,11 +293,6 @@ public class OneChildController {
         int id = Integer.parseInt(request.getParameter("id"));
         // 删除记录前先删除文件
         Onechildarchives originOca = ocaService.getOcaById(id);
-        if (StringUtils.isNotEmpty(originOca.getFamilyplanningcertificate())) {
-            FileUtils.deleteQuietly(new File(fileUploadDirectory
-                    + File.separator
-                    + originOca.getFamilyplanningcertificate()));
-        }
         if (StringUtils.isNotEmpty(originOca.getZhunshengzheng())) {
             FileUtils.deleteQuietly(new File(fileUploadDirectory
                     + File.separator
@@ -364,23 +361,33 @@ public class OneChildController {
         int limit = Integer.parseInt(request.getParameter("limit"));
         Page page = new Page(start, limit);
         logger.debug(page.toString());
-
-        if (StringUtils.isNotEmpty(request.getParameter("year"))
-                && StringUtils.isNotEmpty(request.getParameter("month"))) {
-            Calendar cal = Calendar.getInstance();
-            cal.set(Calendar.YEAR,
-                    Integer.parseInt(request.getParameter("year")));
-            cal.set(Calendar.MONTH,
-                    Integer.parseInt(request.getParameter("month")) - 1);
-            ocaQueryParam.setRegistrationdate(cal.getTime());
+        Date startdate = null;
+        Date enddate = null;
+        try {
+            if (StringUtils.isNotEmpty(request.getParameter("startdate"))) {
+                startdate =
+                        new SimpleDateFormat("yyyy/MM/dd").parse(URLDecoder
+                                .decode(request.getParameter("startdate"),
+                                        "UTF-8"));
+            }
+            if (StringUtils.isNotEmpty(request.getParameter("enddate"))) {
+                enddate =
+                        new SimpleDateFormat("yyyy/MM/dd").parse(URLDecoder
+                                .decode(request.getParameter("enddate"),
+                                        "UTF-8"));
+            }
+        } catch (ParseException | UnsupportedEncodingException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
         }
-
         example.setPage(page);
         // 根据条件 ，按什么顺序
         example.setOrderByClause("ID DESC");
 
         OnePage<Onechildarchives> userPageData =
-                ocaService.selectOnePage(example, ocaQueryParam);
+                ocaService
+                        .selectOnePage(example, ocaQueryParam, startdate,
+                                enddate);
 
         String pageDataString = mapper.toJson(userPageData.getDataList());
         String jsonResult =

@@ -245,8 +245,8 @@
                     <td>
                       <sf:select id="maritalstatus" path="maritalstatus">
                         <sf:option value="-1" selected="">-----请选择-----</sf:option>
-                        <sf:option value="1">初婚</sf:option>
-                        <sf:option value="2">再婚</sf:option>
+                        <sf:option value="初婚">初婚</sf:option>
+                        <sf:option value="再婚">再婚</sf:option>
                       </sf:select>
                     </td>
                     <td class="label"><label for="marriageno">结婚证号：</label></td>
@@ -261,8 +261,8 @@
                     <td>
                       <sf:select id="isadopted" path="isadopted">
                         <sf:option value="-1" selected="">-----请选择-----</sf:option>
-                        <sf:option value="1">是</sf:option>
-                        <sf:option value="2">否</sf:option>
+                        <sf:option value="是">是</sf:option>
+                        <sf:option value="否">否</sf:option>
                       </sf:select>
                     </td>
                     <td class="label"><label for="residenceno">居住证号：</label></td>
@@ -303,8 +303,8 @@
                     <td>
                       <sf:select id="status" path="status">
                         <sf:option value="-1" selected="">-----请选择-----</sf:option>
-                        <sf:option value="1">正常</sf:option>
-                        <sf:option value="2">注销</sf:option>
+                        <sf:option value="正常">正常</sf:option>
+                        <sf:option value="注销">注销</sf:option>
                       </sf:select>
                     </td>
                   </tr>

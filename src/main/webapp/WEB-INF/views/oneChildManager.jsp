@@ -79,23 +79,11 @@
                 <input type="text" id="fname" name="fname"/>
                 <label for="fidcardno">身份证号：</label>
                 <input type="text" id="fidcardno" name="fidcardno"/>
-                <label for="serviceno">办证编号：</label>
+                <label for="serviceno">服务证号：</label>
                 <input type="text" id="serviceno" name="serviceno"/>
-                <select type="text" id="year" name="year">
-                    <option value="">--年份--</option>
-                    <option value="2013">2013</option>
-                    <option value="2014">2014</option>
-                </select> 年
-                <select type="text" id="month" name="month">
-                    <option value="">--月份--</option>
-                    <option value="1">1</option><option value="2">2</option>
-                    <option value="3">3</option><option value="4">4</option>
-                    <option value="5">5</option><option value="6">6</option>
-                    <option value="7">7</option><option value="8">8</option>
-                    <option value="9">9</option><option value="10">10</option>
-                    <option value="11">11</option>
-                    <option value="12">12</option>
-                </select> 月
+                <label for="">办证时间：</label>
+                <input type="text" id="startdate" name="startdate" size="16" />
+                <input type="text" id="enddate" name="enddate" size="16" />
                 <button type="button" style="width:60px" class="btn btn-primary" onclick="queryOca()">查询</button>
                 <button type="reset" style="width:60px" class="btn btn-default" onclick="resetQueryForm()">重置</button>
             </form>
@@ -105,48 +93,82 @@
       </div>
     </div>
 <script type="text/javascript">
-var defModel = [
-{
-    header : '服务时间',
-    name : 'registrationdate',
-    align : 'center',
-    sort : 'serverSide',
-    options: {
-        dateFormat: "yy-mm-dd"
-    },
-    type: "omCalendar"
-},
-{
-    header : '服务结果',
-    name : 'registrationdate',
+//设定日期选择器的相关属性
+var calOpts = {
+  dateFormat: "yy/mm/dd"
+};
+$("#startdate").omCalendar(calOpts);
+$("#enddate").omCalendar(calOpts);
+var defModel = [{
+    header : '地址',
+    name : 'registrationaddr',
     align : 'center',
     sort : 'serverSide'
-},
-{
-    header : '用户名',
+}, {
+    header : '育妇姓名',
     name : 'fname',
     align : 'center',
     sort : 'serverSide'
-},
-{
-  header : '操作',
-  name: "",
-  align : 'left',
-  renderer : function(colValue, rowData, rowIndex) {
-    var str = '<a href="javascript:void(0)" onclick="updateOca('
-        + rowData.id
-        + ')">编辑</a>'
-        + ' | <a href="javascript:void(0)" onclick="deleteOca('
-        + rowData.id
-        + ')">删除</a>';
-    return str;
-  }
+}, {
+    header : '身份证号码',
+    name : 'fidcardno',
+    align : 'center',
+    sort : 'serverSide'
+}, {
+    header : '丈夫姓名',
+    name : 'mname',
+    align : 'center',
+    sort : 'serverSide'
+}, {
+    header : '身份证号码',
+    name : 'midcardno',
+    align : 'center',
+    sort : 'serverSide'
+}, {
+    header : '婚姻状况',
+    name : 'maritalstatus',
+    align : 'center',
+    sort : 'serverSide'
+}, {
+    header : '结婚时间',
+    name : 'marriagedate',
+    align : 'center',
+    sort : 'serverSide'
+}, {
+    header : '妊娠情况',
+    name : 'fname',
+    align : 'center',
+    sort : 'serverSide'
+}, {
+    header : '其它',
+    name : 'fname',
+    align : 'center',
+    sort : 'serverSide'
+}, {
+    header : '操作',
+    name: "",
+    align : 'center',
+    renderer : function(colValue, rowData, rowIndex) {
+      var str = '<a href="javascript:void(0)" onclick="printOca('
+          + rowData.id
+          + ')">打印</a>'
+          + ' | <a href="javascript:void(0)" onclick="updateOca('
+          + rowData.id
+          + ')">管理</a>'
+          + ' | <a href="javascript:void(0)" onclick="deleteOca('
+          + rowData.id
+          + ')">删除</a>';
+      return str;
+    }
 }
 ];
 // 搜索
 var queryOca = function() {
     $('#ocaListTable').omGrid("setData", '${ctx}/oneChild/query?' + encodeURI($("#queryForm").serialize()));
 };
+var printOca = function(id) {
+  alert("打印");
+}
 var updateOca = function(id) {
     window.location = "${ctx}/oneChild/update/"+id;
 };

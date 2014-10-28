@@ -2,6 +2,7 @@ package fnjsw.service.impl;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -59,7 +60,8 @@ public class OnechildarchivesServiceImpl {
     }
 
     public OnePage<Onechildarchives> selectOnePage(
-            OnechildarchivesExample example, Onechildarchives oca) {
+            OnechildarchivesExample example, Onechildarchives oca,
+            Date startdate, Date enddate) {
         OnechildarchivesExample.Criteria cirteria = example.createCriteria();
         try {
             // 在这里添加查询条件
@@ -77,16 +79,15 @@ public class OnechildarchivesServiceImpl {
         } catch (UnsupportedEncodingException e) {
 
         }
-        if (oca.getRegistrationdate() != null) {
+        if (startdate != null && enddate != null) {
             Calendar cal = Calendar.getInstance();
-            cal.setTime(oca.getRegistrationdate());
-            cal.set(Calendar.DAY_OF_MONTH, 1);
-            Date start = cal.getTime();
-            cal.add(Calendar.MONTH, 1);
-            cal.set(Calendar.DAY_OF_MONTH, 0);
-            Date end = cal.getTime();
-            System.out.println(start.toString() + " " + end.toString());
-            cirteria.andRegistrationdateBetween(start, end);
+            cal.setTime(enddate);
+            cal.add(Calendar.DATE, 1);
+            cirteria.andRegistrationdateBetween(startdate, cal.getTime());
+        } else if (startdate != null && enddate == null) {
+            cirteria.andRegistrationdateGreaterThanOrEqualTo(startdate);
+        } else if (startdate == null && enddate != null) {
+            cirteria.andRegistrationdateLessThanOrEqualTo(enddate);
         }
         // 对 criteria 的条件进行修改
         return ocaComponent.selectOnePage(example);
