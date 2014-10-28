@@ -38,6 +38,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springside.modules.mapper.JsonMapper;
 
 import fnjsw.entity.Familyplanningcertificate;
+import fnjsw.entity.Division;
 import fnjsw.entity.Gestationinfo;
 import fnjsw.entity.Onechildarchives;
 import fnjsw.entity.OnechildarchivesExample;
@@ -401,10 +402,15 @@ public class OneChildController {
     public String queryDivision(HttpServletRequest request,
             HttpServletResponse response) {
         String code = request.getParameter("code");
-        if ("11".equals(code)) {
-            return "{\"divisions\": [{\"code\": \"1101\", \"name\": \"市辖区\"}]}";
-        }
-        return "";
+        
+        List<Division> divList = ocaService.queryDivision(code);
+        
+        String pageDataString = mapper.toJson(divList);
+        return pageDataString;
+//        if ("11".equals(code)) {
+//            return "{\"divisions\": [{\"code\": \"1101\", \"name\": \"市辖区\"}]}";
+//        }
+//        return "";
     }
 
     // ////////////////////////////////////////////////////////////////////////////

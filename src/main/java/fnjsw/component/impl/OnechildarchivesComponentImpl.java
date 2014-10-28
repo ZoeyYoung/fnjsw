@@ -25,6 +25,9 @@ public class OnechildarchivesComponentImpl {
     @Autowired
     private OnechildarchivesMapper ocaMapper;
 
+    @Autowired
+    private DivisionMapper divMapper;
+
     public Onechildarchives getById(int id) {
         return ocaMapper.selectByPrimaryKey(id);
     }
@@ -77,6 +80,27 @@ public class OnechildarchivesComponentImpl {
 
     public int delete(int id) {
         return ocaMapper.deleteByPrimaryKey(id);
+    }
+
+    public List<Division> queryDivision(String code){
+        DivisionExample example = new DivisionExample();
+        DivisionExample.Criteria criteria = example.createCriteria();
+        // 大于等于两个0的情况
+        String regex = "0{2,}";
+        Pattern p = Pattern.compile(regex);
+        Matcher m = p.matcher(code);
+        // result 为前面非0的数字
+        String result = m.replaceAll("").trim();
+        // sql like 为 12%0000... 后面的零的个数，通过如下的 sb 获得
+        int origLength = result.length();
+        int zeroFill = 15- 2 - origLength;
+        StringBuilder sb = new StringBuilder();
+        for(int i = 0; i< zeroFill; i++){
+            sb.append("0");
+        }
+        criteria.andDivcodeNotEqualTo(code);
+        criteria.andDivcodeLike(result+"%"+sb.toString());
+        return divMapper.selectByExample(example);
     }
 
 }

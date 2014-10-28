@@ -461,14 +461,14 @@ if ($("#status").val() === "注销") {
   $("#logoutreasonLabel").show();
 }
 var fiPr = [{
-    code: "11",
+    code: "110000000000000",
     name: "北京市"
 }, {
-    code: "12",
-    name: "天津市"
+  code: "120000000000000",
+  name: "天津市"
 }, {
-    code: "13",
-    name: "河北省"
+  code: "130000000000000",
+  name: "河北省"
 }];
 $("#f1Pr, #f2Pr, #m1Pr, #m2Pr").empty();
 $("#f1Pr, #f2Pr, #m1Pr, #m2Pr").append($("<option/>").text("-----请选择-----").attr("value",""));
@@ -481,9 +481,9 @@ var appendNextOps = function(code, next) {
     }).always(function(data) {
         $("#" + next).empty();
         $("#" + next).append($("<option/>").text("-----请选择-----").attr("value",""));
-        var nextOpts = data.divisions;
-        for (var i = 0, l = nextOpts.length; i < l; i++) {
-          $("#" + next).append($("<option/>").text(nextOpts[i].name).attr("value", nextOpts[i].code));
+/*        var nextOpts = data.divisions;*/
+        for (var i = 0, l = data.length; i < l; i++) {
+          $("#" + next).append($("<option/>").text(data[i].divname).attr("value", data[i].divcode));
         }
     });
 };
