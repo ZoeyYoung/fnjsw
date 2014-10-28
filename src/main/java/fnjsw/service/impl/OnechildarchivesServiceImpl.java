@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import fnjsw.component.impl.FamilyplanningcertificateComponentImpl;
+import fnjsw.entity.Division;
 import fnjsw.component.impl.GestationinfoComponentImpl;
 import fnjsw.component.impl.OnechildarchivesComponentImpl;
 import fnjsw.entity.Familyplanningcertificate;
@@ -139,4 +140,7 @@ public class OnechildarchivesServiceImpl {
         return fpcComponent.delete(fpc);
     }
 
+    public List<Division> queryDivision(String code){
+        return ocaComponent.queryDivision(code);
+    }
 }
