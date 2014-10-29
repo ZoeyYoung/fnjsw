@@ -460,6 +460,18 @@ if ($("#status").val() === "注销") {
   $("#logoutreason").show();
   $("#logoutreasonLabel").show();
 }
+$("#f1Pr, #f2Pr, #m1Pr, #m2Pr").empty();
+function getDivision(code, selectId) {
+    $.getJSON("${ctx}/oneChild/getDivision", {
+        code: code
+    }).always(function(data) {
+        var next = $("#" + selectId).attr("next");
+        for (var i = 1; i < 5; i++) {
+            $("#" + next).append($("<option/>").text(data[i].divname).attr("value", data[i].divcode).attr('selected', true));
+            next = $("#" + next).attr("next");
+        }
+    });
+}
 $.getJSON("${ctx}/oneChild/queryDivision", {
     code: ""
 }).always(function(data) {
@@ -467,6 +479,26 @@ $.getJSON("${ctx}/oneChild/queryDivision", {
     $("#f1Pr, #f2Pr, #m1Pr, #m2Pr").append($("<option/>").text("-----请选择-----").attr("value",""));
     for (var i = 0, l = data.length; i < l; i++) {
         $("#f1Pr, #f2Pr, #m1Pr, #m2Pr").append($("<option/>").text(data[i].divname).attr("value", data[i].divcode));
+    }
+    if (${oca.fpermanentaddress}) {
+        var fpermanentaddress = "${oca.fpermanentaddress}";
+        $("#f1Pr").val(fpermanentaddress.substr(0,2) + "0000000000000");
+        getDivision(fpermanentaddress, "f1Pr");
+    }
+    if (${oca.faddress}) {
+        var faddress = "${oca.faddress}";
+        $("#f2Pr").val(faddress.substr(0,2) + "0000000000000");
+        getDivision(faddress, "f2Pr");
+    }
+    if (${oca.mpermanentaddress}) {
+        var mpermanentaddress = "${oca.mpermanentaddress}";
+        $("#m1Pr").val(mpermanentaddress.substr(0,2) + "0000000000000");
+        getDivision(mpermanentaddress, "m1Pr");
+    }
+    if (${oca.maddress}) {
+        var maddress = "${oca.maddress}";
+        $("#m2Pr").val(maddress.substr(0,2) + "0000000000000");
+        getDivision(maddress, "m2Pr");
     }
 });
 var appendNextOps = function(code, next) {
