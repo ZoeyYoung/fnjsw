@@ -220,6 +220,4 @@ public class Page {
                 + ", haveLastPage=" + haveLastPage + ", nextPageNo="
                 + nextPageNo + ", previousPageNo=" + previousPageNo + "]";
     }
-
-
 }

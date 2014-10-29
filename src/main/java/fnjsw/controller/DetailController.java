@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping(value = "/detail/")
 public class DetailController {
 
-	@RequestMapping(value = "list", method = RequestMethod.GET)
-	public String getUserList(HttpServletRequest request, Model model){ 
-		return "detail";
-	}
+    @RequestMapping(value = "list", method = RequestMethod.GET)
+    public String getUserList(HttpServletRequest request, Model model) {
+        return "detail";
+    }
 
 }

@@ -2,7 +2,6 @@ package fnjsw.service.impl;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -12,10 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import fnjsw.component.impl.DivisionComponentImpl;
 import fnjsw.component.impl.FamilyplanningcertificateComponentImpl;
-import fnjsw.entity.Division;
 import fnjsw.component.impl.GestationinfoComponentImpl;
 import fnjsw.component.impl.OnechildarchivesComponentImpl;
+import fnjsw.entity.Division;
 import fnjsw.entity.Familyplanningcertificate;
 import fnjsw.entity.Gestationinfo;
 import fnjsw.entity.Onechildarchives;
@@ -32,6 +32,8 @@ public class OnechildarchivesServiceImpl {
     private GestationinfoComponentImpl giComponent;
     @Autowired
     private FamilyplanningcertificateComponentImpl fpcComponent;
+    @Autowired
+    private DivisionComponentImpl divComponent;
 
     public Onechildarchives getOcaById(int id) {
         return ocaComponent.getById(id);
@@ -140,7 +142,7 @@ public class OnechildarchivesServiceImpl {
         return fpcComponent.delete(fpc);
     }
 
-    public List<Division> queryDivision(String code){
-        return ocaComponent.queryDivision(code);
+    public List<Division> getDivByCode(String code) {
+        return divComponent.getByCode(code);
     }
 }

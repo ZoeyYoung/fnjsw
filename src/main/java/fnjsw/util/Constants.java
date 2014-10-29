@@ -1,6 +1,6 @@
 package fnjsw.util;
 
-public class Const {
+public class Constants {
 
     public static final String PARAM_USERID = "id";
     public static final String PARAM_USERNAME = "username";

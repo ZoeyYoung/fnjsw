@@ -7,7 +7,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springside.modules.mapper.JsonMapper;
 
 import fnjsw.entity.Gestationinfo;
 import fnjsw.entity.GestationinfoExample;
@@ -18,8 +17,6 @@ import fnjsw.util.OnePage;
 public class GestationinfoComponentImpl {
     private static Logger logger = LoggerFactory
             .getLogger(GestationinfoComponentImpl.class);
-
-    private static JsonMapper mapper = JsonMapper.nonDefaultMapper();
 
     @Autowired
     private GestationinfoMapper giMapper;

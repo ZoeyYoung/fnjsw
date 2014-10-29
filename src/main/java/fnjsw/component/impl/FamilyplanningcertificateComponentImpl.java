@@ -7,7 +7,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springside.modules.mapper.JsonMapper;
 
 import fnjsw.entity.Familyplanningcertificate;
 import fnjsw.entity.FamilyplanningcertificateExample;
@@ -18,8 +17,6 @@ public class FamilyplanningcertificateComponentImpl {
 
     private static Logger logger = LoggerFactory
             .getLogger(FamilyplanningcertificateComponentImpl.class);
-
-    private static JsonMapper mapper = JsonMapper.nonDefaultMapper();
 
     @Autowired
     private FamilyplanningcertificateMapper fpcMapper;

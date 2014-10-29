@@ -402,24 +402,14 @@ public class OneChildController {
     public String queryDivision(HttpServletRequest request,
             HttpServletResponse response) {
         String code = request.getParameter("code");
-        
-        List<Division> divList = ocaService.queryDivision(code);
-        
-        String pageDataString = mapper.toJson(divList);
-        return pageDataString;
-//        if ("11".equals(code)) {
-//            return "{\"divisions\": [{\"code\": \"1101\", \"name\": \"市辖区\"}]}";
-//        }
-//        return "";
+        List<Division> divList = ocaService.getDivByCode(code);
+        return mapper.toJson(divList);
     }
-
-    // ////////////////////////////////////////////////////////////////////////////
 
     @RequestMapping(value = "queryGestation")
     @ResponseBody
     public String getGestationInfo(int ocaId, HttpServletRequest request) {
         List<Gestationinfo> giList = ocaService.getGiByOcaId(ocaId);
-
         String pageDataString = mapper.toJson(giList);
         String jsonResult =
                 "{\"rows\":" + pageDataString + ",\"total\":"
