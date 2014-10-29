@@ -119,6 +119,11 @@ public class OnechildarchivesServiceImpl {
         return giComponent.delete(id);
     }
 
+    @Transactional
+    public int deleteGiByOcaId(int ocaId) {
+        return giComponent.deleteByOcaId(ocaId);
+    }
+
     public List<Familyplanningcertificate> getFpcByOcaId(int ocaId) {
         return fpcComponent.getByOcaId(ocaId);
     }

@@ -39,6 +39,13 @@ public class GestationinfoComponentImpl {
         return giMapper.deleteByPrimaryKey(id);
     }
 
+    public int deleteByOcaId(int ocaId) {
+        GestationinfoExample example = new GestationinfoExample();
+        GestationinfoExample.Criteria criteria = example.createCriteria();
+        criteria.andOcaidEqualTo(ocaId);
+        return giMapper.deleteByExample(example);
+    }
+
     public List<Gestationinfo> getAll() {
         List<Gestationinfo> ocaList = new ArrayList<Gestationinfo>();
 

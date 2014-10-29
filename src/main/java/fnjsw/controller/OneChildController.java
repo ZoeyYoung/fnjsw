@@ -43,6 +43,7 @@ import fnjsw.entity.Gestationinfo;
 import fnjsw.entity.Onechildarchives;
 import fnjsw.entity.OnechildarchivesExample;
 import fnjsw.service.impl.OnechildarchivesServiceImpl;
+import fnjsw.util.CommonUtils;
 import fnjsw.util.OnePage;
 import fnjsw.util.Page;
 
@@ -56,8 +57,6 @@ public class OneChildController {
 
     @Autowired
     private OnechildarchivesServiceImpl ocaService;
-
-    private String fileUploadDirectory = "D:/uploads/";
 
     @InitBinder
     protected void init(HttpServletRequest request,
@@ -192,8 +191,7 @@ public class OneChildController {
         try {
             Familyplanningcertificate fpc = new Familyplanningcertificate();
             String filename =
-                    saveMutipartFile(new File(fileUploadDirectory + ocaId),
-                            file);
+                    saveMutipartFile(CommonUtils.getFPCDir(ocaId), file);
             fpc.setOcaid(ocaId);
             fpc.setFilename(filename);
             fpc.setUploadtime(new Date());
@@ -211,9 +209,12 @@ public class OneChildController {
             Model model) {
         try {
             Onechildarchives oca = ocaService.getOcaById(ocaId);
+            if (StringUtils.isNotEmpty(oca.getZhunshengzheng())) {
+                FileUtils.deleteQuietly(CommonUtils.getZSZFile(ocaId,
+                        oca.getZhunshengzheng()));
+            }
             String filename =
-                    saveMutipartFile(new File(fileUploadDirectory + ocaId),
-                            file[0]);
+                    saveMutipartFile(CommonUtils.getZSZDir(ocaId), file[0]);
             if (StringUtils.isNotEmpty(filename)) {
                 oca.setZhunshengzheng(filename);
             }
@@ -230,9 +231,7 @@ public class OneChildController {
             HttpServletRequest request,
             HttpServletResponse response) throws IOException {
         Familyplanningcertificate fpc = ocaService.getFpcById(fpcId);
-        File file =
-                new File(fileUploadDirectory + fpc.getOcaid() + File.separator
-                        + fpc.getFilename());
+        File file = CommonUtils.getFPCFile(fpc.getOcaid(), fpc.getFilename());
         InputStream is = new FileInputStream(file);
         OutputStream os = response.getOutputStream();
         byte[] bt = new byte[1024];
@@ -252,9 +251,7 @@ public class OneChildController {
             HttpServletRequest request,
             HttpServletResponse response) throws IOException {
         Onechildarchives oca = ocaService.getOcaById(ocaId);
-        File file =
-                new File(fileUploadDirectory + oca.getId() + File.separator
-                        + oca.getZhunshengzheng());
+        File file = CommonUtils.getZSZFile(ocaId, oca.getZhunshengzheng());
         InputStream is = new FileInputStream(file);
         OutputStream os = response.getOutputStream();
         byte[] bt = new byte[1024];
@@ -274,9 +271,6 @@ public class OneChildController {
         if (mpf.getSize() == 0L) {
             return "";
         }
-        if (!dir.isDirectory()) {
-            dir.mkdirs();
-        }
         String newFilenameBase = UUID.randomUUID().toString();
         String originalFileExtension =
                 mpf.getOriginalFilename().substring(
@@ -287,18 +281,31 @@ public class OneChildController {
         return newFilename;
     }
 
+    /**
+     * 删除一孩档案
+     * 
+     * @param request
+     * @param response
+     * @return
+     */
     @RequestMapping(value = "delete", method = RequestMethod.POST)
     @ResponseBody
     public String delete(HttpServletRequest request,
             HttpServletResponse response) {
+        // 一孩档案id
         int id = Integer.parseInt(request.getParameter("id"));
-        // 删除记录前先删除文件
-        Onechildarchives originOca = ocaService.getOcaById(id);
-        if (StringUtils.isNotEmpty(originOca.getZhunshengzheng())) {
-            FileUtils.deleteQuietly(new File(fileUploadDirectory
-                    + File.separator
-                    + originOca.getZhunshengzheng()));
+        // 删除妊娠信息
+        ocaService.deleteGiByOcaId(id);
+        try {
+            // 删除计生证件扫描件
+            FileUtils.deleteDirectory(CommonUtils.getFPCDir(id));
+            // 删除准生证扫描件
+            FileUtils.deleteDirectory(CommonUtils.getZSZDir(id));
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
         }
+        // 删除一孩档案
         int result = ocaService.deleteOca(id);
         if (result == 1) {
             return "success";
@@ -325,9 +332,7 @@ public class OneChildController {
         int result = ocaService.deleteFpc(fpcId);
         if (result == 1) {
             File file =
-                    new File(fileUploadDirectory + fpc.getOcaid()
-                            + File.separator
-                            + fpc.getFilename());
+                    CommonUtils.getFPCFile(fpc.getOcaid(), fpc.getFilename());
             FileUtils.deleteQuietly(file);
             return "success";
         }
@@ -343,9 +348,7 @@ public class OneChildController {
         oca.setZhunshengzheng("");
         int result = ocaService.updateOca(oca);
         if (result == 1) {
-            File file =
-                    new File(fileUploadDirectory + ocaId + File.separator
-                            + filename);
+            File file = CommonUtils.getZSZFile(ocaId, filename);
             FileUtils.deleteQuietly(file);
             return "success";
         }
