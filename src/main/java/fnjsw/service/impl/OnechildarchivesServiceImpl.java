@@ -142,7 +142,11 @@ public class OnechildarchivesServiceImpl {
         return fpcComponent.delete(fpc);
     }
 
-    public List<Division> getDivByCode(String code) {
-        return divComponent.getByCode(code);
+    public List<Division> queryDivByCode(String code) {
+        return divComponent.queryDivByCode(code);
+    }
+    
+    public List<Division> getDivByCode(String code){
+    	return divComponent.getDivByCode(code);
     }
 }

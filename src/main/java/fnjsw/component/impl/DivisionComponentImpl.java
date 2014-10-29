@@ -2,8 +2,6 @@ package fnjsw.component.impl;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,17 +21,46 @@ public class DivisionComponentImpl {
     @Autowired
     private DivisionMapper divisionMapper;
 
-    public List<Division> getByCode(String code){
+    public List<Division> queryDivByCode(String code){
         DivisionExample example = new DivisionExample();
         DivisionExample.Criteria criteria = example.createCriteria();
         // 
-        String query = getTrimResult(code);
+        String query = getQueryTrimResult(code);
         criteria.andDivcodeNotEqualTo(code);
         criteria.andDivcodeLike(query);
         return divisionMapper.selectByExample(example);
     }
+    
+    public List<Division> getDivByCode(String code){
+        DivisionExample example = new DivisionExample();
+        DivisionExample.Criteria criteria = example.createCriteria();
+        // 
+        List<String> query = getGetTrimResult(code); 
+        criteria.andDivcodeIn(query);
+        example.setOrderByClause("DIVCODE ASC");
+        return divisionMapper.selectByExample(example);
+    }
+    
+    private List<String> getGetTrimResult(String code){
+    	List<String> queryList = new ArrayList<String>();
+    	queryList.add(code);
+        if (code == null || "".equals(code)) {
+            return queryList; // 13个0
+        }
+        String str02 = code.substring(0, 2);
+        String str24 = code.substring(2, 4);
+        String str46 = code.substring(4, 6);
+        String str69 = code.substring(6, 9);
+        String str912 = code.substring(9, 12);
+        queryList.add(str02 + "0000000000000"); // 13个0
+        queryList.add(str02 + str24 + "00000000000"); // 11个0
+        queryList.add(str02 + str24 + str46 + "000000000"); // 9个0
+        queryList.add(str02 + str24 + str46 + str69 + "000000"); // 6个0
+        queryList.add(str02 + str24 + str46 + str69 + str912 + "000"); // 3个0
+        return queryList;
+    }
 
-    private String getTrimResult(String code) {
+    private String getQueryTrimResult(String code) {
         if (code == null || "".equals(code)) {
             return "%0000000000000"; // 13个0
         }

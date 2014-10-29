@@ -402,6 +402,15 @@ public class OneChildController {
     public String queryDivision(HttpServletRequest request,
             HttpServletResponse response) {
         String code = request.getParameter("code");
+        List<Division> divList = ocaService.queryDivByCode(code);
+        return mapper.toJson(divList);
+    }
+    
+    @RequestMapping(value = "getDivision", method = RequestMethod.GET)
+    @ResponseBody
+    public String getDivision(HttpServletRequest request,
+            HttpServletResponse response) {
+        String code = request.getParameter("code");
         List<Division> divList = ocaService.getDivByCode(code);
         return mapper.toJson(divList);
     }
