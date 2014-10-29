@@ -121,9 +121,9 @@
                       <select id="f1To" name="f1To" next="f1Vi">
                         <option value="-1" selected="">-----请选择-----</option>
                       </select> (镇)
-                      <select id="f1Vi" name="f1Vi">
+                      <sf:select id="f1Vi" path="fpermanentaddress">
                         <option value="-1" selected="">-----请选择-----</option>
-                      </select> (村)
+                      </sf:select> (村)
                       <label for="fphouseno">门牌号</label>
                       <sf:input id="fphouseno" path="fphouseno" size="8" />
                     </td>
@@ -142,9 +142,9 @@
                       <select id="f2To" name="f2To" next="f2Vi">
                         <option value="-1" selected="">-----请选择-----</option>
                       </select> (镇)
-                      <select id="f2Vi" name="f2Vi">
+                      <sf:select id="f2Vi" path="faddress">
                         <option value="-1" selected="">-----请选择-----</option>
-                      </select> (村)
+                      </sf:select> (村)
                       <label for="fahouseno">门牌号</label>
                       <sf:input id="fahouseno" path="fahouseno" size="8" />
                     </td>
@@ -193,9 +193,9 @@
                       <select id="m1To" name="m1To" next="m1Vi">
                         <option value="-1" selected="">-----请选择-----</option>
                       </select> (镇)
-                      <select id="m1Vi" name="m1Vi">
+                      <sf:select id="m1Vi" path="mpermanentaddress">
                         <option value="-1" selected="">-----请选择-----</option>
-                      </select> (村)
+                      </sf:select> (村)
                       <label for="mphouseno">门牌号</label>
                       <sf:input id="mphouseno" path="mphouseno" size="8" />
                     </td>
@@ -215,9 +215,9 @@
                       <select id="m2To" name="m2To" next="m2Vi">
                         <option value="-1" selected="">-----请选择-----</option>
                       </select> (镇)
-                      <select id="m2Vi" name="m2Vi">
+                      <sf:select id="m2Vi" path="maddress">
                         <option value="-1" selected="">-----请选择-----</option>
-                      </select> (村)
+                      </sf:select> (村)
                       <label for="mahouseno">门牌号</label>
                       <sf:input id="mahouseno" path="mahouseno" size="8" />
                     </td>
@@ -481,9 +481,15 @@ var appendNextOps = function(code, next) {
     }).always(function(data) {
         $("#" + next).empty();
         $("#" + next).append($("<option/>").text("-----请选择-----").attr("value",""));
-/*        var nextOpts = data.divisions;*/
         for (var i = 0, l = data.length; i < l; i++) {
           $("#" + next).append($("<option/>").text(data[i].divname).attr("value", data[i].divcode));
+        }
+        var nextnext = $("#" + next).attr("next")
+        while (nextnext) {
+            var tmp = $("#" + nextnext).attr("next");
+            $("#" + nextnext).empty();
+            $("#" + nextnext).append($("<option/>").text("-----请选择-----").attr("value",""));
+            nextnext = tmp;
         }
     });
 };
